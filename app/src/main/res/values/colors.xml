@@ -9,5 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="input_hint_color">#33691E</color>
     <color name="input_rectangle_grey_color">#C4C4C4</color>
+    <color name="transparent">#00FFFFFF</color>
 
 </resources>
