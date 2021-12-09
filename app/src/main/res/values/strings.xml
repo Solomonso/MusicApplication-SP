@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">MusicApplication-SP</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="registration">Registration</string>
+
+    <!--ss-->
+    <string name="email">Enter email here</string>
+    <string name="username">Enter new username</string>
+    <string name="firstname">Enter your firstname</string>
+    <string name="lastname">Enter your lastname</string>
+    <string name="pin11">Enter new password</string>
+    <string name="pin22">Repeat same password</string>
+
+    <!--buttons-->
+    <string name="next">Next</string>
+    <string name="submit">Submit</string>
 </resources>
