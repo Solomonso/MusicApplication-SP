@@ -4,6 +4,6 @@
     android:padding="10dp"
     android:shape="rectangle">
 
-    <solid android:color="@color/teal_700" />
+    <solid android:color="@color/input_rectangle_grey_color" />
     <corners android:radius="30dp" />
 </shape>
