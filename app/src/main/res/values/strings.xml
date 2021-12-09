@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MusicApplication-SP</string>
+    <string name="log_in_to_music_app">Log into Music App</string>
+    <string name="e_mail_address">Email</string>
+    <string name="password">Password</string>
+    <string name="Log_in">Log in</string>
 </resources>
