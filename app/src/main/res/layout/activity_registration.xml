@@ -20,6 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
+
     <!-- Main -->
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/linearLayoutCompat"
@@ -35,6 +36,7 @@
         app:layout_constraintTop_toBottomOf="@+id/appCompatTextView"
         app:layout_constraintVertical_bias="1.0">
 
+        <!-- Email input -->
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="275dp"
             android:layout_height="70dp"
@@ -47,10 +49,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:gravity="center_horizontal"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+        <!-- username input -->
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="275dp"
             android:layout_height="70dp"
@@ -63,10 +67,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:gravity="center_horizontal"
                 android:hint="@string/username"
                 android:inputType="text" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+        <!-- firstname input -->
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="275dp"
             android:layout_height="70dp"
@@ -79,10 +85,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:gravity="center_horizontal"
                 android:hint="@string/firstname"
                 android:inputType="textEmailAddress" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+        <!-- lastname input -->
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="275dp"
             android:layout_height="70dp"
@@ -95,6 +103,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:gravity="center_horizontal"
                 android:hint="@string/lastname"
                 android:inputType="textEmailAddress" />
         </androidx.appcompat.widget.LinearLayoutCompat>
