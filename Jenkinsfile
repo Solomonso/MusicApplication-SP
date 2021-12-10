@@ -5,10 +5,10 @@ pipeline {
       steps {
         withGradle()
       }
-      stage('Test') {
-            steps {
-                sh './gradlew check'
-            }
+    }
+    stage('Test') {
+      steps {
+        sh './gradlew check'
         }
     }
 
