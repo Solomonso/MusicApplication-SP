@@ -7,11 +7,5 @@ pipeline {
       }
     }
 
-    stage('testing') {
-      steps {
-        warnError(message: 'Something went wrong', catchInterruptions: true)
-      }
-    }
-
   }
 }
