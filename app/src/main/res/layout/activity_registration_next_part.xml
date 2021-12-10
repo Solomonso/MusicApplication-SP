@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,7 +7,7 @@
     android:background="@drawable/greenbg"
     tools:context=".RegistrationNextPart">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- IT IS NOT YET RESPONSIVE -->
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/appCompatTextView"
         android:layout_width="match_parent"
@@ -25,9 +24,9 @@
         android:id="@+id/linearLayoutCompat2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
         android:layout_marginTop="60dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,8 +63,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/pin22"
                 android:gravity="center_horizontal"
+                android:hint="@string/pin22"
                 android:inputType="textEmailAddress" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -74,10 +73,10 @@
             android:id="@+id/btnSubmit"
             android:layout_width="140dp"
             android:layout_height="70dp"
-            android:textSize="30sp"
             android:layout_gravity="center"
             android:layout_marginTop="350dp"
             android:background="@drawable/shape"
-            android:text="@string/submit" />
+            android:text="@string/submit"
+            android:textSize="30sp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.constraintlayout.widget.ConstraintLayout>

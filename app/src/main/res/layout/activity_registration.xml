@@ -7,15 +7,16 @@
     android:background="@drawable/greenbg"
     tools:context=".Registration">
 
+    <!-- IT IS NOT YET RESPONSIVE -->
     <!-- Head -->
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/appCompatTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="@string/registration"
         android:textSize="35sp"
-        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,9 +27,9 @@
         android:id="@+id/linearLayoutCompat"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
         android:layout_marginTop="60dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -40,8 +41,8 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="275dp"
             android:layout_height="70dp"
-            android:background="@drawable/shape"
             android:layout_marginTop="20dp"
+            android:background="@drawable/shape"
             android:gravity="center">
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -58,8 +59,8 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="275dp"
             android:layout_height="70dp"
-            android:background="@drawable/shape"
             android:layout_marginTop="20dp"
+            android:background="@drawable/shape"
             android:gravity="center">
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -76,8 +77,8 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="275dp"
             android:layout_height="70dp"
-            android:background="@drawable/shape"
             android:layout_marginTop="20dp"
+            android:background="@drawable/shape"
             android:gravity="center">
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -94,8 +95,8 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="275dp"
             android:layout_height="70dp"
-            android:background="@drawable/shape"
             android:layout_marginTop="20dp"
+            android:background="@drawable/shape"
             android:gravity="center">
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -112,11 +113,11 @@
             android:id="@+id/btnNext"
             android:layout_width="140dp"
             android:layout_height="70dp"
-            android:textSize="30sp"
-            android:layout_marginTop="170dp"
             android:layout_gravity="center"
+            android:layout_marginTop="170dp"
             android:background="@drawable/shape"
-            android:text="@string/next" />
+            android:text="@string/next"
+            android:textSize="30sp" />
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>
