@@ -5,8 +5,7 @@ pipeline {
     stage('Test') {
       steps {
         echo 'Compile project'
-        sh "chmod +x gradlew"
-        sh './gradlew check'        
+        buildPluginWithGradle()     
         }
     }
 
