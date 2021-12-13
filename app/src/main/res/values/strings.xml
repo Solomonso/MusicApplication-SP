@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">MusicApplication-SP</string>
+
+    <string name="profile">Profile</string>
+    <string name="logout">Log Out</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
 </resources>
