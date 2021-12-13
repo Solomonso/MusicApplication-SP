@@ -34,6 +34,11 @@ class Registration : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        binding.btnNext.setOnClickListener{
+            binding.btnNext.setOnClickListener { view : View ->
+                view.findNavController().navigate(R.id.action_titleFragment_to_gameFragment)
+            }
+        }
         return inflater.inflate(R.layout.activity_registration, container, false)
     }
 

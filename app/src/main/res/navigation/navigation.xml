@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/registration">
+
+    <fragment
+        android:id="@+id/registration"
+        android:name="com.example.musicapplication_sp.Registration"
+        android:label="activity_registration"
+        tools:layout="@layout/activity_registration" >
+        <action
+            android:id="@+id/action_registration_to_registrationNextPart"
+            app:destination="@id/registrationNextPart" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrationNextPart"
+        android:name="com.example.musicapplication_sp.RegistrationNextPart"
+        android:label="activity_registration_next_part"
+        tools:layout="@layout/activity_registration_next_part" />
+</navigation>

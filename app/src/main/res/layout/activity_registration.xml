@@ -5,6 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/greenbg"
+    android:name="androidx.navigation.fragment.NavHostFragment"
+    app:navGraph="@navigation/navigation"
+    app:defaultNavHost="true"
     tools:context=".Registration">
 
     <!-- IT IS NOT YET RESPONSIVE -->
