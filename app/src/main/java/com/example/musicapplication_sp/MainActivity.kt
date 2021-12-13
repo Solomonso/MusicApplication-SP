@@ -13,16 +13,19 @@ class MainActivity : AppCompatActivity() {
     ) { res ->
         this.onSignInResult(res)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_layout)
         this.createSignIntent()
     }
+
     private fun createSignIntent() {
         val providers = arrayListOf(
             AuthUI.IdpConfig.GoogleBuilder().build(),
             AuthUI.IdpConfig.TwitterBuilder().build(),
-            AuthUI.IdpConfig.GitHubBuilder().build())
+            AuthUI.IdpConfig.GitHubBuilder().build()
+        )
 
         // Create and launch sign-in intent
         val signInIntent = AuthUI.getInstance()

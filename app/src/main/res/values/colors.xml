@@ -7,8 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="input_hint_color">#33691E</color>
-    <color name="input_rectangle_grey_color">#C4C4C4</color>
+    <color name="input_hint_color">#183A0A</color>
+    <color name="general_grey">#C4C4C4</color>
     <color name="transparent">#00FFFFFF</color>
 
 </resources>

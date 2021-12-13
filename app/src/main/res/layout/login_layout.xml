@@ -48,7 +48,6 @@
             android:hint="@string/e_mail_address"
             android:inputType="textEmailAddress"
             android:minHeight="48dp"
-
             android:textColorHint="@color/input_hint_color" />
 
         <EditText
@@ -98,7 +97,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
             android:background="@drawable/rounded_rectangle"
-            android:drawableLeft="@drawable/common_google_signin_btn_icon_light"
+            android:drawableLeft="@drawable/fui_ic_googleg_color_24dp"
             android:text="@string/google" />
 
         <Button
