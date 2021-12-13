@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MusicApplicationSP">
-        <activity android:name=".GoogleSignInActivity"></activity>
+        <activity android:name=".LoginThirdParty"></activity>
+        <activity android:name=".GoogleSignInActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
