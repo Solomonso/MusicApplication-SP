@@ -10,15 +10,14 @@
 
     <ImageView
         android:id="@+id/iv_image"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
         android:background="@drawable/menubar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
-    </ImageView>
+        tools:ignore="MissingConstraints"></ImageView>
 
 
 </RelativeLayout>
