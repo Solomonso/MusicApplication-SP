@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_layout)
-        this.createSignIntent()
+//        this.createSignIntent()
     }
 
     private fun createSignIntent() {
