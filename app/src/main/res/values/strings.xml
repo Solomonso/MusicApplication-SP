@@ -6,5 +6,7 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 
 </resources>
