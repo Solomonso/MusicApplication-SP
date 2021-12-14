@@ -102,16 +102,6 @@
             android:text="@string/google"
             android:theme="@style/FirebaseUI" />
 
-        <Button
-            android:id="@+id/sign_in_twitter"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="25dp"
-            android:background="@drawable/rounded_rectangle"
-            android:drawableLeft="@drawable/fui_ic_twitter_bird_white_24dp"
-            android:text="@string/twitter"
-            android:theme="@style/FirebaseUI" />
 
         <Button
             android:id="@+id/sign_in_facebook_button"
