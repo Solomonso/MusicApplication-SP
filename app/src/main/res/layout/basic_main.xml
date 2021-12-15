@@ -27,7 +27,8 @@
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/menu_nav"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"/>
+        android:fitsSystemWindows="true"
+        android:background="@drawable/shape_drawable"/>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_addPlaylist"
