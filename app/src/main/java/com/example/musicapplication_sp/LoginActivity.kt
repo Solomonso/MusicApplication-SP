@@ -2,10 +2,12 @@ package com.example.musicapplication_sp
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.facebook.AccessToken
@@ -25,6 +27,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class LoginActivity : AppCompatActivity() {
+    private var numberOfAttempts: Int = 0
+
     companion object {
         private const val TAG = "ThirdPartyLogin"
         private const val RC_SIGN_IN = 9001
@@ -36,8 +40,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginButton: Button
     private lateinit var loginEmail: EditText
     private lateinit var loginPassword: EditText
-
-    //field declared for login in with google
+    private lateinit var mTextField: TextView
+   //field declared for login in with google
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var signInGoogleButton: Button
     private lateinit var callbackManager: CallbackManager
@@ -53,6 +57,7 @@ class LoginActivity : AppCompatActivity() {
         loginButton = findViewById(R.id.login_button)
         signInGoogleButton = findViewById(R.id.sign_in_google_button)
         signInFacebookButton = findViewById(R.id.sign_in_facebook_button)
+        mTextField = findViewById(R.id.time_count)
 
         this.logIn()//call function for signing with username/password
 
@@ -96,7 +101,21 @@ class LoginActivity : AppCompatActivity() {
         super.onStart()
         // TODO" Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
-   }
+
+//        object : CountDownTimer(30000, 1000) {
+//
+//            override fun onTick(millisUntilFinished: Long) {
+//
+//            val  test = getString(R.string.time_count, millisUntilFinished / 1000)
+//                mTextField.text = test
+//            }
+//
+//            override fun onFinish() {
+//                mTextField.setText("done!")
+//            }
+//        }.start()
+
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -199,27 +218,31 @@ class LoginActivity : AppCompatActivity() {
 
                 }
                 else -> {
-                    val email: String = loginEmail.text.toString().trim { it <= ' ' }
-                    val password: String = loginPassword.text.toString().trim { it <= ' ' }
+//                    if (numberOfAttempts < 3) {
+                        val email: String = loginEmail.text.toString().trim { it <= ' ' }
+                        val password: String = loginPassword.text.toString().trim { it <= ' ' }
 
-                    auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            Toast.makeText(
-                                this@LoginActivity,
-                                "You are logged in " + auth.currentUser!!.email,
-                                Toast.LENGTH_SHORT
-                            ).show()
+                        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                Toast.makeText(this@LoginActivity, "You are logged in " + auth.currentUser!!.email, Toast.LENGTH_SHORT).show()
 
-                            Log.e("Logged in", auth.currentUser!!.uid)
-                        } else {
-                            Toast.makeText(
-                                this@LoginActivity,
-                                "Username or password not correct",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                                Log.e("Logged in", auth.currentUser!!.uid)
+                            } else {
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    "Username or password not correct",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }
-                    }
-
+//                    }
+//                    else {
+//                        Toast.makeText(this@LoginActivity, "Login failed no of attempts is $numberOfAttempts", Toast.LENGTH_SHORT).show()
+//                    }
+//                    if(numberOfAttempts == 2) {
+//                        Toast.makeText(this@LoginActivity, "Login limit exceeded.", Toast.LENGTH_SHORT).show()
+//                    }
+//                    numberOfAttempts++
                 }
             }
 
