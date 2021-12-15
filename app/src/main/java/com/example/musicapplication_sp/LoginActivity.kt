@@ -102,19 +102,6 @@ class LoginActivity : AppCompatActivity() {
         // TODO" Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
 
-//        object : CountDownTimer(30000, 1000) {
-//
-//            override fun onTick(millisUntilFinished: Long) {
-//
-//            val  test = getString(R.string.time_count, millisUntilFinished / 1000)
-//                mTextField.text = test
-//            }
-//
-//            override fun onFinish() {
-//                mTextField.setText("done!")
-//            }
-//        }.start()
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -218,7 +205,7 @@ class LoginActivity : AppCompatActivity() {
 
                 }
                 else -> {
-//                    if (numberOfAttempts < 3) {
+                    if (numberOfAttempts < 4) {
                         val email: String = loginEmail.text.toString().trim { it <= ' ' }
                         val password: String = loginPassword.text.toString().trim { it <= ' ' }
 
@@ -235,14 +222,30 @@ class LoginActivity : AppCompatActivity() {
                                 ).show()
                             }
                         }
-//                    }
-//                    else {
-//                        Toast.makeText(this@LoginActivity, "Login failed no of attempts is $numberOfAttempts", Toast.LENGTH_SHORT).show()
-//                    }
-//                    if(numberOfAttempts == 2) {
-//                        Toast.makeText(this@LoginActivity, "Login limit exceeded.", Toast.LENGTH_SHORT).show()
-//                    }
-//                    numberOfAttempts++
+                    }
+                    else if (numberOfAttempts == 4) {
+                        Toast.makeText(this@LoginActivity, "Login failed. No of attempts is $numberOfAttempts.", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(this@LoginActivity, "Login limit exceeded.", Toast.LENGTH_LONG).show()
+                        object : CountDownTimer(60000, 1000) {
+                            override fun onTick(millisUntilFinished: Long) {
+
+                                val  timeLeft = getString(R.string.time_count, millisUntilFinished / 1000)
+                                mTextField.text = timeLeft
+                                loginButton.isEnabled = false //disable button
+
+                            }
+
+                            override fun onFinish() {
+                                numberOfAttempts = 0
+                                loginButton.isEnabled = true //enable button again
+                                mTextField.text = ""
+                            }
+                        }.start()
+
+                    }
+                    Log.d(TAG, numberOfAttempts.toString())
+                    numberOfAttempts++
                 }
             }
 

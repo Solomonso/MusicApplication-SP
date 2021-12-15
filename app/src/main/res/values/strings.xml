@@ -3,7 +3,7 @@
     <string name="log_in_to_music_app">Log into Music App</string>
     <string name="e_mail_address">Email</string>
     <string name="Log_in">Log in</string>
-    <string name="time_count">seconds remaining: %d </string>
+    <string name="time_count">Seconds remaining: %d</string>
     <string name="facebook_app_id">2330761630394308</string>
     <string name="fb_login_protocol_scheme">fb2330761630394308</string>
     <string name="prompt_email">Email</string>
