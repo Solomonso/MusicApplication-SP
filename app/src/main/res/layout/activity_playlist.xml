@@ -22,6 +22,16 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.206" />
+
+        <ListView
+            android:id="@+id/txtPlaylist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No playlists"
+            android:textSize="25sp"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="140dp"
+            tools:layout_editor_absoluteY="241dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>
