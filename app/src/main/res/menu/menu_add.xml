@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/stuff"
-        android:title=""
+        android:title="test"
         android:background="@color/darklightgreen"
         app:showAsAction="never"/>
 </menu>
