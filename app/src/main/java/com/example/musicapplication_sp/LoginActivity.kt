@@ -212,14 +212,14 @@ class LoginActivity : AppCompatActivity() {
                         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 Toast.makeText(this@LoginActivity, "You are logged in " + auth.currentUser!!.email, Toast.LENGTH_SHORT).show()
-
                                 Log.e("Logged in", auth.currentUser!!.uid)
+                                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                intent.putExtra("display_name", auth.currentUser!!.displayName)
+                                startActivity(intent)
+                                finish()
                             } else {
-                                Toast.makeText(
-                                    this@LoginActivity,
-                                    "Username or password not correct",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                Toast.makeText(this@LoginActivity, "Username or password not correct", Toast.LENGTH_SHORT).show()
                             }
                         }
                     }

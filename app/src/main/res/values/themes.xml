@@ -14,14 +14,7 @@
         <!-- Customize your theme here. -->
         <item name="android:colorBackground">@color/green</item>
         <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="Theme.MusicApplicationSP.NoActionBar">
         <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
-
-<!--    <style name="Theme.MusicApplicationSP.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />-->
-
-<!--    <style name="Theme.MusicApplicationSP.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />-->
 </resources>

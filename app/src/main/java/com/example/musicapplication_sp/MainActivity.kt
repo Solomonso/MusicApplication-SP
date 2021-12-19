@@ -3,15 +3,19 @@ package com.example.musicapplication_sp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar
     private lateinit var toggle: ActionBarDrawerToggle
+    private lateinit var displayName: TextView
 
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,6 +23,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.basic_main)
 
         toolbar = findViewById(R.id.toolbar)
+        displayName = findViewById(R.id.username)
+        val username = intent.getStringExtra("display_name")
+        displayName.text = username //display the current user signed in
         setSupportActionBar(toolbar)
         toggleDrawer()
     }
@@ -51,7 +58,7 @@ class MainActivity : AppCompatActivity() {
                         true
                     }
                     R.id.logout -> {
-                        Toast.makeText(applicationContext, "Logged Out", Toast.LENGTH_SHORT).show()
+                      Firebase.auth.signOut()
                         true
                     }
                     else -> true
