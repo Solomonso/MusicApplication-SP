@@ -3,6 +3,7 @@
     <string name="log_in_to_music_app">Log into Music App</string>
     <string name="e_mail_address">Email</string>
     <string name="password">Password</string>
+    <string name="repeat_password">Repeat Password</string>
     <string name="Log_in">Log in</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -18,4 +19,5 @@
     <string name="facebook">facebook</string>
     <string name="or_continue_to_log_in_with">Or continue to log in with</string>
     <string name="create_account">Create account</string>
+    <string name="sign_up">Sign Up</string>
 </resources>
