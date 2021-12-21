@@ -215,7 +215,7 @@ class LoginActivity : AppCompatActivity() {
                                 Log.e("Logged in", auth.currentUser!!.uid)
                                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                intent.putExtra("display_name", auth.currentUser!!.displayName)
+                                intent.putExtra("display_name", auth.currentUser!!.email)
                                 startActivity(intent)
                                 finish()
                             } else {
