@@ -5,11 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/greenbg"
+    android:id="@+id/drawerLayout"
     tools:context=".Activity_playlist">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/navigation_addPlaylist"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:headerLayout="@layout/add_playlist"
+            android:layout_gravity="end"
+            android:fitsSystemWindows="true"
+            tools:ignore="MissingConstraints" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -35,3 +51,14 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>
+
+
+<!--<com.google.android.material.navigation.NavigationView-->
+<!--    android:id="@+id/navigation_view"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="match_parent"-->
+<!--    app:headerLayout="@layout/nav_header"-->
+<!--    app:menu="@menu/menu_nav"-->
+<!--    android:layout_gravity="start"-->
+<!--    android:fitsSystemWindows="true"-->
+<!--    android:background="@drawable/shape_drawable"/>-->
