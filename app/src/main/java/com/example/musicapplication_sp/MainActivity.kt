@@ -30,6 +30,18 @@ class MainActivity : AppCompatActivity() {
         toggleDrawer()
     }
 
+    override fun onStart() {
+        super.onStart()
+    }
+
+    private fun connected() {
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+    }
+
     private fun toggleDrawer()
     {
           val drawerLayout : DrawerLayout = findViewById(R.id.drawerLayout)

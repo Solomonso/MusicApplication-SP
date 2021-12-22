@@ -40,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginButton: Button
     private lateinit var loginEmail: EditText
     private lateinit var loginPassword: EditText
-    private lateinit var mTextField: TextView
+    private lateinit var timeCountField: TextView
    //field declared for login in with google
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var signInGoogleButton: Button
@@ -57,15 +57,12 @@ class LoginActivity : AppCompatActivity() {
         loginButton = findViewById(R.id.login_button)
         signInGoogleButton = findViewById(R.id.sign_in_google_button)
         signInFacebookButton = findViewById(R.id.sign_in_facebook_button)
-        mTextField = findViewById(R.id.time_count)
+        timeCountField = findViewById(R.id.time_count)
 
         this.logIn()//call function for signing with username/password
 
         // Start Configure Google Sign In
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build()
         googleSignInClient = GoogleSignIn.getClient(this, gso)
         // END Configure Google Sign In
 
@@ -202,7 +199,6 @@ class LoginActivity : AppCompatActivity() {
 
                 TextUtils.isEmpty(loginPassword.text.toString().trim { it <= ' ' }) -> {
                     Toast.makeText(this@LoginActivity, "Please enter password", Toast.LENGTH_SHORT).show()
-
                 }
                 else -> {
                     if (numberOfAttempts < 4) {
@@ -231,7 +227,7 @@ class LoginActivity : AppCompatActivity() {
                             override fun onTick(millisUntilFinished: Long) {
 
                                 val  timeLeft = getString(R.string.time_count, millisUntilFinished / 1000)
-                                mTextField.text = timeLeft
+                                timeCountField.text = timeLeft
                                 loginButton.isEnabled = false //disable button
 
                             }
@@ -239,7 +235,7 @@ class LoginActivity : AppCompatActivity() {
                             override fun onFinish() {
                                 numberOfAttempts = 0
                                 loginButton.isEnabled = true //enable button again
-                                mTextField.text = ""
+                                timeCountField.text = ""
                             }
                         }.start()
 
