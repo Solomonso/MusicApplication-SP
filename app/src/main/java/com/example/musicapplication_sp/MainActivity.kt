@@ -3,13 +3,11 @@ package com.example.musicapplication_sp
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.Toast
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import com.firebase.ui.auth.AuthUI
-import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -21,14 +19,20 @@ import kotlinx.coroutines.withContext
 class MainActivity : AppCompatActivity() {
 
     lateinit var auth: FirebaseAuth
-    lateinit val db = Firebase.firestore
+    lateinit var email : EditText
+    lateinit var password : EditText
+    lateinit var signUpButton : Button
+    var db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.registration_layout)
         auth = FirebaseAuth.getInstance()
         auth.signOut()
-        signUp.setOnClickListener {
+        email = findViewById(R.id.editSignUpTextEmailAddress)
+        password = findViewById(R.id.editSignUpTextPassword)
+        signUpButton = findViewById(R.id.signUp)
+        signUpButton.setOnClickListener {
             registerUser()
         }
 //        this.createSignIntent()
@@ -52,8 +56,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun registerUser() {
-        val email = editSignUpTextEmailAddress.text.toString()
-        val password = editSigUpTextPassword.text.toString()
+        val email = email.text.toString()
+        val password = password.text.toString()
         if (email.isNotEmpty() && password.isNotEmpty()) {
             CoroutineScope(Dispatchers.IO).launch {
                 try {
@@ -86,17 +90,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkLoggedInState() {
+   /* private fun checkLoggedInState() {
         if (auth.currentUser == null) { // not logged in
             tvLoggedIn.text = "You are not logged in"
         } else {
             tvLoggedIn.text = "You are logged in!"
         }
     }
-
+*/
     override fun onStart() {
         super.onStart()
-        checkLoggedInState()
+        //checkLoggedInState()
     }
 
 }
