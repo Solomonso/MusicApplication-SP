@@ -1,6 +1,8 @@
 package com.example.musicapplication_sp
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +11,8 @@ import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,6 +21,7 @@ import kotlinx.coroutines.withContext
 class MainActivity : AppCompatActivity() {
 
     lateinit var auth: FirebaseAuth
+    lateinit val db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +58,22 @@ class MainActivity : AppCompatActivity() {
             CoroutineScope(Dispatchers.IO).launch {
                 try {
                     auth.createUserWithEmailAndPassword(email, password)
+                    // Create a new user with a first and last name
+                    val user = hashMapOf(
+                        "UserID" to auth.uid,
+                        "firstName" to "Ramon",
+                        "lastName" to "Brakels",
+                    )
+
+                    // Add a new document with a generated ID
+                    db.collection("Users")
+                        .add(user)
+                        .addOnSuccessListener { documentReference ->
+                            Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+                        }
+                        .addOnFailureListener { e ->
+                            Log.w(TAG, "Error adding document", e)
+                        }
                     withContext(Dispatchers.Main) {
                         //checkLoggedInState()
                     }
