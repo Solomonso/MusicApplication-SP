@@ -18,16 +18,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.navigation.NavigationView
-            android:id="@+id/navigation_addPlaylist"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            app:headerLayout="@layout/add_playlist"
-            android:layout_gravity="end"
-            android:fitsSystemWindows="true"
-            tools:ignore="MissingConstraints" />
+<!--        <com.google.android.material.navigation.NavigationView-->
+<!--            android:id="@+id/navigation_addPlaylist"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            app:headerLayout="@layout/add_playlist"-->
+<!--            android:layout_gravity="end"-->
+<!--            android:fitsSystemWindows="true"-->
+<!--            tools:ignore="MissingConstraints" />-->
 
         <TextView
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Playlist:"
@@ -40,14 +41,25 @@
             app:layout_constraintVertical_bias="0.206" />
 
         <ListView
-            android:id="@+id/txtPlaylist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/itemPlaylist"
+            android:layout_width="317dp"
+            android:layout_height="196dp"
             android:text="No playlists"
             android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="140dp"
             tools:layout_editor_absoluteY="241dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="289dp"
+            tools:layout_editor_absoluteY="627dp"
+            tools:ignore="MissingConstraints" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -8,7 +8,7 @@
     android:background="@color/darklightgreen">
 
     <TextView
-        android:id="@+id/add_playlist_text"
+        android:id="@+id/btnPlaylist_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
@@ -21,7 +21,7 @@
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/txtPlaylist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -34,7 +34,7 @@
         tools:layout_editor_absoluteY="85dp" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnAddPlaylist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add"
