@@ -25,8 +25,6 @@ class ActivityPlaylist : AppCompatActivity()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_playlist)
 
-        val database = FirebaseFirestore.getInstance()
-
         addNewPlaylist()
     }
 
@@ -35,6 +33,7 @@ class ActivityPlaylist : AppCompatActivity()
      */
     private fun addNewPlaylist() {
         val fab = findViewById<View>(R.id.btnFab) as FloatingActionButton
+        val database = FirebaseFirestore.getInstance()
         fab.setOnClickListener { view ->
             val alertDialog = AlertDialog.Builder(this)
             val textEditText = EditText(this)
@@ -47,7 +46,6 @@ class ActivityPlaylist : AppCompatActivity()
                 playlistItemData.delete = false
 
 //                val newItemData = database.collection("Playlist")
-
             }
             alertDialog.show()
         }
