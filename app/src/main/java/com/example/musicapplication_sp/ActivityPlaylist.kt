@@ -18,12 +18,16 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class ActivityPlaylist : AppCompatActivity()
 {
-    lateinit var database: DatabaseReference
+    lateinit var database: FirebaseFirestore
+    lateinit var btnFab: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_playlist)
+
+        database = FirebaseFirestore.getInstance()
+        btnFab = findViewById(R.id.btnFab)
 
         addNewPlaylist()
     }
@@ -32,9 +36,7 @@ class ActivityPlaylist : AppCompatActivity()
      * addnewPlaylist() creates window box for adding new playlist
      */
     private fun addNewPlaylist() {
-        val fab = findViewById<View>(R.id.btnFab) as FloatingActionButton
-        val database = FirebaseFirestore.getInstance()
-        fab.setOnClickListener { view ->
+        btnFab.setOnClickListener { view ->
             val alertDialog = AlertDialog.Builder(this)
             val textEditText = EditText(this)
             alertDialog.setTitle("Enter New Playlist")
