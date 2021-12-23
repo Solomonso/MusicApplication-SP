@@ -26,28 +26,30 @@ class ActivityPlaylist : AppCompatActivity()
         setContentView(R.layout.activity_playlist)
 
         val database = FirebaseFirestore.getInstance()
-        val fab = findViewById<View>(R.id.btnFab) as FloatingActionButton
 
+        addNewPlaylist()
+    }
+
+    /**
+     * addnewPlaylist() creates window box for adding new playlist
+     */
+    private fun addNewPlaylist() {
+        val fab = findViewById<View>(R.id.btnFab) as FloatingActionButton
         fab.setOnClickListener { view ->
             val alertDialog = AlertDialog.Builder(this)
             val textEditText = EditText(this)
-            alertDialog.setMessage("Add Playlist item")
-            alertDialog.setTitle("Enter Plalist item")
+            alertDialog.setTitle("Enter New Playlist")
+            alertDialog.setMessage("Add Playlist")
             alertDialog.setView(textEditText)
             alertDialog.setPositiveButton("Create playlist") { dialog, i ->
                 val playlistItemData = PlaylistModel.createList()
                 playlistItemData.itemDatatext = textEditText.text.toString()
                 playlistItemData.delete = false
 
-                val newItemData = database.collection("Playlist")
+//                val newItemData = database.collection("Playlist")
 
             }
             alertDialog.show()
         }
-    }
-
-    private fun addPlaylistBox()
-    {
-
     }
 }
