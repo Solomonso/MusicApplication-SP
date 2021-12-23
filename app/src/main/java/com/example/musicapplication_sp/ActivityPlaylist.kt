@@ -3,6 +3,7 @@ package com.example.musicapplication_sp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.view.View
 import android.widget.EditText
 import android.widget.ListView
 import androidx.appcompat.app.AlertDialog
@@ -18,15 +19,15 @@ import com.google.firebase.firestore.FirebaseFirestore
 class ActivityPlaylist : AppCompatActivity() {
 
     lateinit var database: DatabaseReference
-    private lateinit var btnFab: FloatingActionButton
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_playlist)
 
         val database = FirebaseFirestore.getInstance()
+        val fab = findViewById<View>(R.id.btnFab) as FloatingActionButton
 
-        btnFab.setOnClickListener { view ->
+        fab.setOnClickListener { view ->
             val alertDialog = AlertDialog.Builder(this)
             val textEditText = EditText(this)
             alertDialog.setMessage("Add Playlist item")
