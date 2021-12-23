@@ -33,7 +33,7 @@ class ActivityPlaylist : AppCompatActivity()
     }
 
     /**
-     * addnewPlaylist() creates window box for adding new playlist
+     * addNewPlaylist() creates window box for adding new playlist
      */
     private fun addNewPlaylist() {
         btnFab.setOnClickListener { view ->
