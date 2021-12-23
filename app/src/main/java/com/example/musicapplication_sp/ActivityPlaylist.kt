@@ -47,7 +47,7 @@ class ActivityPlaylist : AppCompatActivity()
                 playlistItemData.itemDatatext = textEditText.text.toString()
                 playlistItemData.delete = false
 
-//                val newItemData = database.collection("Playlist")
+                val newItemData = database.collection("Playlist")
             }
             alertDialog.show()
         }
