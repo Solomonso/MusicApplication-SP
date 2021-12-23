@@ -16,9 +16,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 
 
-class ActivityPlaylist : AppCompatActivity() {
-
+class ActivityPlaylist : AppCompatActivity()
+{
     lateinit var database: DatabaseReference
+
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
