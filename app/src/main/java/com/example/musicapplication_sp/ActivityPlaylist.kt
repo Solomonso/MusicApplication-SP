@@ -43,6 +43,7 @@ class ActivityPlaylist : AppCompatActivity()
             alertDialog.setMessage("Add Playlist")
             alertDialog.setView(textEditText)
             alertDialog.setPositiveButton("Create playlist") { dialog, i ->
+
                 val playlistItemData = PlaylistModel.createList()
                 playlistItemData.itemDatatext = textEditText.text.toString()
                 playlistItemData.delete = false
