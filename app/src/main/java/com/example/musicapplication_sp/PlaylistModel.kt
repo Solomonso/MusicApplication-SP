@@ -1,9 +1,7 @@
 package com.example.musicapplication_sp
 
-class PlaylistModel
-{
-    companion object Factory
-    {
+class PlaylistModel {
+    companion object Factory {
         fun createList(): PlaylistModel = PlaylistModel()
     }
 
