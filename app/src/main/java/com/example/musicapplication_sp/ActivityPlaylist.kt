@@ -33,7 +33,7 @@ class ActivityPlaylist : AppCompatActivity(){
     }
 
     /**
-     * addNewPlaylist() opens a alert dialog box for adding new playlist
+     * @description addNewPlaylist() opens a alert dialog box for adding new playlist
      */
     private fun addNewPlaylist() {
         btnFab.setOnClickListener { view ->
@@ -76,6 +76,10 @@ class ActivityPlaylist : AppCompatActivity(){
 //            }
 //        })
     }
+
+    /**
+     * @description
+     */
 //    private fun addItemToList(snapshot: DataSnapshot){
 //        val items = snapshot.children.iterator()
 //
@@ -101,7 +105,10 @@ class ActivityPlaylist : AppCompatActivity(){
 //        val playlistReference = database.child("Playlist").child(itemUID)
 //        playlistReference.child("done").setValue(isDone)
 //    }
-//
+
+    /**
+     * @description
+     */
 //    override fun onItemDelete(itemUID: String) {
 //        val playlistReference = database.child("Playlist").child(itemUID)
 //        playlistReference.removeValue()
