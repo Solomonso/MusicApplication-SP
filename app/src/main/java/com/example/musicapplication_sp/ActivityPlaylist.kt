@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.*
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 
 //PlaylistUpdateDelete
@@ -61,57 +62,57 @@ class ActivityPlaylist : AppCompatActivity(){
             //End dialog box with creation of list and db connection(Realtime database)
         }
 
-//        lists = mutableListOf()
-//        playlistAdapter = PlaylistAdapter(this, lists!!)
-//        listViewItem!!.adapter=playlistAdapter
-//        database.addValueEventListener(object : ValueEventListener{
-//
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                lists!!.clear()
-//                addItemToList(snapshot)
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                Toast.makeText(applicationContext, "No item Added",Toast.LENGTH_LONG).show()
-//            }
-//        })
+        lists = mutableListOf()
+        playlistAdapter = PlaylistAdapter(this, lists!!)
+        listViewItem!!.adapter=playlistAdapter
+        database.addValueEventListener(object : ValueEventListener{
+
+           override fun onDataChange(snapshot: DataSnapshot) {
+                lists!!.clear()
+                addItemToList(snapshot)
+            }
+
+           override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(applicationContext, "No item Added",Toast.LENGTH_LONG).show()
+            }
+        })
     }
 
     /**
      * @description
      */
-//    private fun addItemToList(snapshot: DataSnapshot){
-//        val items = snapshot.children.iterator()
-//
-//        if(items.hasNext()){
-//            val playlistIndexedValue = items.next()
-//            val itemsIterator = playlistIndexedValue.children.iterator()
-//
-//            while (itemsIterator.hasNext()){
-//                val currentItem = itemsIterator.next()
-//                val playListItemData = PlaylistModel.createList()
-//                val map = currentItem.getValue() as HashMap<String, Any>
-//
-//                playListItemData.UID = currentItem.key
-//                playListItemData.delete = map.get("Deleted") as Boolean?
-//                playListItemData.itemDatatext = map.get("itemTextData") as String?
-//                lists!!.add(playListItemData)
-//            }
-//        }
-//        playlistAdapter.notifyDataSetChanged()
-//    }
-//
-//    override fun modifyItem(itemUID: String, isDone: Boolean) {
-//        val playlistReference = database.child("Playlist").child(itemUID)
-//        playlistReference.child("done").setValue(isDone)
-//    }
+    private fun addItemToList(snapshot: DataSnapshot){
+        val items = snapshot.children.iterator()
+
+        if(items.hasNext()){
+            val playlistIndexedValue = items.next()
+            val itemsIterator = playlistIndexedValue.children.iterator()
+
+            while (itemsIterator.hasNext()){
+                val currentItem = itemsIterator.next()
+                val playListItemData = PlaylistModel.createList()
+                val map = currentItem.getValue() as HashMap<String, Any>
+
+                playListItemData.UID = currentItem.key
+                playListItemData.delete = map.get("Deleted") as Boolean?
+                playListItemData.itemDatatext = map.get("itemTextData") as String?
+                lists!!.add(playListItemData)
+            }
+        }
+        playlistAdapter.notifyDataSetChanged()
+    }
+
+    private fun modifyItem(itemUID: String, isDone: Boolean) {
+        val playlistReference = database.child("Playlist").child(itemUID)
+        playlistReference.child("done").setValue(isDone)
+    }
 
     /**
      * @description
      */
-//    override fun onItemDelete(itemUID: String) {
-//        val playlistReference = database.child("Playlist").child(itemUID)
-//        playlistReference.removeValue()
-//        playlistAdapter.notifyDataSetChanged()
-//    }
+    private fun onItemDelete(itemUID: String) {
+        val playlistReference = database.child("Playlist").child(itemUID)
+        playlistReference.removeValue()
+        playlistAdapter.notifyDataSetChanged()
+    }
 }
