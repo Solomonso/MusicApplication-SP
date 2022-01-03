@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         if (email.isNotEmpty() && password.isNotEmpty()) {
             CoroutineScope(Dispatchers.IO).launch {
                 try {
+
                     auth.createUserWithEmailAndPassword(email, password)
                     // Create a new user with a first and last name
                     val user = hashMapOf(
@@ -103,6 +104,13 @@ class MainActivity : AppCompatActivity() {
         //checkLoggedInState()
     }
 
+    private fun encrypt() {
+//        String encrypted = AES
+    }
+
+    private fun decrypt() {
+
+    }
 }
 
 
