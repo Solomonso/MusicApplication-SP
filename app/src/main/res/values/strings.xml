@@ -21,6 +21,10 @@
     <string name="create_account">Create account</string>
     <string name="sign_up">Sign Up</string>
 
+    <string name="songName">Song name</string>
+    <string name="play_audio">Play audio</string>
+    <string name="pause_audio">Pause audio</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

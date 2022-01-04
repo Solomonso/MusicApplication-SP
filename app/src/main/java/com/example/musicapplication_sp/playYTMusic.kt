@@ -1,4 +1,14 @@
 package com.example.musicapplication_sp
 
-class playYTMusic {
+import android.os.Bundle
+import android.os.PersistableBundle
+import androidx.appcompat.app.AppCompatActivity
+
+class PlayYTMusic : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onCreate(savedInstanceState, persistentState)
+        setContentView(R.layout.activity_main)
+    }
+
+
 }

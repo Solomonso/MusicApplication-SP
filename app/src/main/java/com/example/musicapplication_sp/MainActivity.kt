@@ -1,6 +1,9 @@
 package com.example.musicapplication_sp
 
+import android.media.AudioManager
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.widget.Button
 import android.widget.Toast
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -13,68 +16,58 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var btnPlaySong : Button
+    private lateinit var btnPauseSong : Button
+    var mediaPlayer : MediaPlayer? = null
 
-    lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_registration)
-        auth = FirebaseAuth.getInstance()
-        auth.signOut()
-//            registerUser()
-//        }
-//        this.createSignIntent()
-    }
+        setContentView(R.layout.activity_main)
 
+        btnPauseSong = findViewById(R.id.pauseSong)
+        btnPlaySong = findViewById(R.id.playSong)
 
+        btnPlaySong.setOnClickListener {
+            playaudio()
+        }
 
-
-    private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
-        val response = result.idpResponse
-        if (result.resultCode == RESULT_OK) {
-            // Successfully signed in
-            val user = FirebaseAuth.getInstance().currentUser
-            // ...
-        } else {
-            // Sign in failed. If response is null the user canceled the
-            // sign-in flow using the back button. Otherwise check
-            // response.getError().getErrorCode() and handle the error.
-            // ...
+        btnPauseSong.setOnClickListener {
+            pauseaudio()
         }
     }
 
-    private fun registerUser() {
-//        val email = editSignUpTextEmailAddress.text.toString()
-//        val password = editSigUpTextPassword.text.toString()
-//        if (email.isNotEmpty() && password.isNotEmpty()) {
-//            CoroutineScope(Dispatchers.IO).launch {
-//                try {
-//                    auth.createUserWithEmailAndPassword(email, password)
-//                    withContext(Dispatchers.Main) {
-//                        //checkLoggedInState()
-//                    }
-//                } catch (e: Exception) {
-//                    withContext(Dispatchers.Main) {
-//                        Toast.makeText(this@MainActivity, e.message, Toast.LENGTH_LONG).show()
-//                    }
-//                }
-//            }
-//        }
-    }
 
-    private fun checkLoggedInState() {
-//        if (auth.currentUser == null) { // not logged in
-//            tvLoggedIn.text = "You are not logged in"
-//        } else {
-//            tvLoggedIn.text = "You are logged in!"
-//        }
+    private fun playaudio() {
+        val audioURL ="https://www.youtube.com/watch?v=W4hTJybfU7s"
+
+        mediaPlayer = MediaPlayer()
+        mediaPlayer!!.setAudioStreamType(AudioManager.STREAM_MUSIC)
+        try{
+             mediaPlayer!!.setDataSource(audioURL)
+            mediaPlayer!!.prepare()
+            mediaPlayer!!.start()
+        } catch(e : IOException){
+            e.printStackTrace()
+        }
+        Toast.makeText(this, "Songs started plating", Toast.LENGTH_LONG).show()
+
+    }
+    private fun pauseaudio(){
+        if(mediaPlayer!!.isPlaying){
+            mediaPlayer!!.stop()
+            mediaPlayer!!.reset()
+            mediaPlayer!!.release()
+        } else{
+            Toast.makeText(this,"There is no song playing", Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onStart() {
         super.onStart()
-        checkLoggedInState()
     }
 
 }
