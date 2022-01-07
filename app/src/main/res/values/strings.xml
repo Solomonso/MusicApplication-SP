@@ -32,5 +32,6 @@
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="username">Username</string>
+    <string name="current_playlist">currentPlaylist</string>
 
 </resources>
