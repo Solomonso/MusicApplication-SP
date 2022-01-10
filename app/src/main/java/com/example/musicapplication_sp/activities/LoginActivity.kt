@@ -1,6 +1,7 @@
-package com.example.musicapplication_sp
+package com.example.musicapplication_sp.activities
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.TextUtils
@@ -10,28 +11,40 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.facebook.AccessToken
-import com.facebook.CallbackManager
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
-import com.facebook.login.LoginManager
-import com.facebook.login.LoginResult
+import com.android.volley.RequestQueue
+import com.android.volley.toolbox.Volley
+import com.example.musicapplication_sp.R
+import com.example.musicapplication_sp.model.User
+import com.example.musicapplication_sp.repositories.ApiService
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
+import com.spotify.sdk.android.auth.AuthorizationClient
+
+import com.spotify.sdk.android.auth.AuthorizationRequest
+
+import com.spotify.sdk.android.auth.AuthorizationResponse
+
+
+
 class LoginActivity : AppCompatActivity() {
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var rQueue: RequestQueue
+    private lateinit var editor: SharedPreferences.Editor
     private var numberOfAttempts: Int = 0
 
     companion object {
         private const val TAG = "ThirdPartyLogin"
         private const val RC_SIGN_IN = 9001
+        private const val CLIENT_ID = "f9cb87049e144fc494ff35cc4091496c"
+        private const val REQUEST_CODE = 1337
+        private const val REDIRECT_URI = "https://com.example.musicapplication_sp//callback"
     }
     //field for firebase authentication
     private lateinit var auth: FirebaseAuth
@@ -41,11 +54,10 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginEmail: EditText
     private lateinit var loginPassword: EditText
     private lateinit var timeCountField: TextView
+    private lateinit var signSpotifyButton: Button
    //field declared for login in with google
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var signInGoogleButton: Button
-    private lateinit var callbackManager: CallbackManager
-    private lateinit var signInFacebookButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,39 +68,22 @@ class LoginActivity : AppCompatActivity() {
         loginPassword = findViewById(R.id.text_password)
         loginButton = findViewById(R.id.login_button)
         signInGoogleButton = findViewById(R.id.sign_in_google_button)
-        signInFacebookButton = findViewById(R.id.sign_in_facebook_button)
+        signSpotifyButton = findViewById(R.id.sign_in_spotify_button)
         timeCountField = findViewById(R.id.time_count)
+        sharedPreferences = this.getSharedPreferences("Spotify", MODE_PRIVATE)
+        rQueue = Volley.newRequestQueue(this)
 
         this.logIn()//call function for signing with username/password
+        this.listenToClickForSpotifySignIn() // call spotify function
 
         // Start Configure Google Sign In
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build()
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(
+            R.string.default_web_client_id
+        )).requestEmail().build()
         googleSignInClient = GoogleSignIn.getClient(this, gso)
         // END Configure Google Sign In
 
         this.listenToClickForGoogleSignIn()//call the google sign in function
-
-        //Start initialize the facebook login button
-        callbackManager = CallbackManager.Factory.create()
-        signInFacebookButton.setOnClickListener{
-            LoginManager.getInstance().logInWithReadPermissions(this@LoginActivity, listOf("email", "public_profile"))
-            LoginManager.getInstance().registerCallback(callbackManager, object :
-                FacebookCallback<LoginResult> {
-                override fun onSuccess(loginResult: LoginResult) {
-                    Log.d(TAG, "facebook:onSuccess:$loginResult")
-                    handleFacebookAccessToken(loginResult.accessToken)
-                }
-
-                override fun onCancel() {
-                    Log.d(TAG, "facebook:onCancel")
-                }
-
-                override fun onError(error: FacebookException) {
-                    Log.d(TAG, "facebook:onError", error)
-                }
-            })
-            //END initialize the facebook login button
-        }
     }
 
     /**
@@ -116,10 +111,7 @@ class LoginActivity : AppCompatActivity() {
                 Log.w(TAG, "Google sign in failed", e)
             }
         }
-        // Pass the activity result back to the Facebook SDK
-        callbackManager.onActivityResult(requestCode, resultCode, data)
     }
-
     /**
      * @description
      * @param {String} The token to be used for authentication
@@ -161,30 +153,13 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * @description
-     * @param {AccessToken} The token to be used for authentication
-     */
-    private fun handleFacebookAccessToken(token: AccessToken) {
-        Log.d(TAG, "handleFacebookAccessToken:$token")
-
-        val credential = FacebookAuthProvider.getCredential(token.token)
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // TODO: Sign in success, update UI with the signed-in user's information
-                    // TODO: open the user profile
-                    // TODO: call a new intent
-                    val user = auth.currentUser
-                    Log.d(TAG, "signInWithFacebookCredential:success")
-                    Toast.makeText(this@LoginActivity,"Signed in with facebook successful " + user!!.displayName + " " + user.email, Toast.LENGTH_SHORT).show()
-
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "signInWithFacebookCredential:failure", task.exception)
-                    Toast.makeText(baseContext, "Authentication failed.",Toast.LENGTH_SHORT).show()
-                }
-            }
+    private fun listenToClickForSpotifySignIn() {
+        signSpotifyButton.setOnClickListener {
+            val intent = Intent(this@LoginActivity, SpotifyLogin::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+        }
     }
 
     /**
@@ -208,7 +183,6 @@ class LoginActivity : AppCompatActivity() {
                         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 Toast.makeText(this@LoginActivity, "You are logged in " + auth.currentUser!!.email, Toast.LENGTH_SHORT).show()
-                                Log.e("Logged in", auth.currentUser!!.uid)
                                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                 intent.putExtra("display_name", auth.currentUser!!.displayName)

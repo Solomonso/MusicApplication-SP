@@ -43,6 +43,13 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx:21.0.1'
     implementation 'com.firebaseui:firebase-ui-auth:8.0.0'
     implementation 'com.google.firebase:firebase-auth:21.0.1'
+
+    //spotify
+    implementation("com.spotify.android:auth:1.2.6")
+    implementation fileTree(dir: 'spotify-app-remote', include: ['*.aar'])
+    implementation "com.google.code.gson:gson:2.8.6"
+    implementation 'com.android.volley:volley:1.2.1'
+
     testImplementation 'junit:junit:4.13.2'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
