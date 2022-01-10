@@ -17,6 +17,9 @@
         <activity
             android:name=".activities.LoginActivity"
             android:exported="true">
+            android:name=".ActivityPlaylist"
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

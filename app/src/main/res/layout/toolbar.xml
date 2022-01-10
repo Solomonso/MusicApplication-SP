@@ -8,31 +8,30 @@
     android:elevation="4dp"
     android:gravity="start"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    app:navigationIcon="@drawable/menubar"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-    <!--    <ImageView-->
-    <!--        android:id="@+id/menubar"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginStart="15dp"-->
-    <!--        android:layout_marginTop="15dp"-->
-    <!--        android:src="@drawable/menubar"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        tools:ignore="MissingConstraints" />-->
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/menubar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/menubar"
+            android:background="@android:color/transparent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
 
-    <!--    <ImageView-->
-    <!--        android:id="@+id/add_playlist"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_gravity="end"-->
-    <!--        android:layout_marginTop="15dp"-->
-    <!--        android:layout_marginRight="20dp"-->
-    <!--        android:src="@drawable/btnplaylist"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        tools:ignore="MissingConstraints" />-->
+<!--        <ImageView-->
+<!--            android:id="@+id/add_playlist"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="end"-->
+<!--            android:layout_marginTop="15dp"-->
+<!--            android:layout_marginRight="20dp"-->
+<!--            android:src="@drawable/btnplaylist"-->
+<!--            android:backgroundTint="@android:color/transparent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            tools:ignore="MissingConstraints" />-->
 
 
 </androidx.appcompat.widget.Toolbar>
