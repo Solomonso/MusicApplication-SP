@@ -1,4 +1,4 @@
-package com.example.musicapplication_sp
+package com.example.musicapplication_sp.model
 
 class PlaylistModel {
     companion object Factory {

@@ -8,15 +8,12 @@ import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.example.musicapplication_sp.interfaces.VolleyCallBack
+import com.example.musicapplication_sp.model.Endpoints
 
 import com.google.gson.Gson
 import org.json.JSONObject
 
-
-
-
-
-class ApiService(requestQueue: RequestQueue, sharedPreferences: SharedPreferences) {
+class UserService(requestQueue: RequestQueue, sharedPreferences: SharedPreferences) {
     private var sPreferences: SharedPreferences = sharedPreferences
     private var rQueue: RequestQueue = requestQueue
     private lateinit var user: User
@@ -29,7 +26,8 @@ class ApiService(requestQueue: RequestQueue, sharedPreferences: SharedPreference
     }
 
     fun get(callBack: VolleyCallBack) {
-        val jsonObjectRequest: JsonObjectRequest = object : JsonObjectRequest(ENDPOINT, null,
+        val jsonObjectRequest: JsonObjectRequest = object : JsonObjectRequest(
+            Endpoints.USER.endpoint, null,
             Response.Listener { response: JSONObject ->
                 val gson = Gson()
                 user = gson.fromJson(
@@ -47,7 +45,7 @@ class ApiService(requestQueue: RequestQueue, sharedPreferences: SharedPreference
                 headers["Authorization"] = auth
                 return headers
             }
-        };
+        }
         rQueue.add(jsonObjectRequest)
     }
 

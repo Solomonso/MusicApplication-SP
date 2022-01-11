@@ -8,12 +8,14 @@ import android.widget.BaseAdapter
 import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.TextView
+import com.example.musicapplication_sp.interfaces.PlaylistUpdateDelete
+import com.example.musicapplication_sp.model.PlaylistModel
 
 class PlaylistAdapter(context: Context, playList: MutableList<PlaylistModel>) : BaseAdapter() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private val itemList = playList
-    private val playlistUpdateDelete:PlaylistUpdateDelete = context as PlaylistUpdateDelete
+    private val playlistUpdateDelete: PlaylistUpdateDelete = context as PlaylistUpdateDelete
 
     /**
      * How many items are in the data set represented by this Adapter.

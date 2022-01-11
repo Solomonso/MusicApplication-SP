@@ -1,5 +1,6 @@
 package com.example.musicapplication_sp.activities
 
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -76,8 +77,9 @@ class MainActivity : AppCompatActivity() {
                         true
                     }
                     R.id.playlist -> {
-                        Toast.makeText(applicationContext, "List of playlists", Toast.LENGTH_SHORT)
-                            .show()
+                        val intent = Intent(this@MainActivity, ActivityPlaylist::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
                         true
                     }
                     R.id.settings -> {

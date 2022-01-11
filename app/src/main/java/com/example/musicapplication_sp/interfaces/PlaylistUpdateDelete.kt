@@ -1,4 +1,4 @@
-package com.example.musicapplication_sp
+package com.example.musicapplication_sp.interfaces
 
 interface PlaylistUpdateDelete {
     fun modifyItem(itemUID :String, isDone : Boolean)

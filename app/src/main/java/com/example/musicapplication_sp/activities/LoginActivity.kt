@@ -14,8 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
 import com.example.musicapplication_sp.R
-import com.example.musicapplication_sp.model.User
-import com.example.musicapplication_sp.repositories.ApiService
+import com.example.musicapplication_sp.repositories.PlaylistService
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -24,13 +23,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-
-import com.spotify.sdk.android.auth.AuthorizationClient
-
-import com.spotify.sdk.android.auth.AuthorizationRequest
-
-import com.spotify.sdk.android.auth.AuthorizationResponse
-
 
 
 class LoginActivity : AppCompatActivity() {
@@ -42,9 +34,6 @@ class LoginActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "ThirdPartyLogin"
         private const val RC_SIGN_IN = 9001
-        private const val CLIENT_ID = "f9cb87049e144fc494ff35cc4091496c"
-        private const val REQUEST_CODE = 1337
-        private const val REDIRECT_URI = "https://com.example.musicapplication_sp//callback"
     }
     //field for firebase authentication
     private lateinit var auth: FirebaseAuth

@@ -1,22 +1,33 @@
-package com.example.musicapplication_sp
+package com.example.musicapplication_sp.activities
 
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.view.View
+
 import android.widget.EditText
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.android.volley.RequestQueue
+import com.android.volley.toolbox.Volley
+import com.example.musicapplication_sp.PlaylistAdapter
+import com.example.musicapplication_sp.R
+import com.example.musicapplication_sp.interfaces.VolleyCallBack
+import com.example.musicapplication_sp.model.PlaylistModel
+import com.example.musicapplication_sp.repositories.PlaylistService
+import com.example.musicapplication_sp.repositories.UserService
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
 
 //PlaylistUpdateDelete
 class ActivityPlaylist : AppCompatActivity(){
     private lateinit var btnFab: FloatingActionButton
-    private lateinit var database: DatabaseReference
+    private lateinit var database: FirebaseFirestore
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var rQueue: RequestQueue
+    private lateinit var playlistService: PlaylistService
+    private lateinit var userService: UserService
+    private lateinit var editor: SharedPreferences.Editor
     var lists: MutableList<PlaylistModel>? = null
     private lateinit var playlistAdapter: PlaylistAdapter
     private var listViewItem: ListView? = null
@@ -25,10 +36,13 @@ class ActivityPlaylist : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_playlist)
 
-        database = FirebaseDatabase.getInstance().reference
+        database = FirebaseFirestore.getInstance()
         btnFab = findViewById(R.id.btnFab)
         listViewItem = findViewById(R.id.itemPlaylist)
-
+        sharedPreferences = this.getSharedPreferences("Spotify", MODE_PRIVATE);
+        rQueue = Volley.newRequestQueue(this)
+        playlistService = PlaylistService(rQueue, sharedPreferences)
+        userService = UserService(rQueue, sharedPreferences)
         addNewPlaylist()
     }
 
@@ -47,12 +61,14 @@ class ActivityPlaylist : AppCompatActivity(){
 
                 val playlistItemData = PlaylistModel.createList()
                 playlistItemData.itemDatatext = textEditText.text.toString()
+
+                userService.get(object : VolleyCallBack {
+                    override fun onSuccess() {
+                        val user = userService.getUser()
+                        playlistService.createPlaylist(user.id, playlistItemData.itemDatatext)
+                    }
+                })
                 playlistItemData.delete = false
-
-                val newItemData = database.child("Playlist")
-                playlistItemData.UID = newItemData.key
-
-                newItemData.setValue(playlistItemData)
 
                 dialog.dismiss()
                 Toast.makeText(this, "Playlist saved", Toast.LENGTH_LONG).show()
