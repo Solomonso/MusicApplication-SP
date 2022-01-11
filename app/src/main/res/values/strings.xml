@@ -20,4 +20,6 @@
     <string name="or_continue_to_log_in_with">Or continue to log in with</string>
     <string name="create_account">Create account</string>
     <string name="sign_up">Sign Up</string>
+    <string name="fName">First name</string>
+    <string name="lName">Last name</string>
 </resources>

@@ -21,7 +21,10 @@ class MainActivity : AppCompatActivity() {
     lateinit var auth: FirebaseAuth
     lateinit var email : EditText
     lateinit var password : EditText
+    lateinit var fName : EditText
+    lateinit var lName : EditText
     lateinit var signUpButton : Button
+
     var db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +34,8 @@ class MainActivity : AppCompatActivity() {
         auth.signOut()
         email = findViewById(R.id.editSignUpTextEmailAddress)
         password = findViewById(R.id.editSignUpTextPassword)
+        fName = findViewById(R.id.editTextFName)
+        lName = findViewById(R.id.editTextLName)
         signUpButton = findViewById(R.id.signUp)
         signUpButton.setOnClickListener {
             registerUser()
@@ -58,6 +63,8 @@ class MainActivity : AppCompatActivity() {
     private fun registerUser() {
         val email = email.text.toString()
         val password = password.text.toString()
+        val fName = fName.text.toString()
+        val lName = lName.text.toString()
         if (email.isNotEmpty() && password.isNotEmpty()) {
             CoroutineScope(Dispatchers.IO).launch {
                 try {
@@ -66,8 +73,9 @@ class MainActivity : AppCompatActivity() {
                     // Create a new user with a first and last name
                     val user = hashMapOf(
                         "UserID" to auth.uid,
-                        "firstName" to "Ramon",
-                        "lastName" to "Brakels",
+                        "email" to email,
+                        "firstName" to fName,
+                        "lastName" to lName,
                     )
 
                     // Add a new document with a generated ID
