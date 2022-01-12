@@ -7,6 +7,7 @@ plugins {
 android {
     compileSdkVersion 31
     buildToolsVersion '31.0.0'
+    //useLibrary  'org.apache.http'
 
     defaultConfig {
         applicationId "com.example.musicapplication_sp"
@@ -34,6 +35,8 @@ android {
 }
 
 dependencies {
+    //noinspection DuplicatePlatformClasses
+    implementation 'org.apache.httpcomponents:httpclient:4.5.13'
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation 'com.google.android.material:material:1.4.0'
@@ -45,6 +48,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx:21.0.1'
     implementation 'com.firebaseui:firebase-ui-auth:8.0.0'
     implementation 'com.google.firebase:firebase-auth:21.0.1'
+    implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.8.1'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'

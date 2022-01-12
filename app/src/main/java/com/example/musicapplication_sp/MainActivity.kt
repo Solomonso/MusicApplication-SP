@@ -1,5 +1,6 @@
 package com.example.musicapplication_sp
 
+import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         val audioURL ="https://www.youtube.com/watch?v=W4hTJybfU7s"
 
         mediaPlayer = MediaPlayer()
-        mediaPlayer!!.setAudioStreamType(AudioManager.STREAM_MUSIC)
+        mediaPlayer!!.setAudioAttributes(AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build())
         try{
              mediaPlayer!!.setDataSource(audioURL)
             mediaPlayer!!.prepare()
