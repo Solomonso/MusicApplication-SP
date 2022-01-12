@@ -33,5 +33,9 @@
     <string name="close">Close</string>
     <string name="username">Username</string>
     <string name="delete">Delete</string>
+    <string name="firstname">firstName</string>
+    <string name="repeat_password">repeat password</string>
+    <string name="lName">last name</string>
+    <string name="sign_up">sign up</string>
 
 </resources>

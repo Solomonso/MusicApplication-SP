@@ -44,6 +44,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginPassword: EditText
     private lateinit var timeCountField: TextView
     private lateinit var signSpotifyButton: Button
+    private lateinit var registerButton: Button
    //field declared for login in with google
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var signInGoogleButton: Button
@@ -58,6 +59,7 @@ class LoginActivity : AppCompatActivity() {
         loginButton = findViewById(R.id.login_button)
         signInGoogleButton = findViewById(R.id.sign_in_google_button)
         signSpotifyButton = findViewById(R.id.sign_in_spotify_button)
+        registerButton = findViewById(R.id.register)
         timeCountField = findViewById(R.id.time_count)
         sharedPreferences = this.getSharedPreferences("Spotify", MODE_PRIVATE)
         rQueue = Volley.newRequestQueue(this)
@@ -73,6 +75,8 @@ class LoginActivity : AppCompatActivity() {
         // END Configure Google Sign In
 
         this.listenToClickForGoogleSignIn()//call the google sign in function
+
+        this.OpenRegistrationActiviy() //open register page
     }
 
     /**
@@ -138,7 +142,16 @@ class LoginActivity : AppCompatActivity() {
     private fun listenToClickForGoogleSignIn()
     {
         signInGoogleButton.setOnClickListener{
-            signIn()
+        }
+    }
+
+    private fun OpenRegistrationActiviy()
+    {
+        registerButton.setOnClickListener{
+            val intent = Intent(this@LoginActivity, RegistrationActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
         }
     }
 
