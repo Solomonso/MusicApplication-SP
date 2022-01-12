@@ -17,10 +17,6 @@ class UserService(requestQueue: RequestQueue, sharedPreferences: SharedPreferenc
     private var sPreferences: SharedPreferences = sharedPreferences
     private var rQueue: RequestQueue = requestQueue
     private lateinit var user: User
-    companion object {
-        private const val ENDPOINT = "https://api.spotify.com/v1/me"
-    }
-
     fun getUser(): User {
         return user
     }

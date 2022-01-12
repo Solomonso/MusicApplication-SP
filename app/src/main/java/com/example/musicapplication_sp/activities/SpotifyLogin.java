@@ -11,7 +11,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.musicapplication_sp.R;
 import com.example.musicapplication_sp.model.User;
-import com.example.musicapplication_sp.repositories.PlaylistService;
 import com.example.musicapplication_sp.repositories.UserService;
 import com.spotify.sdk.android.auth.AuthorizationClient;
 import com.spotify.sdk.android.auth.AuthorizationRequest;

@@ -3,6 +3,7 @@ package com.example.musicapplication_sp.activities
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 
 import android.widget.EditText
 import android.widget.ListView

@@ -13,26 +13,29 @@ import com.example.musicapplication_sp.model.Endpoints;
 import com.example.musicapplication_sp.model.Playlist;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.squareup.okhttp.MediaType;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class PlaylistService {
     private SharedPreferences sharedPreferences;
     private RequestQueue requestQueue;
-    private Playlist playlist;
-
+    private ArrayList<Playlist> playlist;
+    private static final MediaType JSON = MediaType.parse("application/json; charset-utf-8");
     public PlaylistService(RequestQueue queue, SharedPreferences sReferences) {
         this.requestQueue = queue;
         this.sharedPreferences = sReferences;
+        this.playlist = new ArrayList<>();
     }
 
-    public Playlist getPlaylist() {
-        return playlist;
+    public ArrayList<Playlist> getPlaylist() {
+        return this.playlist;
     }
 
     public void createPlaylist(String id, String name) {
