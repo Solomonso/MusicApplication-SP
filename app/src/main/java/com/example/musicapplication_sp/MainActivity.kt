@@ -9,6 +9,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
@@ -31,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.registration_layout)
         auth = FirebaseAuth.getInstance()
-        auth.signOut()
+        //auth.signOut()
         email = findViewById(R.id.editSignUpTextEmailAddress)
         password = findViewById(R.id.editSignUpTextPassword)
         fName = findViewById(R.id.editTextFName)
@@ -61,35 +62,39 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun registerUser() {
-        val email = email.text.toString()
-        val password = password.text.toString()
-        val fName = fName.text.toString()
-        val lName = lName.text.toString()
+        val email : String = email.text.toString()
+        val password : String = password.text.toString()
+        val fName : String = fName.text.toString()
+        val lName : String = lName.text.toString()
         if (email.isNotEmpty() && password.isNotEmpty()) {
             CoroutineScope(Dispatchers.IO).launch {
                 try {
 
                     auth.createUserWithEmailAndPassword(email, password)
                     // Create a new user with a first and last name
-                    val user = hashMapOf(
-                        "UserID" to auth.uid,
+                    val user = Firebase.auth.currentUser
+                    user?.let{
+                    val userData = hashMapOf(
+                        "UserID" to user.uid,
                         "email" to email,
                         "firstName" to fName,
                         "lastName" to lName,
                     )
-
-                    // Add a new document with a generated ID
-                    db.collection("Users")
-                        .add(user)
-                        .addOnSuccessListener { documentReference ->
-                            Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+                        // Add a new document with a generated ID
+                        db.collection("Users")
+                            .add(userData)
+                            .addOnSuccessListener { documentReference ->
+                                Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w(TAG, "Error adding document", e)
+                            }
+                        withContext(Dispatchers.Main) {
+                            //checkLoggedInState()
                         }
-                        .addOnFailureListener { e ->
-                            Log.w(TAG, "Error adding document", e)
-                        }
-                    withContext(Dispatchers.Main) {
-                        //checkLoggedInState()
                     }
+
+
                 } catch (e: Exception) {
                     withContext(Dispatchers.Main) {
                         Toast.makeText(this@MainActivity, e.message, Toast.LENGTH_LONG).show()
