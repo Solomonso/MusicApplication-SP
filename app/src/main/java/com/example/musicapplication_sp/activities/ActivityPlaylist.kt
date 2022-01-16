@@ -90,13 +90,16 @@ class ActivityPlaylist : AppCompatActivity(){
 
                 val playlistItemData = PlaylistModel.createList()
                 playlistItemData.itemDatatext = textEditText.text.toString()
-                playlistItemData.delete = false
-
+                userService.get(object : VolleyCallBack {
+                    override fun onSuccess() {
+                        val user = userService.getUser()
+                        playlistService.createPlaylist(user.id, playlistItemData.itemDatatext)
+                    }
+                })
                 dialog.dismiss()
                 Toast.makeText(this, "Playlist saved", Toast.LENGTH_LONG).show()
             }
             alertDialog.show()
-            //End dialog box with creation of list and db connection(Realtime database)
         }
 
     }

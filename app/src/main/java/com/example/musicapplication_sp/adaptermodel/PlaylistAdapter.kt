@@ -24,6 +24,7 @@ class PlaylistAdapter (private val playlists: ArrayList<Playlist>) : RecyclerVie
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = playlists[position]
         holder.playlistName.text = currentItem.name
+
     }
 
     override fun getItemCount(): Int {

@@ -62,6 +62,30 @@ public class PlaylistService {
             }
         };
         requestQueue.add(jsonObjectRequest);
+    }
 
+    public void createPlaylist(String id, String name) {
+        final HashMap<String, String> postParams = new HashMap<>();
+        postParams.put("name", name);
+
+        String url = String.format(Endpoints.CREATEPLAYLIST.getEndpoint(), id);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(postParams), response -> {
+
+        }, error -> {
+            if (postParams.isEmpty()) {
+                Log.d("Error", "Unable to post");
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                String token = sharedPreferences.getString("token", "");
+                String auth = "Bearer " + token;
+                headers.put("Authorization", auth);
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+        requestQueue.add(jsonObjectRequest);
     }
 }
