@@ -31,8 +31,7 @@ class MainActivity : AppCompatActivity() {
         toolbar = findViewById(R.id.toolbar)
         sharedPreferences = this.getSharedPreferences("Spotify", MODE_PRIVATE)
         displayName = findViewById(R.id.username)
-        username = intent.getStringExtra("display_name").toString()
-        username  = sharedPreferences.getString("username", "No user").toString() //display the current user signed in
+        username = intent.getStringExtra("display_name").toString() //display the current user signed in
         displayName.text = username
         setSupportActionBar(toolbar)
         toggleDrawer()
@@ -50,15 +49,6 @@ class MainActivity : AppCompatActivity() {
         super.onStop()
     }
 
-    private fun displayUserDetail(name: String) {
-        var returnValue = ""
-        when (name) {
-            intent.getStringExtra(name) -> {returnValue = name }
-            sharedPreferences.getString(name, "No user") -> {returnValue = name }
-            else -> {}
-        }
-
-    }
     private fun toggleDrawer()
     {
           val drawerLayout : DrawerLayout = findViewById(R.id.drawerLayout)
@@ -78,17 +68,18 @@ class MainActivity : AppCompatActivity() {
                     }
                     R.id.playlist -> {
                         val intent = Intent(this@MainActivity, ActivityPlaylist::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
                         true
                     }
                     R.id.settings -> {
-                        Toast.makeText(applicationContext, "Opened Settings", Toast.LENGTH_SHORT)
-                            .show()
+                        val intent = Intent(this@MainActivity, SettingActivity::class.java)
+                        startActivity(intent)
                         true
                     }
                     R.id.logout -> {
                       Firebase.auth.signOut()
+                        val intent = Intent(this@MainActivity, LoginActivity::class.java)
+                        startActivity(intent)
                         true
                     }
                     else -> true

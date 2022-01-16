@@ -1,5 +1,6 @@
 package com.example.musicapplication_sp.activities
 
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,11 +10,15 @@ import android.widget.EditText
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
-import com.example.musicapplication_sp.PlaylistAdapter
+import com.example.musicapplication_sp.adaptermodel.PlaylistAdapter
 import com.example.musicapplication_sp.R
+import com.example.musicapplication_sp.interfaces.OnPlaylistClickListener
 import com.example.musicapplication_sp.interfaces.VolleyCallBack
+import com.example.musicapplication_sp.model.Playlist
 import com.example.musicapplication_sp.model.PlaylistModel
 import com.example.musicapplication_sp.repositories.PlaylistService
 import com.example.musicapplication_sp.repositories.UserService
@@ -28,10 +33,9 @@ class ActivityPlaylist : AppCompatActivity(){
     private lateinit var rQueue: RequestQueue
     private lateinit var playlistService: PlaylistService
     private lateinit var userService: UserService
-    private lateinit var editor: SharedPreferences.Editor
-    var lists: MutableList<PlaylistModel>? = null
-    private lateinit var playlistAdapter: PlaylistAdapter
-    private var listViewItem: ListView? = null
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var playlists: ArrayList<Playlist>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,14 +43,38 @@ class ActivityPlaylist : AppCompatActivity(){
 
         database = FirebaseFirestore.getInstance()
         btnFab = findViewById(R.id.btnFab)
-        listViewItem = findViewById(R.id.itemPlaylist)
-        sharedPreferences = this.getSharedPreferences("Spotify", MODE_PRIVATE);
+        sharedPreferences = this.getSharedPreferences("Spotify", MODE_PRIVATE)
         rQueue = Volley.newRequestQueue(this)
         playlistService = PlaylistService(rQueue, sharedPreferences)
         userService = UserService(rQueue, sharedPreferences)
         addNewPlaylist()
-    }
+        recyclerView = findViewById(R.id.itemPlaylist)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        playlists = arrayListOf()
+        retrieveUserPlaylist()
 
+    }
+    private fun retrieveUserPlaylist() {
+        playlistService.getCurrentUserPlaylist(object : VolleyCallBack {
+            override fun onSuccess() {
+                val playlist = playlistService.playlist
+                for (p in playlist) {
+                    playlists.add(p)
+                }
+                val adapter = PlaylistAdapter(playlists)
+                recyclerView.adapter = adapter
+                adapter.setOnPlaylistClickListener(object : OnPlaylistClickListener {
+                    override fun onItemClick(position: Int) {
+                        val songIntent = Intent(this@ActivityPlaylist, SongActivity::class.java)
+                        songIntent.putExtra("playlist_id", playlists[position].id)
+                        startActivity(songIntent)
+
+                    }
+                })
+
+            }
+        })
+    }
     /**
      * addNewPlaylist() opens a alert dialog box for adding new playlist
      */
@@ -62,13 +90,6 @@ class ActivityPlaylist : AppCompatActivity(){
 
                 val playlistItemData = PlaylistModel.createList()
                 playlistItemData.itemDatatext = textEditText.text.toString()
-
-                userService.get(object : VolleyCallBack {
-                    override fun onSuccess() {
-                        val user = userService.getUser()
-                        playlistService.createPlaylist(user.id, playlistItemData.itemDatatext)
-                    }
-                })
                 playlistItemData.delete = false
 
                 dialog.dismiss()
@@ -78,50 +99,5 @@ class ActivityPlaylist : AppCompatActivity(){
             //End dialog box with creation of list and db connection(Realtime database)
         }
 
-//        lists = mutableListOf()
-//        playlistAdapter = PlaylistAdapter(this, lists!!)
-//        listViewItem!!.adapter=playlistAdapter
-//        database.addValueEventListener(object : ValueEventListener{
-//
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                lists!!.clear()
-//                addItemToList(snapshot)
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                Toast.makeText(applicationContext, "No item Added",Toast.LENGTH_LONG).show()
-//            }
-//        })
     }
-//    private fun addItemToList(snapshot: DataSnapshot){
-//        val items = snapshot.children.iterator()
-//
-//        if(items.hasNext()){
-//            val playlistIndexedValue = items.next()
-//            val itemsIterator = playlistIndexedValue.children.iterator()
-//
-//            while (itemsIterator.hasNext()){
-//                val currentItem = itemsIterator.next()
-//                val playListItemData = PlaylistModel.createList()
-//                val map = currentItem.getValue() as HashMap<String, Any>
-//
-//                playListItemData.UID = currentItem.key
-//                playListItemData.delete = map.get("Deleted") as Boolean?
-//                playListItemData.itemDatatext = map.get("itemTextData") as String?
-//                lists!!.add(playListItemData)
-//            }
-//        }
-//        playlistAdapter.notifyDataSetChanged()
-//    }
-//
-//    override fun modifyItem(itemUID: String, isDone: Boolean) {
-//        val playlistReference = database.child("Playlist").child(itemUID)
-//        playlistReference.child("done").setValue(isDone)
-//    }
-//
-//    override fun onItemDelete(itemUID: String) {
-//        val playlistReference = database.child("Playlist").child(itemUID)
-//        playlistReference.removeValue()
-//        playlistAdapter.notifyDataSetChanged()
-//    }
 }

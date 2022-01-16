@@ -1,8 +1,9 @@
 package com.example.musicapplication_sp.model;
 
 public enum Endpoints {
-    PLAYLIST("https://api.spotify.com/v1/users/%s/playlists"),
-    ADDTOPLAYLIST("https://api.spotify.com/v1/playlists/{playlist_id}/tracks"),
+    GETUSERPLAYLISTS("https://api.spotify.com/v1/me/playlists"),
+    GETSONGFROMPLAYLIST("https://api.spotify.com/v1/playlists/%s/tracks"),
+    ADDTOPLAYLIST("https://api.spotify.com/v1/playlists/%s/tracks"),
     USER("https://api.spotify.com/v1/me");
     private final String endpoints;
     Endpoints(String endpoints) {

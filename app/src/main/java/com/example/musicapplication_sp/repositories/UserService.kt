@@ -26,10 +26,7 @@ class UserService(requestQueue: RequestQueue, sharedPreferences: SharedPreferenc
             Endpoints.USER.endpoint, null,
             Response.Listener { response: JSONObject ->
                 val gson = Gson()
-                user = gson.fromJson(
-                    response.toString(),
-                    User::class.java
-                )
+                user = gson.fromJson(response.toString(), User::class.java)
                 callBack.onSuccess()
             },
             Response.ErrorListener { error: VolleyError? ->  }) {

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/greenbg"
-    tools:context=".activities.ActivityPlaylist">
+    tools:context=".activities.SongActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/playlist"
+            android:text="@string/songs"
             android:textSize="35sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.262"
@@ -34,26 +34,16 @@
             app:layout_constraintVertical_bias="0.206" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/itemPlaylist"
+            android:id="@+id/item_song"
             android:layout_width="323dp"
             android:layout_height="326dp"
-            android:text="@string/no_playlists"
+            android:text="@string/no_song"
             android:textSize="25sp"
-            tools:listitem="@layout/list_item_playlists"
-            app:layout_constraintBottom_toTopOf="@+id/btnFab"
+            tools:listitem="@layout/list_item_songs"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView"
             tools:ignore="MissingConstraints" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnFab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_input_add"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/itemPlaylist"
-            tools:ignore="MissingConstraints,SpeakableTextPresentCheck" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

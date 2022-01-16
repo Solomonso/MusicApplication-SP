@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
 import com.example.musicapplication_sp.R
-import com.example.musicapplication_sp.repositories.PlaylistService
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -43,7 +42,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginEmail: EditText
     private lateinit var loginPassword: EditText
     private lateinit var timeCountField: TextView
-    private lateinit var signSpotifyButton: Button
+
     private lateinit var registerButton: Button
    //field declared for login in with google
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -58,14 +57,13 @@ class LoginActivity : AppCompatActivity() {
         loginPassword = findViewById(R.id.text_password)
         loginButton = findViewById(R.id.login_button)
         signInGoogleButton = findViewById(R.id.sign_in_google_button)
-        signSpotifyButton = findViewById(R.id.sign_in_spotify_button)
+
         registerButton = findViewById(R.id.register)
         timeCountField = findViewById(R.id.time_count)
         sharedPreferences = this.getSharedPreferences("Spotify", MODE_PRIVATE)
         rQueue = Volley.newRequestQueue(this)
 
         this.logIn()//call function for signing with username/password
-        this.listenToClickForSpotifySignIn() // call spotify function
 
         // Start Configure Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(
@@ -76,7 +74,7 @@ class LoginActivity : AppCompatActivity() {
 
         this.listenToClickForGoogleSignIn()//call the google sign in function
 
-        this.OpenRegistrationActiviy() //open register page
+        this.openRegistrationActivity() //open register page
     }
 
     /**
@@ -84,9 +82,18 @@ class LoginActivity : AppCompatActivity() {
      */
     override fun onStart() {
         super.onStart()
-        // TODO" Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
+        if (currentUser != null) {
+            reload()
+        }
 
+    }
+
+    private fun reload() {
+        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+        intent.putExtra("display_name", auth.currentUser!!.email) //prevents the display from being null after reload
+        startActivity(intent)
+        finish()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -145,19 +152,10 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun OpenRegistrationActiviy()
+    private fun openRegistrationActivity()
     {
         registerButton.setOnClickListener{
             val intent = Intent(this@LoginActivity, RegistrationActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            finish()
-        }
-    }
-
-    private fun listenToClickForSpotifySignIn() {
-        signSpotifyButton.setOnClickListener {
-            val intent = Intent(this@LoginActivity, SpotifyLogin::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
             finish()
@@ -169,25 +167,24 @@ class LoginActivity : AppCompatActivity() {
      */
     private fun logIn() {
         loginButton.setOnClickListener {
+            val email: String = loginEmail.text.toString().trim { it <= ' ' } //the it <= '' remove all non printable characters with ascii code
+            val password: String = loginPassword.text.toString().trim { it <= ' ' }
             when {
-                TextUtils.isEmpty(loginEmail.text.toString().trim { it <= ' ' }) -> { //the it <= '' remove all non printable characters with ascii code
+                TextUtils.isEmpty(email) -> {
                     Toast.makeText(this@LoginActivity, "Please enter email", Toast.LENGTH_SHORT).show()
                 }
 
-                TextUtils.isEmpty(loginPassword.text.toString().trim { it <= ' ' }) -> {
+                TextUtils.isEmpty(password) -> {
                     Toast.makeText(this@LoginActivity, "Please enter password", Toast.LENGTH_SHORT).show()
                 }
                 else -> {
                     if (numberOfAttempts < 4) {
-                        val email: String = loginEmail.text.toString().trim { it <= ' ' }
-                        val password: String = loginPassword.text.toString().trim { it <= ' ' }
-
                         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 Toast.makeText(this@LoginActivity, "You are logged in " + auth.currentUser!!.email, Toast.LENGTH_SHORT).show()
                                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                intent.putExtra("display_name", auth.currentUser!!.displayName)
+                                intent.putExtra("display_name", auth.currentUser!!.email)
                                 startActivity(intent)
                                 finish()
                             } else {
