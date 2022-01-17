@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:autofillHints="password"
-        android:background="@drawable/rounded_rectangle"
+        android:background="@drawable/text_input_shape"
         android:ems="10"
         android:gravity="center"
         android:hint="@string/client_id"

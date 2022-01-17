@@ -36,7 +36,7 @@ class PlaylistActivity : AppCompatActivity() {
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_playlist)
+        setContentView(R.layout.playlist)
 
         database = FirebaseFirestore.getInstance()
         btnFab = findViewById(R.id.btnFab)

@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.basic_main)
+        setContentView(R.layout.profile)
 
         toolbar = findViewById(R.id.toolbar)
         sharedPreferences = this.getSharedPreferences("Spotify", MODE_PRIVATE)

@@ -15,7 +15,7 @@ class SettingActivity : AppCompatActivity() {
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_setting)
+        setContentView(R.layout.settings)
         signSpotifyButton = findViewById(R.id.sign_in_spotify_button)
         sharedPreferences = this.getSharedPreferences("Spotify", MODE_PRIVATE)
         this.listenToClickForSpotifySignInButton()

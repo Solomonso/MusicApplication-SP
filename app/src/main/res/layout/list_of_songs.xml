@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/green_background"
+    android:background="@drawable/greenbg"
     android:orientation="vertical">
 
 
@@ -21,26 +22,38 @@
         <include
             android:id="@+id/toolbar"
             layout="@layout/toolbar"
-            android:layout_width="414dp"
+            android:layout_width="match_parent"
             android:layout_height="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/song_list_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/list_of_songs"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintVertical_bias="0.1"
+            />
 
         <EditText
             android:id="@+id/song_input"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:autofillHints="@string/song_name"
             android:ems="10"
             android:inputType="text"
-            android:text="@string/song_name"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.3"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            app:layout_constraintVertical_bias="0.05" />
+            app:layout_constraintTop_toBottomOf="@id/song_list_text"
+            app:layout_constraintVertical_bias="0.05"
+            android:labelFor="@id/song_list_text"/>
 
         <Button
             android:id="@+id/song_input_button"
@@ -61,6 +74,8 @@
             app:layout_constraintStart_toStartOf="@id/song_input"
             app:layout_constraintTop_toBottomOf="@id/song_input"
             app:layout_constraintVertical_bias="0.05" />
+
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

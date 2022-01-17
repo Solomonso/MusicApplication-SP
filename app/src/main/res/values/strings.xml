@@ -50,5 +50,6 @@
     <string name="playlist1">Playlist</string>
     <string name="song_name">Song name</string>
     <string name="add">Add</string>
+    <string name="list_of_songs">List of songs</string>
 
 </resources>
