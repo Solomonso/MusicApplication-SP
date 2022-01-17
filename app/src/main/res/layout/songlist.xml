@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/greenbg"
@@ -36,8 +35,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:layout_constraintVertical_bias="0.1"
-            />
+            app:layout_constraintVertical_bias="0.1" />
 
         <EditText
             android:id="@+id/song_input"
@@ -47,13 +45,13 @@
             android:autofillHints="@string/song_name"
             android:ems="10"
             android:inputType="text"
+            android:labelFor="@id/song_list_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/song_list_text"
-            app:layout_constraintVertical_bias="0.05"
-            android:labelFor="@id/song_list_text"/>
+            app:layout_constraintVertical_bias="0.05" />
 
         <Button
             android:id="@+id/song_input_button"
@@ -74,8 +72,6 @@
             app:layout_constraintStart_toStartOf="@id/song_input"
             app:layout_constraintTop_toBottomOf="@id/song_input"
             app:layout_constraintVertical_bias="0.05" />
-
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
