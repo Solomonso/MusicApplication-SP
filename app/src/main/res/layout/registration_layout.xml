@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".RegistrationActivity">
+    tools:context=".activities.RegistrationActivity">
 
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -90,7 +90,7 @@
             android:background="@drawable/rounded_rectangle"
             android:ems="10"
             android:gravity="center"
-            android:hint="@string/fName"
+            android:hint="@string/firstname"
             android:inputType="textPersonName"
             android:minHeight="48dp"
             android:textColorHint="@color/input_hint_color"

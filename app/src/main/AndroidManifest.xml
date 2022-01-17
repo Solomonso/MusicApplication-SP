@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.musicapplication_sp">
 
     <application
@@ -10,9 +11,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MusicApplicationSP">
         <activity
-            android:name=".RegistrationActivity"
-            android:exported="true"
-            android:screenOrientation="portrait">
+            android:name=".activities.SpotifyLogin"
+            android:exported="false" />
+        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.RegistrationActivity"/>
+        <activity android:name=".activities.SongActivity"/>
+        <activity android:name=".activities.SettingActivity"/>
+        <activity   android:name=".activities.ActivityPlaylist"
+            android:exported="true" />
+        <activity
+            android:name=".activities.LoginActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
