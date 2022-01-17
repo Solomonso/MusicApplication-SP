@@ -20,6 +20,7 @@ class SongActivity : AppCompatActivity(){
     private lateinit var songService: SongService
     private lateinit var playlistId: String
     private lateinit var recyclerView: RecyclerView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_song)

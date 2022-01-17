@@ -24,7 +24,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.firestore.FirebaseFirestore
 
 //PlaylistUpdateDelete
-class ActivityPlaylist : AppCompatActivity(){
+class PlaylistActivity : AppCompatActivity(){
     private lateinit var btnFab: FloatingActionButton
     private lateinit var database: FirebaseFirestore
     private lateinit var sharedPreferences: SharedPreferences
@@ -34,7 +34,7 @@ class ActivityPlaylist : AppCompatActivity(){
     private lateinit var recyclerView: RecyclerView
     private lateinit var playlists: ArrayList<Playlist>
 
-
+    @Override
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_playlist)
@@ -64,7 +64,7 @@ class ActivityPlaylist : AppCompatActivity(){
                 recyclerView.adapter = adapter
                 adapter.setOnPlaylistClickListener(object : OnPlaylistClickListener {
                     override fun onItemClick(position: Int) {
-                        val songIntent = Intent(this@ActivityPlaylist, SongActivity::class.java)
+                        val songIntent = Intent(this@PlaylistActivity, SongActivity::class.java)
                         songIntent.putExtra("playlist_id", playlists[position].id)
                         startActivity(songIntent)
 

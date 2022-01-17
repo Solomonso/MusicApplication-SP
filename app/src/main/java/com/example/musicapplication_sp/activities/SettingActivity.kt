@@ -11,6 +11,7 @@ import com.example.musicapplication_sp.R
 class SettingActivity : AppCompatActivity(){
     private lateinit var signSpotifyButton: Button
     private lateinit var sharedPreferences: SharedPreferences
+
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

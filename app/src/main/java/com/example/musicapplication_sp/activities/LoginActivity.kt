@@ -36,6 +36,7 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var registerButton: Button
 
+    @Override
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth

@@ -35,6 +35,7 @@ public class SpotifyLogin extends AppCompatActivity {
 
     private static final int REQUEST_CODE = 1337;
     private static final String REDIRECT_URI = "https://com.example.musicapplication_sp//callback";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
