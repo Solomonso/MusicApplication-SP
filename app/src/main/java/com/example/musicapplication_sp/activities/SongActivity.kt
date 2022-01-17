@@ -23,7 +23,7 @@ class SongActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_song)
+        setContentView(R.layout.song_activity)
         sharedPreferences = this.getSharedPreferences("Spotify", MODE_PRIVATE)
         requestQueue = Volley.newRequestQueue(this)
         songService = SongService(requestQueue, sharedPreferences)
