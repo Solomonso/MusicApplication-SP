@@ -65,7 +65,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/add_playlist"
+        app:headerLayout="@layout/playlist_add"
         app:menu="@menu/menu_add" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

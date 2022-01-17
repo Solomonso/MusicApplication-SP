@@ -46,6 +46,7 @@
             android:ems="10"
             android:inputType="text"
             android:labelFor="@id/song_list_text"
+            android:text="@string/song"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.3"

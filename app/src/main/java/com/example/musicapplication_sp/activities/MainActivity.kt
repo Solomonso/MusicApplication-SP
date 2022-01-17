@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.profile)
+        setContentView(R.layout.activity_main)
 
         toolbar = findViewById(R.id.toolbar)
         sharedPreferences = this.getSharedPreferences("Spotify", MODE_PRIVATE)
@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.settings -> {
-                    val intent = Intent(this@MainActivity, SettingActivity::class.java)
+                    val intent = Intent(this@MainActivity, SettingsActivity::class.java)
                     startActivity(intent)
                     true
                 }

@@ -92,7 +92,7 @@ public class SpotifyLogin extends AppCompatActivity {
     }
 
     private void startMainActivity() {
-        Intent intent = new Intent(SpotifyLogin.this, SettingActivity.class);
+        Intent intent = new Intent(SpotifyLogin.this, SettingsActivity.class);
         startActivity(intent);
         Toast.makeText(this, "Spotify Account linked successfully.", Toast.LENGTH_SHORT).show();
         finish();

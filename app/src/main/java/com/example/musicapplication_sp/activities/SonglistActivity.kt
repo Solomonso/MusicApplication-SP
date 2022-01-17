@@ -9,7 +9,7 @@ class SonglistActivity : AppCompatActivity() {
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.songlist)
+        setContentView(R.layout.activity_songlist)
     }
 
     override fun onStart() {
