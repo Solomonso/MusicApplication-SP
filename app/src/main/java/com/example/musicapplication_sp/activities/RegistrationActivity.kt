@@ -32,7 +32,7 @@ class RegistrationActivity : AppCompatActivity() {
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.account_registration)
+        setContentView(R.layout.activity_registration)
         auth = FirebaseAuth.getInstance()
         //auth.signOut()
         email = findViewById(R.id.editSignUpTextEmailAddress)

@@ -26,7 +26,7 @@ class SettingsActivity : AppCompatActivity() {
             val username = sharedPreferences.getString("username", "").toString()
             //check if the spotify user already linked an account with their username
             if (username.isEmpty()) {
-                val intent = Intent(this@SettingsActivity, SpotifyLogin::class.java)
+                val intent = Intent(this@SettingsActivity, SpotifyLoginActivity::class.java)
                 startActivity(intent)
             } else {
                 Toast.makeText(

@@ -20,7 +20,7 @@ import com.spotify.sdk.android.auth.AuthorizationClient;
 import com.spotify.sdk.android.auth.AuthorizationRequest;
 import com.spotify.sdk.android.auth.AuthorizationResponse;
 
-public class SpotifyLogin extends AppCompatActivity {
+public class SpotifyLoginActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 1337;
     private static final String REDIRECT_URI = "https://com.example.musicapplication_sp//callback";
     private SharedPreferences sharedPreferences;
@@ -92,7 +92,7 @@ public class SpotifyLogin extends AppCompatActivity {
     }
 
     private void startMainActivity() {
-        Intent intent = new Intent(SpotifyLogin.this, SettingsActivity.class);
+        Intent intent = new Intent(SpotifyLoginActivity.this, SettingsActivity.class);
         startActivity(intent);
         Toast.makeText(this, "Spotify Account linked successfully.", Toast.LENGTH_SHORT).show();
         finish();
