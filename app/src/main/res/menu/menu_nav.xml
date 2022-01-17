@@ -5,31 +5,31 @@
 
     <item
         android:id="@+id/profile"
-        android:title="Profile"
+        android:title="@string/profile"
         android:background="@color/darklightgreen"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/playlist"
-        android:title="Playlist"
+        android:title="@string/playlist1"
         android:background="@color/darklightgreen"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/songs"
-        android:title="@string/song1"
+        android:title="@string/songs1"
         android:background="@color/darklightgreen"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/settings"
-        android:title="Settings"
+        android:title="@string/settings"
         android:background="@color/darklightgreen"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/logout"
-        android:title="Log Out"
+        android:title="@string/log_out"
         android:background="@color/darklightgreen"
         app:showAsAction="never"/>
 
