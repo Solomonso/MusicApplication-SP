@@ -13,7 +13,7 @@ import com.example.musicapplication_sp.interfaces.VolleyCallBack
 import com.example.musicapplication_sp.model.Song
 import com.example.musicapplication_sp.repositories.SongService
 
-class SongActivity : AppCompatActivity(){
+class SongActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var requestQueue: RequestQueue
     private lateinit var songs: ArrayList<Song>

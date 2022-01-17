@@ -24,6 +24,7 @@ public class SongService {
     private SharedPreferences sharedPreferences;
     private RequestQueue requestQueue;
     private ArrayList<Song> songs;
+
     public SongService(RequestQueue queue, SharedPreferences sPreferences) {
         this.requestQueue = queue;
         this.sharedPreferences = sPreferences;
@@ -36,11 +37,11 @@ public class SongService {
 
     public void getSongsFromCurrentPlaylist(String playlistId, final VolleyCallBack callBack) {
         String endpoint = String.format(Endpoints.GETSONGFROMPLAYLIST.getEndpoint(), playlistId); //format the url to get the playlist id
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  endpoint,null,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, endpoint, null,
                 response -> {
                     Gson gson = new Gson();
                     JSONArray jsonArray = response.optJSONArray("items");
-                    for(int i = 0; i < Objects.requireNonNull(jsonArray).length(); i++) {
+                    for (int i = 0; i < Objects.requireNonNull(jsonArray).length(); i++) {
                         try {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             jsonObject = jsonObject.optJSONObject("track");
@@ -51,8 +52,9 @@ public class SongService {
                             e.printStackTrace();
                         }
                     }
-                    callBack.onSuccess(); },
-                error ->  Log.d("Error", "Unable get song from playlist " + error)) {
+                    callBack.onSuccess();
+                },
+                error -> Log.d("Error", "Unable get song from playlist " + error)) {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();

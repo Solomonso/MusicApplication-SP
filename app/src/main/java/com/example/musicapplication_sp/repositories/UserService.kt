@@ -1,15 +1,14 @@
 package com.example.musicapplication_sp.repositories
 
 import android.content.SharedPreferences
-import com.android.volley.RequestQueue
-import com.android.volley.toolbox.JsonObjectRequest
-import com.example.musicapplication_sp.model.User
 import com.android.volley.AuthFailureError
+import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.VolleyError
+import com.android.volley.toolbox.JsonObjectRequest
 import com.example.musicapplication_sp.interfaces.VolleyCallBack
 import com.example.musicapplication_sp.model.Endpoints
-
+import com.example.musicapplication_sp.model.User
 import com.google.gson.Gson
 import org.json.JSONObject
 
@@ -29,7 +28,7 @@ class UserService(requestQueue: RequestQueue, sharedPreferences: SharedPreferenc
                 user = gson.fromJson(response.toString(), User::class.java)
                 callBack.onSuccess()
             },
-            Response.ErrorListener { error: VolleyError? ->  }) {
+            Response.ErrorListener { error: VolleyError? -> }) {
             @Throws(AuthFailureError::class)
             override fun getHeaders(): Map<String, String> {
                 val headers: MutableMap<String, String> = HashMap()

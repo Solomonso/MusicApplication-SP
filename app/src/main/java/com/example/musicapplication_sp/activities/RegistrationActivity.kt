@@ -4,8 +4,8 @@ import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import android.widget.Toast
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.musicapplication_sp.R
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
@@ -21,11 +21,11 @@ import kotlinx.coroutines.withContext
 class RegistrationActivity : AppCompatActivity() {
 
     lateinit var auth: FirebaseAuth
-    lateinit var email : EditText
-    lateinit var password : EditText
-    lateinit var fName : EditText
-    lateinit var lName : EditText
-    lateinit var signUpButton : Button
+    lateinit var email: EditText
+    lateinit var password: EditText
+    lateinit var fName: EditText
+    lateinit var lName: EditText
+    lateinit var signUpButton: Button
 
     var db = Firebase.firestore
 
@@ -47,8 +47,6 @@ class RegistrationActivity : AppCompatActivity() {
     }
 
 
-
-
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
         val response = result.idpResponse
         if (result.resultCode == RESULT_OK) {
@@ -64,10 +62,10 @@ class RegistrationActivity : AppCompatActivity() {
     }
 
     private fun registerUser() {
-        val email : String = email.text.toString()
-        val password : String = password.text.toString()
-        val fName : String = fName.text.toString()
-        val lName : String = lName.text.toString()
+        val email: String = email.text.toString()
+        val password: String = password.text.toString()
+        val fName: String = fName.text.toString()
+        val lName: String = lName.text.toString()
         if (email.isNotEmpty() && password.isNotEmpty()) {
             CoroutineScope(Dispatchers.IO).launch {
                 try {
@@ -75,7 +73,7 @@ class RegistrationActivity : AppCompatActivity() {
                     auth.createUserWithEmailAndPassword(email, password)
                     // Create a new user with a first and last name
                     val user = Firebase.auth.currentUser
-                    user?.let{
+                    user?.let {
                         val userData = hashMapOf(
                             "UserID" to user.uid,
                             "email" to email,
@@ -86,7 +84,10 @@ class RegistrationActivity : AppCompatActivity() {
                         db.collection("Users")
                             .add(userData)
                             .addOnSuccessListener { documentReference ->
-                                Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+                                Log.d(
+                                    TAG,
+                                    "DocumentSnapshot added with ID: ${documentReference.id}"
+                                )
                             }
                             .addOnFailureListener { e ->
                                 Log.w(TAG, "Error adding document", e)
@@ -99,7 +100,8 @@ class RegistrationActivity : AppCompatActivity() {
 
                 } catch (e: Exception) {
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(this@RegistrationActivity, e.message, Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@RegistrationActivity, e.message, Toast.LENGTH_LONG)
+                            .show()
                     }
                 }
             }

@@ -39,11 +39,11 @@
             android:layout_height="326dp"
             android:text="@string/no_song"
             android:textSize="25sp"
-            tools:listitem="@layout/list_item_songs"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"
+            tools:listitem="@layout/list_item_songs" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -7,6 +7,7 @@ public enum Endpoints {
     ADDTOPLAYLIST("https://api.spotify.com/v1/playlists/%s/tracks"),
     USER("https://api.spotify.com/v1/me");
     private final String endpoints;
+
     Endpoints(String endpoints) {
         this.endpoints = endpoints;
     }

@@ -25,6 +25,7 @@ public class PlaylistService {
     private SharedPreferences sharedPreferences;
     private RequestQueue requestQueue;
     private ArrayList<Playlist> playlists;
+
     public PlaylistService(RequestQueue queue, SharedPreferences sReferences) {
         this.requestQueue = queue;
         this.sharedPreferences = sReferences;
@@ -36,11 +37,11 @@ public class PlaylistService {
     }
 
     public void getCurrentUserPlaylist(final VolleyCallBack callBack) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,  Endpoints.GETUSERPLAYLISTS.getEndpoint(),null,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, Endpoints.GETUSERPLAYLISTS.getEndpoint(), null,
                 response -> {
                     Gson gson = new Gson();
                     JSONArray jsonArray = response.optJSONArray("items");
-                    for(int i = 0; i < Objects.requireNonNull(jsonArray).length(); i++) {
+                    for (int i = 0; i < Objects.requireNonNull(jsonArray).length(); i++) {
                         try {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             Playlist playlist = gson.fromJson(jsonObject.toString(), Playlist.class);
@@ -49,7 +50,8 @@ public class PlaylistService {
                             e.printStackTrace();
                         }
                     }
-                    callBack.onSuccess(); },
+                    callBack.onSuccess();
+                },
                 error -> getCurrentUserPlaylist(() -> Log.d("Error", "Unable get current user playlist " + error))) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

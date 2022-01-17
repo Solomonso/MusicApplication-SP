@@ -70,15 +70,17 @@ class LoginActivity : AppCompatActivity() {
 
     private fun reload() {
         val intent = Intent(this@LoginActivity, MainActivity::class.java)
-        intent.putExtra("display_name", auth.currentUser!!.email) //prevents the display from being null after reload
+        intent.putExtra(
+            "display_name",
+            auth.currentUser!!.email
+        ) //prevents the display from being null after reload
         startActivity(intent)
         finish()
     }
 
 
-    private fun openRegistrationActivity()
-    {
-        registerButton.setOnClickListener{
+    private fun openRegistrationActivity() {
+        registerButton.setOnClickListener {
             val intent = Intent(this@LoginActivity, RegistrationActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
@@ -91,39 +93,61 @@ class LoginActivity : AppCompatActivity() {
      */
     private fun logIn() {
         loginButton.setOnClickListener {
-            val email: String = loginEmail.text.toString().trim { it <= ' ' } //the it <= '' remove all non printable characters with ascii code
+            val email: String = loginEmail.text.toString()
+                .trim { it <= ' ' } //the it <= '' remove all non printable characters with ascii code
             val password: String = loginPassword.text.toString().trim { it <= ' ' }
             when {
                 TextUtils.isEmpty(email) -> {
-                    Toast.makeText(this@LoginActivity, "Please enter email", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@LoginActivity, "Please enter email", Toast.LENGTH_SHORT)
+                        .show()
                 }
 
                 TextUtils.isEmpty(password) -> {
-                    Toast.makeText(this@LoginActivity, "Please enter password", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@LoginActivity, "Please enter password", Toast.LENGTH_SHORT)
+                        .show()
                 }
                 else -> {
                     if (numberOfAttempts < 4) {
-                        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                Toast.makeText(this@LoginActivity, "You are logged in " + auth.currentUser!!.email, Toast.LENGTH_SHORT).show()
-                                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                intent.putExtra("display_name", auth.currentUser!!.email)
-                                startActivity(intent)
-                                finish()
-                            } else {
-                                Toast.makeText(this@LoginActivity, "Username or password not correct", Toast.LENGTH_SHORT).show()
+                        auth.signInWithEmailAndPassword(email, password)
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    Toast.makeText(
+                                        this@LoginActivity,
+                                        "You are logged in " + auth.currentUser!!.email,
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    val intent =
+                                        Intent(this@LoginActivity, MainActivity::class.java)
+                                    intent.flags =
+                                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                    intent.putExtra("display_name", auth.currentUser!!.email)
+                                    startActivity(intent)
+                                    finish()
+                                } else {
+                                    Toast.makeText(
+                                        this@LoginActivity,
+                                        "Username or password not correct",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
                             }
-                        }
-                    }
-                    else if (numberOfAttempts == 4) {
-                        Toast.makeText(this@LoginActivity, "Login failed. No of attempts is $numberOfAttempts.", Toast.LENGTH_LONG).show()
+                    } else if (numberOfAttempts == 4) {
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "Login failed. No of attempts is $numberOfAttempts.",
+                            Toast.LENGTH_LONG
+                        ).show()
                     } else {
-                        Toast.makeText(this@LoginActivity, "Login limit exceeded.", Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "Login limit exceeded.",
+                            Toast.LENGTH_LONG
+                        ).show()
                         object : CountDownTimer(60000, 1000) {
                             override fun onTick(millisUntilFinished: Long) {
 
-                                val  timeLeft = getString(R.string.time_count, millisUntilFinished / 1000)
+                                val timeLeft =
+                                    getString(R.string.time_count, millisUntilFinished / 1000)
                                 timeCountField.text = timeLeft
                                 loginButton.isEnabled = false //disable button
 
