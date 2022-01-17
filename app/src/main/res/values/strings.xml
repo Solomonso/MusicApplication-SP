@@ -33,7 +33,7 @@
     <string name="close">Close</string>
     <string name="username">Username</string>
     <string name="delete">Delete</string>
-    <string name="firstname">firstName</string>
+    <string name="firstname">first name</string>
     <string name="repeat_password">repeat password</string>
     <string name="lName">last name</string>
     <string name="sign_up">sign up</string>
@@ -44,5 +44,6 @@
     <string name="songs">Songs:</string>
     <string name="client_id">Enter Client ID</string>
     <string name="authorize">Authorize access</string>
+    <string name="passwordsDontMatch">Passwords don`t match, please reenter password</string>
 
 </resources>
