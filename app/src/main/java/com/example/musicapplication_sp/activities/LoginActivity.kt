@@ -1,5 +1,6 @@
 package com.example.musicapplication_sp.activities
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -14,12 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
 import com.example.musicapplication_sp.R
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -27,13 +23,8 @@ import com.google.firebase.ktx.Firebase
 class LoginActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var rQueue: RequestQueue
-    private lateinit var editor: SharedPreferences.Editor
     private var numberOfAttempts: Int = 0
 
-    companion object {
-        private const val TAG = "ThirdPartyLogin"
-        private const val RC_SIGN_IN = 9001
-    }
     //field for firebase authentication
     private lateinit var auth: FirebaseAuth
 
@@ -44,9 +35,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var timeCountField: TextView
 
     private lateinit var registerButton: Button
-   //field declared for login in with google
-    private lateinit var googleSignInClient: GoogleSignInClient
-    private lateinit var signInGoogleButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +44,6 @@ class LoginActivity : AppCompatActivity() {
         loginEmail = findViewById(R.id.text_email)
         loginPassword = findViewById(R.id.text_password)
         loginButton = findViewById(R.id.login_button)
-        signInGoogleButton = findViewById(R.id.sign_in_google_button)
 
         registerButton = findViewById(R.id.register)
         timeCountField = findViewById(R.id.time_count)
@@ -64,15 +51,6 @@ class LoginActivity : AppCompatActivity() {
         rQueue = Volley.newRequestQueue(this)
 
         this.logIn()//call function for signing with username/password
-
-        // Start Configure Google Sign In
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(
-            R.string.default_web_client_id
-        )).requestEmail().build()
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
-        // END Configure Google Sign In
-
-        this.listenToClickForGoogleSignIn()//call the google sign in function
 
         this.openRegistrationActivity() //open register page
     }
@@ -96,61 +74,6 @@ class LoginActivity : AppCompatActivity() {
         finish()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == RC_SIGN_IN) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            try {
-                // Google Sign In was successful, update UI with the signed-in user's information
-                val account = task.getResult(ApiException::class.java)!!
-                Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
-                firebaseAuthWithGoogle(account.idToken!!)
-            } catch (e: ApiException) {
-                // Google Sign In failed, update UI appropriately
-                Log.w(TAG, "Google sign in failed", e)
-            }
-        }
-    }
-    /**
-     * @description
-     * @param {String} The token to be used for authentication
-     */
-    private fun firebaseAuthWithGoogle(idToken: String) {
-        val credential = GoogleAuthProvider.getCredential(idToken, null)
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // TODO: Sign in success, update UI with the signed-in user's information
-                    // TODO: open the user profile
-                    // TODO: call a new intent
-                    val user = auth.currentUser
-                    Log.d(TAG, "signInWithGoogleCredential:success")
-                    Toast.makeText(this@LoginActivity,"Signed in with google successful " + user!!.displayName + " " + user.email, Toast.LENGTH_SHORT).show()
-
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "signInWithGoogleCredential:failure", task.exception)
-                }
-            }
-    }
-
-    /**
-     * @description This function displays and connect to the google sign in page
-     */
-    private fun signIn() {
-        val signInIntent = googleSignInClient.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
-    }
-
-    /**
-     * @description This function listens to the button for signing with google when clicked
-     */
-    private fun listenToClickForGoogleSignIn()
-    {
-        signInGoogleButton.setOnClickListener{
-        }
-    }
 
     private fun openRegistrationActivity()
     {

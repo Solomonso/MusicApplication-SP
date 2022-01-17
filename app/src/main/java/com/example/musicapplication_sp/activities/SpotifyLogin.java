@@ -78,6 +78,7 @@ public class SpotifyLogin extends AppCompatActivity {
                     waitForUserInfo();
                     break;
                 case ERROR:
+                    Toast.makeText(this, "Failed to link account " + response.getError(), Toast.LENGTH_SHORT).show();
                     break;
                 default:
             }
