@@ -44,5 +44,6 @@
     <string name="songs">Songs:</string>
     <string name="client_id">Enter Client ID</string>
     <string name="authorize">Authorize access</string>
+    <string name="song1">Songs</string>
 
 </resources>

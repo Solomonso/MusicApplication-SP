@@ -16,6 +16,12 @@
         app:showAsAction="never"/>
 
     <item
+        android:id="@+id/songs"
+        android:title="@string/song1"
+        android:background="@color/darklightgreen"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/settings"
         android:title="Settings"
         android:background="@color/darklightgreen"
