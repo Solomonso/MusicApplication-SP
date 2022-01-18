@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="40dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="10dp"
             android:autofillHints="emailAddress"
             android:background="@drawable/text_input_shape"
             android:ems="10"
@@ -51,47 +51,13 @@
             android:minHeight="48dp"
             android:textColorHint="@color/input_hint_color" />
 
-        <EditText
-            android:id="@+id/editSignUpTextPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="5dp"
-            android:autofillHints="password"
-            android:background="@drawable/text_input_shape"
-            android:ems="10"
-            android:gravity="center"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            android:minHeight="48dp"
-            android:textColorHint="@color/input_hint_color"
 
-            />
-        <EditText
-            android:id="@+id/editTextRepeatPassword"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:autofillHints="password"
-            android:background="@drawable/text_input_shape"
-            android:ems="10"
-            android:gravity="center"
-            android:hint="@string/repeat_password"
-            android:inputType="textPassword"
-            android:minHeight="48dp"
-            android:textColorHint="@color/input_hint_color"
-
-            />
         <EditText
             android:id="@+id/editTextFName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="10dp"
             android:autofillHints="password"
             android:background="@drawable/text_input_shape"
             android:ems="10"
@@ -108,8 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="10dp"
             android:autofillHints="password"
             android:background="@drawable/text_input_shape"
             android:ems="10"
@@ -118,6 +83,39 @@
             android:inputType="textPersonName"
             android:minHeight="48dp"
             android:maxLength="24"
+            android:textColorHint="@color/input_hint_color"
+
+            />
+
+        <EditText
+            android:id="@+id/editSignUpTextPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:autofillHints="password"
+            android:background="@drawable/text_input_shape"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:minHeight="48dp"
+            android:textColorHint="@color/input_hint_color"
+
+            />
+        <EditText
+            android:id="@+id/editTextRepeatPassword"
+            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:autofillHints="password"
+            android:background="@drawable/text_input_shape"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="@string/repeat_password"
+            android:inputType="textPassword"
+            android:minHeight="48dp"
             android:textColorHint="@color/input_hint_color"
 
             />
@@ -131,6 +129,8 @@
             android:text="@string/sign_up"
             android:textColor="@color/black"
             android:textSize="20sp" />
+
+
 
 
 
