@@ -29,7 +29,7 @@
             android:layout_marginTop="40dp"
             android:text="@string/log_in_to_music_app"
             android:textColor="@color/black"
-            android:textSize="24.5sp"
+            android:textSize="35sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
 

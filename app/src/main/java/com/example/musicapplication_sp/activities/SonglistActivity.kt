@@ -10,7 +10,6 @@ class SonglistActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_songlist)
-        TODO("App crashes when 'songs' is selected in the nav-menu")
     }
 
     override fun onStart() {

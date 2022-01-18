@@ -32,7 +32,7 @@ public class SpotifyLoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.spotify_activity);
+        setContentView(R.layout.activity_spotify);
         spotifyClientID = findViewById(R.id.text_spotify_client_id);
         authorizeAccessButton = findViewById(R.id.authorize_access);
         authSpotify();
