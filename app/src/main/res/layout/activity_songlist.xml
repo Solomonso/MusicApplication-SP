@@ -55,7 +55,7 @@
             app:layout_constraintVertical_bias="0.05" />
 
         <Button
-            android:id="@+id/song_input_button"
+            android:id="@+id/add_song_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/add"
@@ -64,12 +64,12 @@
             app:layout_constraintTop_toTopOf="@id/song_input" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/song_list"
+            android:id="@+id/list_of_songs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/song_input_button"
+            app:layout_constraintEnd_toEndOf="@id/song_input"
             app:layout_constraintStart_toStartOf="@id/song_input"
             app:layout_constraintTop_toBottomOf="@id/song_input"
             app:layout_constraintVertical_bias="0.05" />
