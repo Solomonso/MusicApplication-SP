@@ -7,6 +7,7 @@ import android.text.TextUtils
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.musicapplication_sp.R
@@ -29,7 +30,9 @@ class RegistrationActivity : AppCompatActivity() {
     lateinit var repeatPassword: EditText
     lateinit var fName: EditText
     lateinit var lName: EditText
+    lateinit var passwordCriteria: TextView
     lateinit var signUpButton: Button
+
 
     var db = Firebase.firestore
 
@@ -44,6 +47,7 @@ class RegistrationActivity : AppCompatActivity() {
         repeatPassword = findViewById(R.id.editTextRepeatPassword)
         fName = findViewById(R.id.editTextFName)
         lName = findViewById(R.id.editTextLName)
+        passwordCriteria = findViewById(R.id.registration_error_message)
         signUpButton = findViewById(R.id.signUp)
         signUpButton.setOnClickListener {
             registerUser()
@@ -58,28 +62,15 @@ class RegistrationActivity : AppCompatActivity() {
         val fName: String = fName.text.toString()
         val lName: String = lName.text.toString()
         if (email.isNotEmpty() && password.isNotEmpty()) {
-            if (!isValidEmail(email)) {
-                Toast.makeText(
-                    this@RegistrationActivity,
-                    "Please enter a valid email address",
-                    Toast.LENGTH_LONG
-                )
-                    .show()
-            } else if (!isValidPassword(password)) {
-                Toast.makeText(
-                    this@RegistrationActivity,
-                    "The password does not meet the required criteria. Please use 1 lowercase," +
-                            " 1 uppercase, 1 special character and 1 number",
-                    Toast.LENGTH_LONG
-                )
-                    .show()
-            } else if (password != repeatPassword) {
-                Toast.makeText(
-                    this@RegistrationActivity,
-                    "The provided passwords don't match, please re-enter your password",
-                    Toast.LENGTH_LONG
-                )
-                    .show()
+            passwordCriteria.text =
+                "Please enter a valid email address"
+
+        } else if (!isValidPassword(password)) {
+            passwordCriteria.text =
+                "The password does not meet the required criteria. Please use 1 lowercase, 1 uppercase, 1 special character and 1 number"
+        } else if (password != repeatPassword) {
+            passwordCriteria.text =
+                "The provided passwords don't match, please re-enter your password"
             } else {
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
@@ -120,6 +111,7 @@ class RegistrationActivity : AppCompatActivity() {
                                     startActivity(intent)
                                     finish()
                                 } else {
+                                    passwordCriteria.text = ""
                                     Toast.makeText(
                                         this@RegistrationActivity,
                                         "Account couldn't be created: " + (task.exception?.message
@@ -140,7 +132,6 @@ class RegistrationActivity : AppCompatActivity() {
                     }
                 }
             }
-        }
         if (email.isEmpty() || password.isEmpty() || repeatPassword.isEmpty() || fName.isEmpty() || lName.isEmpty()) {
             Toast.makeText(this@RegistrationActivity, "One or more fields are not filled in", Toast.LENGTH_LONG).show()
         }
