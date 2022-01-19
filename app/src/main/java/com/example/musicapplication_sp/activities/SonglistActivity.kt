@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.iterator
 import androidx.recyclerview.widget.RecyclerView
 import com.example.musicapplication_sp.R
+import com.example.musicapplication_sp.repositories.OtherSongService
+import com.vichit.retrofitexample
 
 class SonglistActivity : AppCompatActivity() {
 
@@ -18,6 +20,9 @@ class SonglistActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_songlist)
+
+        val otherSongService = OtherSongService.buildService()
+
         songInput = findViewById(R.id.song_input)
         addButton = findViewById(R.id.add_song_button)
         addButton.setOnClickListener{

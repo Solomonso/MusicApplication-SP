@@ -1,5 +1,10 @@
 package com.example.musicapplication_sp.interfaces
 
-interface MusicAppApi {
+import com.example.musicapplication_sp.model.PostModel
+import retrofit2.Call
+import retrofit2.http.GET
 
+interface MusicAppApi {
+    @GET("/api")
+    fun getPosts() :Call<MutableList<PostModel>>
 }
