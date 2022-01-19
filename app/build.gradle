@@ -37,6 +37,7 @@ android {
 dependencies {
     //to fetch data from api https://square.github.io/retrofit/
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    //Gson
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     implementation 'androidx.core:core-ktx:1.7.0'
