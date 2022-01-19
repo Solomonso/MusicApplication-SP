@@ -4,7 +4,7 @@ import com.example.musicapplication_sp.model.PostModel
 import retrofit2.Call
 import retrofit2.http.GET
 
-interface MusicAppApi {
+interface SonglistApiService {
     @GET("/api")
     fun getPosts() :Call<MutableList<PostModel>>
 }
