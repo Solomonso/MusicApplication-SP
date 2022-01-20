@@ -8,7 +8,7 @@ object SonglistServiceGenerator {
     private val client = OkHttpClient.Builder().build()
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl("https://musicapi.duckdns.org/api/songs/")
+        .baseUrl("https://musicapi.duckdns.org/api/")
         .addConverterFactory(GsonConverterFactory.create())
         .client(client)
         .build()

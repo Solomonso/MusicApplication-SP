@@ -5,6 +5,6 @@ import retrofit2.Call
 import retrofit2.http.GET
 
 interface SonglistApiService {
-    @GET("/api")
-    fun getPosts(): Call<MutableList<PostModel>>
+    @GET("/songs")
+    fun getPosts() :Call<MutableList<PostModel>>
 }
