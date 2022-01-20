@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.musicapplication_sp">
 
     <application
@@ -15,6 +16,11 @@
         <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.RegistrationActivity" />
         <activity android:name=".activities.SongActivity" />
+        <activity android:name=".activities.SettingActivity" />
+        <activity
+            android:name=".activities.ActivityPlaylist"
+            android:exported="true" />
+
         <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.SonglistActivity" />
         <activity

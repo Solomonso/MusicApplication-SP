@@ -1,5 +1,7 @@
 package com.example.musicapplication_sp.activities;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,8 +10,6 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -20,15 +20,18 @@ import com.spotify.sdk.android.auth.AuthorizationClient;
 import com.spotify.sdk.android.auth.AuthorizationRequest;
 import com.spotify.sdk.android.auth.AuthorizationResponse;
 
-public class SpotifyLoginActivity extends AppCompatActivity {
-    private static final int REQUEST_CODE = 1337;
-    private static final String REDIRECT_URI = "https://com.example.musicapplication_sp//callback";
+
+
+
+public class SpotifyLogin extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private RequestQueue rQueue;
     private SharedPreferences.Editor editor;
     private EditText spotifyClientID;
     private Button authorizeAccessButton;
 
+    private static final int REQUEST_CODE = 1337;
+    private static final String REDIRECT_URI = "https://com.example.musicapplication_sp//callback";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,11 +43,15 @@ public class SpotifyLoginActivity extends AppCompatActivity {
         rQueue = Volley.newRequestQueue(this);
     }
 
+    /**
+     * Uses the Spotify Authentication Library,.
+     * Which is used for signing in and handles the authentication flow and Spotify Web API calls
+     */
     private void authSpotify() {
         authorizeAccessButton.setOnClickListener(view -> {
             String CLIENT_ID = spotifyClientID.getText().toString();
             Log.d("id", CLIENT_ID);
-            if (TextUtils.isEmpty(CLIENT_ID)) {
+            if(TextUtils.isEmpty(CLIENT_ID)) {
                 Toast.makeText(this, "Enter client id", Toast.LENGTH_SHORT).show();
             } else {
                 AuthorizationRequest.Builder builder = new AuthorizationRequest.Builder(CLIENT_ID, AuthorizationResponse.Type.TOKEN, REDIRECT_URI);
@@ -53,6 +60,9 @@ public class SpotifyLoginActivity extends AppCompatActivity {
                 AuthorizationRequest request = builder.build();
 
                 AuthorizationClient.openLoginActivity(this, REQUEST_CODE, request);
+                editor = getSharedPreferences("Spotify", MODE_PRIVATE).edit();
+                editor.putString("client_id", CLIENT_ID);
+                editor.commit();
             }
         });
 
@@ -92,7 +102,7 @@ public class SpotifyLoginActivity extends AppCompatActivity {
     }
 
     private void startMainActivity() {
-        Intent intent = new Intent(SpotifyLoginActivity.this, SettingsActivity.class);
+        Intent intent = new Intent(SpotifyLogin.this, SettingActivity.class);
         startActivity(intent);
         Toast.makeText(this, "Spotify Account linked successfully.", Toast.LENGTH_SHORT).show();
         finish();

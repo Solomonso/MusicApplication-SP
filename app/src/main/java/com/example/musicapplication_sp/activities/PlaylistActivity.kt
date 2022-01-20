@@ -79,7 +79,7 @@ class PlaylistActivity : AppCompatActivity() {
      * addNewPlaylist() opens a alert dialog box for adding new playlist
      */
     private fun addNewPlaylist() {
-        btnFab.setOnClickListener { view ->
+        btnFab.setOnClickListener {
             //start dialog box
             val alertDialog = AlertDialog.Builder(this)
             val textEditText = EditText(this)

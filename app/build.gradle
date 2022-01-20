@@ -48,11 +48,12 @@ dependencies {
 
     //spotify
     implementation("com.spotify.android:auth:1.2.6")
-    implementation fileTree(dir: 'spotify-app-remote', include: ['*.aar'])
     implementation "com.google.code.gson:gson:2.8.6"
     implementation 'com.android.volley:volley:1.2.1'
 
     implementation 'com.google.firebase:firebase-database-ktx:20.0.3'
+
+    implementation files('../spotify-app-remote-release-0.7.2.aar')
 
     //Testing
     testImplementation 'junit:junit:4.13.2'
