@@ -28,7 +28,7 @@ class UserService(requestQueue: RequestQueue, sharedPreferences: SharedPreferenc
                 user = gson.fromJson(response.toString(), User::class.java)
                 callBack.onSuccess()
             },
-            Response.ErrorListener { error: VolleyError? -> }) {
+            Response.ErrorListener { }) {
             @Throws(AuthFailureError::class)
             override fun getHeaders(): Map<String, String> {
                 val headers: MutableMap<String, String> = HashMap()

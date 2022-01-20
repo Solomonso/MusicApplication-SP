@@ -63,6 +63,11 @@ class MainActivity : AppCompatActivity() {
                         startActivity(intent)
                         true
                     }
+                    R.id.songs -> {
+                        val intent = Intent(this@MainActivity, SonglistActivity::class.java)
+                        startActivity(intent)
+                        true
+                    }
                     R.id.logout -> {
                       Firebase.auth.signOut()
                         val intent = Intent(this@MainActivity, LoginActivity::class.java)

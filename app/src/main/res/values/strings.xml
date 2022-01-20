@@ -33,8 +33,6 @@
     <string name="add_a_playlist">Add a playlist</string>
     <string name="profile_picture">Profile picture</string>
     <string name="add_playlist">Add playlist</string>
-    <string name="enter_valid_email">Please enter a valid email address</string>
-    <string name="password_criteria">The password does not meet the required criteria. Please use 1 lowercase, 1 uppercase, 1 special character and 1 number</string>
     <string name="passwords_dont_match">The provided passwords don\'t match, please re-enter your password</string>
     <string name="enter_valid_email">Please enter a valid email address</string>
     <string name="invalid_password_message">The password does not meet the required criteria. Please use 1 lowercase, 1 uppercase, 1 special character and 1 number</string>
