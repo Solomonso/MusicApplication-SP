@@ -6,8 +6,10 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.iterator
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.musicapplication_sp.R
+import com.example.musicapplication_sp.adaptermodel.PostAdapter
 import com.example.musicapplication_sp.interfaces.SonglistApiService
 import com.example.musicapplication_sp.model.PostModel
 import com.example.musicapplication_sp.repositories.SonglistServiceGenerator
@@ -26,19 +28,29 @@ class SonglistActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_songlist)
 
-        val otherSongService = SonglistServiceGenerator.buildService(SonglistApiService::class.java)
-        val call = otherSongService.getPosts()
-
         songInput = findViewById(R.id.song_input)
         addButton = findViewById(R.id.add_song_button)
         listViewer = findViewById(R.id.list_of_songs)
 
-        addButton.setOnClickListener{
+        getListOfSongs()
+    }
+
+    private fun getListOfSongs() {
+
+        val otherSongService = SonglistServiceGenerator.buildService(SonglistApiService::class.java)
+        val call = otherSongService.getPosts()
+        addButton.setOnClickListener {
             //addSong()
-            call.enqueue(object : Callback<MutableList<PostModel>>{
-                override fun onResponse(call: Call<MutableList<PostModel>>, response: Response<MutableList<PostModel>>) {
-                    if (response.isSuccessful){
-                        Log.e("SUCCESS", response.body().toString())
+            call.enqueue(object : Callback<MutableList<PostModel>> {
+                override fun onResponse(
+                    call: Call<MutableList<PostModel>>,
+                    response: Response<MutableList<PostModel>>
+                ) {
+                    if (response.isSuccessful) {
+                        listViewer.apply {
+                            layoutManager = LinearLayoutManager(this@SonglistActivity)
+                            adapter = PostAdapter(response.body()!!)
+                        }
                     }
                 }
 
@@ -49,7 +61,6 @@ class SonglistActivity : AppCompatActivity() {
 
             })
         }
-
     }
 
     fun addSong() {
