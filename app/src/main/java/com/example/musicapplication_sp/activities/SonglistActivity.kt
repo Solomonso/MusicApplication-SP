@@ -17,9 +17,9 @@ import retrofit2.Response
 
 class SonglistActivity : AppCompatActivity() {
 
-    private lateinit var songInput : EditText
-    private lateinit var addButton : Button
-    private lateinit var listViewer : RecyclerView
+    private lateinit var songInput: EditText
+    private lateinit var addButton: Button
+    private lateinit var listViewer: RecyclerView
 
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,11 +33,14 @@ class SonglistActivity : AppCompatActivity() {
         addButton = findViewById(R.id.add_song_button)
         listViewer = findViewById(R.id.list_of_songs)
 
-        addButton.setOnClickListener{
+        addButton.setOnClickListener {
             //addSong()
-            call.enqueue(object : Callback<MutableList<PostModel>>{
-                override fun onResponse(call: Call<MutableList<PostModel>>, response: Response<MutableList<PostModel>>) {
-                    if (response.isSuccessful){
+            call.enqueue(object : Callback<MutableList<PostModel>> {
+                override fun onResponse(
+                    call: Call<MutableList<PostModel>>,
+                    response: Response<MutableList<PostModel>>
+                ) {
+                    if (response.isSuccessful) {
                         Log.e("SUCCESS", response.body().toString())
                     }
                 }
@@ -56,11 +59,11 @@ class SonglistActivity : AppCompatActivity() {
         val songName = songInput.text.toString()
         val songList = mutableListOf<String>()
 
-        for(song in listViewer){
+        for (song in listViewer) {
             songList.add(song.toString())
         }
 
-        if(songName.isNotEmpty() && songName.isNotBlank()){
+        if (songName.isNotEmpty() && songName.isNotBlank()) {
             TODO("Add song to the recyclerview")
 
         }

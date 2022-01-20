@@ -71,69 +71,74 @@ class RegistrationActivity : AppCompatActivity() {
         } else if (password != repeatPassword) {
             passwordCriteria.text =
                 "The provided passwords don't match, please re-enter your password"
-            } else {
-                CoroutineScope(Dispatchers.IO).launch {
-                    try {
-                        auth.createUserWithEmailAndPassword(email, password)
-                            .addOnCompleteListener { task ->
-                                if (task.isSuccessful) {
-                                    Toast.makeText(
-                                        this@RegistrationActivity,
-                                        "Your account is created with the email address " + auth.currentUser!!.email,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                    // Create a new user with a first and last name
-                                    val user = Firebase.auth.currentUser
-                                    user?.let {
-                                        val userData = hashMapOf(
-                                            "UserID" to user.uid,
-                                            "email" to email,
-                                            "firstName" to fName,
-                                            "lastName" to lName,
-                                        )
-                                        // Add a new document with a generated ID
-                                        db.collection("Users")
-                                            .add(userData)
-                                            .addOnSuccessListener { documentReference ->
-                                                Log.d(
-                                                    TAG, "DocumentSnapshot added with ID: ${documentReference.id}"
-                                                )
-                                            }
-                                            .addOnFailureListener { e ->
-                                                Log.w(TAG, "Error adding document", e)
-                                            }
-                                    }
-                                    auth.signOut()
-                                    val intent =
-                                        Intent(this@RegistrationActivity, LoginActivity::class.java)
-                                    intent.flags =
-                                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                    startActivity(intent)
-                                    finish()
-                                } else {
-                                    passwordCriteria.text = ""
-                                    Toast.makeText(
-                                        this@RegistrationActivity,
-                                        "Account couldn't be created: " + (task.exception?.message
-                                            ?: String),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+        } else {
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    auth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                Toast.makeText(
+                                    this@RegistrationActivity,
+                                    "Your account is created with the email address " + auth.currentUser!!.email,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                // Create a new user with a first and last name
+                                val user = Firebase.auth.currentUser
+                                user?.let {
+                                    val userData = hashMapOf(
+                                        "UserID" to user.uid,
+                                        "email" to email,
+                                        "firstName" to fName,
+                                        "lastName" to lName,
+                                    )
+                                    // Add a new document with a generated ID
+                                    db.collection("Users")
+                                        .add(userData)
+                                        .addOnSuccessListener { documentReference ->
+                                            Log.d(
+                                                TAG,
+                                                "DocumentSnapshot added with ID: ${documentReference.id}"
+                                            )
+                                        }
+                                        .addOnFailureListener { e ->
+                                            Log.w(TAG, "Error adding document", e)
+                                        }
                                 }
+                                auth.signOut()
+                                val intent =
+                                    Intent(this@RegistrationActivity, LoginActivity::class.java)
+                                intent.flags =
+                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                startActivity(intent)
+                                finish()
+                            } else {
+                                passwordCriteria.text = ""
+                                Toast.makeText(
+                                    this@RegistrationActivity,
+                                    "Account couldn't be created: " + (task.exception?.message
+                                        ?: String),
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
-
-                    } catch (e: Exception) {
-                        withContext(Dispatchers.Main) {
-                            Toast.makeText(
-                                this@RegistrationActivity,
-                                e.message,
-                                Toast.LENGTH_LONG
-                            ).show()
                         }
+
+                } catch (e: Exception) {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(
+                            this@RegistrationActivity,
+                            e.message,
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 }
             }
+        }
         if (email.isEmpty() || password.isEmpty() || repeatPassword.isEmpty() || fName.isEmpty() || lName.isEmpty()) {
-            Toast.makeText(this@RegistrationActivity, "One or more fields are not filled in", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this@RegistrationActivity,
+                "One or more fields are not filled in",
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 
