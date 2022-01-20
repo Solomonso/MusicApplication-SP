@@ -35,7 +35,6 @@ class SonglistActivity : AppCompatActivity() {
         }
 
         if(songName.isNotEmpty() && songName.isNotBlank()){
-            TODO("Add song to the recyclerview")
 
         }
     }

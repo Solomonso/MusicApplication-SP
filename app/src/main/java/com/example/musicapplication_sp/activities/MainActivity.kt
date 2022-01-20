@@ -4,7 +4,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
@@ -37,18 +36,6 @@ class MainActivity : AppCompatActivity() {
         toggleDrawer()
     }
 
-    override fun onStart() {
-        super.onStart()
-    }
-
-    private fun connected() {
-
-    }
-
-    override fun onStop() {
-        super.onStop()
-    }
-
     private fun toggleDrawer()
     {
           val drawerLayout : DrawerLayout = findViewById(R.id.drawerLayout)
@@ -67,7 +54,7 @@ class MainActivity : AppCompatActivity() {
                         true
                     }
                     R.id.playlist -> {
-                        val intent = Intent(this@MainActivity, ActivityPlaylist::class.java)
+                        val intent = Intent(this@MainActivity, PlaylistActivity::class.java)
                         startActivity(intent)
                         true
                     }

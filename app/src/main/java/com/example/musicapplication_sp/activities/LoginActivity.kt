@@ -40,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
-        setContentView(R.layout.login_layout)
+        setContentView(R.layout.activity_login)
         //initialize all the fields declared
         loginEmail = findViewById(R.id.text_email)
         loginPassword = findViewById(R.id.text_password)

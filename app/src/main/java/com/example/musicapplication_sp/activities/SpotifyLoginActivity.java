@@ -20,10 +20,7 @@ import com.spotify.sdk.android.auth.AuthorizationClient;
 import com.spotify.sdk.android.auth.AuthorizationRequest;
 import com.spotify.sdk.android.auth.AuthorizationResponse;
 
-
-
-
-public class SpotifyLogin extends AppCompatActivity {
+public class SpotifyLoginActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private RequestQueue rQueue;
     private SharedPreferences.Editor editor;
@@ -102,7 +99,7 @@ public class SpotifyLogin extends AppCompatActivity {
     }
 
     private void startMainActivity() {
-        Intent intent = new Intent(SpotifyLogin.this, SettingActivity.class);
+        Intent intent = new Intent(SpotifyLoginActivity.this, SettingActivity.class);
         startActivity(intent);
         Toast.makeText(this, "Spotify Account linked successfully.", Toast.LENGTH_SHORT).show();
         finish();

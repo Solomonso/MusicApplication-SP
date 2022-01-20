@@ -3,7 +3,6 @@ package com.example.musicapplication_sp.repositories;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -54,7 +53,7 @@ public class PlaylistService {
                 },
                 error -> getCurrentUserPlaylist(() -> Log.d("Error", "Unable get current user playlist " + error))) {
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 String token = sharedPreferences.getString("token", "");
                 String auth = "Bearer " + token;

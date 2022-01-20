@@ -32,8 +32,6 @@ class RegistrationActivity : AppCompatActivity() {
     lateinit var lName: EditText
     lateinit var passwordCriteria: TextView
     lateinit var signUpButton: Button
-
-
     var db = Firebase.firestore
 
     @Override
@@ -61,16 +59,17 @@ class RegistrationActivity : AppCompatActivity() {
         val repeatPassword: String = repeatPassword.text.toString().trim { it <= ' ' }
         val fName: String = fName.text.toString()
         val lName: String = lName.text.toString()
-        if (email.isNotEmpty() && password.isNotEmpty()) {
-            passwordCriteria.text =
-                "Please enter a valid email address"
 
-        } else if (!isValidPassword(password)) {
-            passwordCriteria.text =
-                "The password does not meet the required criteria. Please use 1 lowercase, 1 uppercase, 1 special character and 1 number"
-        } else if (password != repeatPassword) {
-            passwordCriteria.text =
-                "The provided passwords don't match, please re-enter your password"
+        if (email.isNotEmpty() && password.isNotEmpty()) {
+            if (!isValidEmail(email)) {
+                passwordCriteria.text =
+                    getString(R.string.enter_valid_email)
+            } else if (!isValidPassword(password)) {
+                passwordCriteria.text =
+                    getString(R.string.invalid_password_message)
+            } else if (password != repeatPassword) {
+                passwordCriteria.text =
+                    getString(R.string.password_criteria)
             } else {
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
@@ -96,7 +95,8 @@ class RegistrationActivity : AppCompatActivity() {
                                             .add(userData)
                                             .addOnSuccessListener { documentReference ->
                                                 Log.d(
-                                                    TAG, "DocumentSnapshot added with ID: ${documentReference.id}"
+                                                    TAG,
+                                                    "DocumentSnapshot added with ID: ${documentReference.id}"
                                                 )
                                             }
                                             .addOnFailureListener { e ->
@@ -132,8 +132,13 @@ class RegistrationActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
         if (email.isEmpty() || password.isEmpty() || repeatPassword.isEmpty() || fName.isEmpty() || lName.isEmpty()) {
-            Toast.makeText(this@RegistrationActivity, "One or more fields are not filled in", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this@RegistrationActivity,
+                "One or more fields are not filled in",
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 

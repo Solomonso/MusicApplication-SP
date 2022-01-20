@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.musicapplication_sp.R
 
-class SettingsActivity : AppCompatActivity() {
+class SettingActivity : AppCompatActivity() {
     private lateinit var signSpotifyButton: Button
     private lateinit var sharedPreferences: SharedPreferences
 
@@ -26,11 +26,11 @@ class SettingsActivity : AppCompatActivity() {
             val username = sharedPreferences.getString("username", "").toString()
             //check if the spotify user already linked an account with their username
             if (username.isEmpty()) {
-                val intent = Intent(this@SettingsActivity, SpotifyLoginActivity::class.java)
+                val intent = Intent(this@SettingActivity, SpotifyLoginActivity::class.java)
                 startActivity(intent)
             } else {
                 Toast.makeText(
-                    this@SettingsActivity,
+                    this@SettingActivity,
                     "Spotify Account already linked.",
                     Toast.LENGTH_SHORT
                 ).show()

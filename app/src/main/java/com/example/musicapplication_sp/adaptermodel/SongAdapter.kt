@@ -19,7 +19,7 @@ class SongAdapter(private val songs: ArrayList<Song>): RecyclerView.Adapter<Song
         this.listener = listener
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.list_item_songs, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.list_of_songs, parent, false)
         playButton = itemView.findViewById(R.id.playButton)
         pauseButton = itemView.findViewById(R.id.pauseButton)
         resumeButton = itemView.findViewById(R.id.resumeButton)
