@@ -102,7 +102,7 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(this@LoginActivity, "Please enter password", Toast.LENGTH_SHORT).show()
                 }
                 else -> {
-                    if (numberOfAttempts < 4) {
+                    if (numberOfAttempts < 3) {
                         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 Toast.makeText(this@LoginActivity, "You are logged in " + auth.currentUser!!.email, Toast.LENGTH_SHORT).show()
@@ -116,7 +116,7 @@ class LoginActivity : AppCompatActivity() {
                             }
                         }
                     }
-                    else if (numberOfAttempts == 4) {
+                    else if (numberOfAttempts == 3) {
                         Toast.makeText(this@LoginActivity, "Login failed. No of attempts is $numberOfAttempts.", Toast.LENGTH_LONG).show()
                     } else {
                         Toast.makeText(this@LoginActivity, "Login limit exceeded.", Toast.LENGTH_LONG).show()
