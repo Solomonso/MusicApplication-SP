@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
           toggle.isDrawerIndicatorEnabled = true
           drawerLayout.addDrawerListener(toggle)
           toggle.syncState()
-
+        val username = sharedPreferences.getString("username","").toString()
         navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.profile -> {

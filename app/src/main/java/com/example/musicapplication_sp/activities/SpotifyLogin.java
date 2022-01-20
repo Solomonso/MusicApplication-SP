@@ -7,24 +7,21 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.musicapplication_sp.R;
-import com.example.musicapplication_sp.model.Playlist;
 import com.example.musicapplication_sp.model.User;
-import com.example.musicapplication_sp.repositories.PlaylistService;
 import com.example.musicapplication_sp.repositories.UserService;
 import com.spotify.sdk.android.auth.AuthorizationClient;
 import com.spotify.sdk.android.auth.AuthorizationRequest;
 import com.spotify.sdk.android.auth.AuthorizationResponse;
 
-import java.util.ArrayList;
+
+
 
 public class SpotifyLogin extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
@@ -46,6 +43,10 @@ public class SpotifyLogin extends AppCompatActivity {
         rQueue = Volley.newRequestQueue(this);
     }
 
+    /**
+     * Uses the Spotify Authentication Library,.
+     * Which is used for signing in and handles the authentication flow and Spotify Web API calls
+     */
     private void authSpotify() {
         authorizeAccessButton.setOnClickListener(view -> {
             String CLIENT_ID = spotifyClientID.getText().toString();
@@ -59,6 +60,9 @@ public class SpotifyLogin extends AppCompatActivity {
                 AuthorizationRequest request = builder.build();
 
                 AuthorizationClient.openLoginActivity(this, REQUEST_CODE, request);
+                editor = getSharedPreferences("Spotify", MODE_PRIVATE).edit();
+                editor.putString("client_id", CLIENT_ID);
+                editor.commit();
             }
         });
 

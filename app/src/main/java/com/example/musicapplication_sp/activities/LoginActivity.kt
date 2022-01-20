@@ -115,7 +115,7 @@ class LoginActivity : AppCompatActivity() {
                             }
                         }
                     }
-                    else if (numberOfAttempts == 4) {
+                    else if (numberOfAttempts == 3) {
                         Toast.makeText(this@LoginActivity, "Login failed. No of attempts is $numberOfAttempts.", Toast.LENGTH_LONG).show()
                     } else {
                         Toast.makeText(this@LoginActivity, "Login limit exceeded.", Toast.LENGTH_LONG).show()
@@ -125,12 +125,14 @@ class LoginActivity : AppCompatActivity() {
                                 val  timeLeft = getString(R.string.time_count, millisUntilFinished / 1000)
                                 timeCountField.text = timeLeft
                                 loginButton.isEnabled = false //disable button
+                                registerButton.isEnabled = false
 
                             }
 
                             override fun onFinish() {
                                 numberOfAttempts = 0
                                 loginButton.isEnabled = true //enable button again
+                                registerButton.isEnabled = true // enable register again
                                 timeCountField.text = ""
                             }
                         }.start()

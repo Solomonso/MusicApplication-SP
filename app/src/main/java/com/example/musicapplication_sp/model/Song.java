@@ -4,10 +4,12 @@ public class Song {
     private String id;
     private String name;
     private String artist;
+    private String uri;
 
-    public Song(String id, String name) {
+    public Song(String id, String name, String uri) {
         this.name = name;
         this.id = id;
+        this.uri = uri;
     }
 
     public String getId() {
@@ -32,6 +34,14 @@ public class Song {
 
     public void setArtist(String artist) {
         this.artist = artist;
+    }
+
+    public String getUri() {
+        return this.uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 
 }
