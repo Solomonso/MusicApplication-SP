@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/greenbackground"
     android:orientation="vertical"
-    android:background="@drawable/greenbg"
     tools:context=".activities.RegistrationActivity">
 
 
@@ -75,11 +75,12 @@
             android:gravity="center"
             android:hint="@string/firstname"
             android:inputType="textPersonName"
-            android:minHeight="48dp"
             android:maxLength="24"
+            android:minHeight="48dp"
             android:textColorHint="@color/input_hint_color"
 
             />
+
         <EditText
             android:id="@+id/editTextLName"
             android:layout_width="wrap_content"
@@ -92,8 +93,8 @@
             android:gravity="center"
             android:hint="@string/lName"
             android:inputType="textPersonName"
-            android:minHeight="48dp"
             android:maxLength="24"
+            android:minHeight="48dp"
             android:textColorHint="@color/input_hint_color"
 
             />
@@ -114,12 +115,13 @@
             android:textColorHint="@color/input_hint_color"
 
             />
+
         <EditText
             android:id="@+id/editTextRepeatPassword"
-            android:layout_marginBottom="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
             android:autofillHints="password"
             android:background="@drawable/text_input_shape"
             android:ems="10"
@@ -136,9 +138,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="70dp"
             android:background="@color/transparent"
             android:text="@string/sign_up"
-            android:layout_marginBottom="70dp"
             android:textColor="@color/black"
             android:textSize="20sp" />
 

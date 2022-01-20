@@ -1,40 +1,78 @@
 package com.example.musicapplication_sp.activities
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.iterator
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.musicapplication_sp.R
+import com.example.musicapplication_sp.adaptermodel.PostAdapter
+import com.example.musicapplication_sp.interfaces.SonglistApiService
+import com.example.musicapplication_sp.model.PostModel
+import com.example.musicapplication_sp.repositories.SonglistServiceGenerator
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SonglistActivity : AppCompatActivity() {
 
-    lateinit var songInput : EditText
-    lateinit var addButton : Button
-    lateinit var listViewer : RecyclerView
+    private lateinit var songInput: EditText
+    private lateinit var addButton: Button
+    private lateinit var listViewer: RecyclerView
 
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_songlist)
+
         songInput = findViewById(R.id.song_input)
         addButton = findViewById(R.id.add_song_button)
-        addButton.setOnClickListener{
-            addSong()
-        }
         listViewer = findViewById(R.id.list_of_songs)
+
+        getListOfSongs()
+    }
+
+    private fun getListOfSongs() {
+
+        val otherSongService = SonglistServiceGenerator.buildService(SonglistApiService::class.java)
+        val call = otherSongService.getPosts()
+        addButton.setOnClickListener {
+            //addSong()
+            call.enqueue(object : Callback<MutableList<PostModel>> {
+                override fun onResponse(
+                    call: Call<MutableList<PostModel>>,
+                    response: Response<MutableList<PostModel>>
+                ) {
+                    if (response.isSuccessful) {
+                        listViewer.apply {
+                            layoutManager = LinearLayoutManager(this@SonglistActivity)
+                            adapter = PostAdapter(response.body()!!)
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<MutableList<PostModel>>, t: Throwable) {
+                    t.printStackTrace()
+                    Log.e("ERROR", t.message.toString())
+                }
+
+            })
+        }
     }
 
     fun addSong() {
         val songName = songInput.text.toString()
         val songList = mutableListOf<String>()
 
-        for(song in listViewer){
+        for (song in listViewer) {
             songList.add(song.toString())
         }
 
-        if(songName.isNotEmpty() && songName.isNotBlank()){
+        if (songName.isNotEmpty() && songName.isNotBlank()) {
+            TODO("Add song to the recyclerview")
 
         }
     }
