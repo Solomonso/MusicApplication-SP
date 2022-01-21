@@ -1,6 +1,6 @@
 package com.example.musicapplication_sp
 
-import com.example.musicapplication_sp.activities.Cryptography
+import com.example.musicapplication_sp.Cryptography.Cryptography
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import javax.crypto.spec.SecretKeySpec

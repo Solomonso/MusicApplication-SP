@@ -1,4 +1,4 @@
-package com.example.musicapplication_sp.activities
+package com.example.musicapplication_sp.Cryptography
 
 import java.security.SecureRandom
 import javax.crypto.Cipher
@@ -23,9 +23,7 @@ open class Cryptography {
         val secretKey: SecretKey = KeyGenerator.getInstance(algorithm).generateKey()
         // get base64 encoded version of the key
         val encodedKey = secretKey.encoded
-        val keySpec = SecretKeySpec(encodedKey, algorithm)
-        print(encodedKey)
-        return keySpec
+        return SecretKeySpec(encodedKey, algorithm)
     }
 
     fun encrypt(
@@ -39,7 +37,7 @@ open class Cryptography {
         ivRandom.nextBytes(iv)
         val ivSpec = IvParameterSpec(iv) // 2
 
-        val cipher = Cipher.getInstance("AES/CBC/PKCS7Padding") // 1
+        val cipher = Cipher.getInstance("AES/CTR/NoPadding") // 1
         cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivSpec)
         val encrypted = cipher.doFinal(plainByteArray) // 2
         map["iv"] = iv
@@ -47,14 +45,13 @@ open class Cryptography {
         return map
 
     }
+
     fun decrypt(map: MutableMap<String, ByteArray>, secretKeySpec: SecretKeySpec): String {
         val iv = map["iv"]
         val encrypted = map["encrypted"]
-
-
-        val ivSpec1 = IvParameterSpec(iv)
-        val cipher = Cipher.getInstance("AES/CBC/PKCS7Padding")
-        cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivSpec1)
+        val ivSpec = IvParameterSpec(iv)
+        val cipher = Cipher.getInstance("AES/CTR/NoPadding")
+        cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivSpec)
         val decrypted = cipher.doFinal(encrypted)
         val sb = StringBuilder()
         for (b in decrypted) {
