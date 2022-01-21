@@ -22,7 +22,6 @@ open class Cryptography {
         random.nextBytes(salt)
         val secretKey: SecretKey = KeyGenerator.getInstance(algorithm).generateKey()
         // get base64 encoded version of the key
-// get base64 encoded version of the key
         val encodedKey = secretKey.encoded
         val keySpec = SecretKeySpec(encodedKey, algorithm)
         print(encodedKey)
@@ -34,35 +33,24 @@ open class Cryptography {
         secretKey: SecretKey
     ): MutableMap<String, ByteArray> {
         val ivRandom = SecureRandom() //not caching previous seeded instance of SecureRandom
-        // 1
         val map: MutableMap<String, ByteArray>
         map = HashMap()
         val iv = ByteArray(16)
         ivRandom.nextBytes(iv)
         val ivSpec = IvParameterSpec(iv) // 2
-        //val string: String = sharedPreferences["token"] as String
-        //val byteArray: ByteArray = string.toByteArray()
+
         val cipher = Cipher.getInstance("AES/CBC/PKCS7Padding") // 1
         cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivSpec)
         val encrypted = cipher.doFinal(plainByteArray) // 2
-        //map["salt"] = salt
         map["iv"] = iv
         map["encrypted"] = encrypted
         return map
 
     }
-
     fun decrypt(map: MutableMap<String, ByteArray>, secretKeySpec: SecretKeySpec): String {
-        val salt = map["salt"]
         val iv = map["iv"]
         val encrypted = map["encrypted"]
 
-        // 2
-//regenerate key from password
-        val keySpec = secretKeySpec
-
-// 3
-//Decrypt
 
         val ivSpec1 = IvParameterSpec(iv)
         val cipher = Cipher.getInstance("AES/CBC/PKCS7Padding")
