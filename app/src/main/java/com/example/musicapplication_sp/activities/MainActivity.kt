@@ -14,11 +14,6 @@ import com.example.musicapplication_sp.R
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import java.security.KeyPair
-import java.security.KeyPairGenerator
-import java.security.PublicKey
-import java.security.Signature
-import javax.crypto.Cipher
 
 class MainActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
@@ -31,32 +26,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val sign: Signature = Signature.getInstance("SHA256withRSA")
-
-        //Creating KeyPair generator object
-        val keyPairGen = KeyPairGenerator.getInstance("RSA")
-
-
-        //Initializing the key pair generator
-        keyPairGen.initialize(2048)
-
-        //Generating the pair of keys
-        val pair = keyPairGen.generateKeyPair()
-
-        //Creating a Cipher object
-        val cipher: Cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding")
-
-        //Initializing a Cipher object
-        cipher.init(Cipher.ENCRYPT_MODE, pair.public)
-
-        //Adding data to the cipher
-        val input = "AIzaSyDGDhdiqacmjroaO7-Bar_fgP6G2YVEHsA".toByteArray()
-        cipher.update(input)
-
-        //encrypting the data
-        val cipherText: ByteArray = cipher.doFinal()
-        println(cipherText.toString() + "UTF8")
 
         toolbar = findViewById(R.id.toolbar)
         sharedPreferences = this.getSharedPreferences("Spotify", MODE_PRIVATE)
