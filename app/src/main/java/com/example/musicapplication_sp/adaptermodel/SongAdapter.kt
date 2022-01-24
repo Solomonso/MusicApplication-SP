@@ -10,7 +10,8 @@ import com.example.musicapplication_sp.R
 import com.example.musicapplication_sp.interfaces.OnSongClickListener
 import com.example.musicapplication_sp.model.Song
 
-class SongAdapter(private val songs: ArrayList<Song>): RecyclerView.Adapter<SongAdapter.MyViewHolder>() {
+class SongAdapter(private val songs: ArrayList<Song>) :
+    RecyclerView.Adapter<SongAdapter.MyViewHolder>() {
     private lateinit var listener: OnSongClickListener
     lateinit var playButton: ImageButton
     lateinit var pauseButton: ImageButton
@@ -18,8 +19,10 @@ class SongAdapter(private val songs: ArrayList<Song>): RecyclerView.Adapter<Song
     fun setOnSongPlayListener(listener: OnSongClickListener) {
         this.listener = listener
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.list_of_songs, parent, false)
+        val itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.list_of_songs, parent, false)
         playButton = itemView.findViewById(R.id.playButton)
         pauseButton = itemView.findViewById(R.id.pauseButton)
         resumeButton = itemView.findViewById(R.id.resumeButton)
@@ -34,12 +37,15 @@ class SongAdapter(private val songs: ArrayList<Song>): RecyclerView.Adapter<Song
     override fun getItemCount(): Int {
         return songs.size
     }
-    inner class MyViewHolder(itemView: View, listener: OnSongClickListener): RecyclerView.ViewHolder(itemView) {
-        val songName : TextView = itemView.findViewById(R.id.song_name)
+
+    inner class MyViewHolder(itemView: View, listener: OnSongClickListener) :
+        RecyclerView.ViewHolder(itemView) {
+        val songName: TextView = itemView.findViewById(R.id.song_name)
+
         init {
-            itemView.setOnClickListener{
+            itemView.setOnClickListener {
                 listener.onItemClick(adapterPosition)
             }
-         }
         }
+    }
 }

@@ -134,7 +134,11 @@ class RegistrationActivity : AppCompatActivity() {
             }
         }
         if (email.isEmpty() || password.isEmpty() || repeatPassword.isEmpty() || fName.isEmpty() || lName.isEmpty()) {
-            Toast.makeText(this@RegistrationActivity, "One or more fields are not filled in", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this@RegistrationActivity,
+                "One or more fields are not filled in",
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 

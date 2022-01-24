@@ -20,3 +20,4 @@ class ExampleInstrumentedTest {
         assertEquals("com.example.musicapplication_sp", appContext.packageName)
     }
 }
+

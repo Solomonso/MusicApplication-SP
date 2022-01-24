@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.musicapplication_sp.R
 import com.example.musicapplication_sp.model.PostModel
 
-class PostAdapter(private val postModel: MutableList<PostModel>) : RecyclerView.Adapter<PostViewHolder>() {
+class PostAdapter(private val postModel: MutableList<PostModel>) :
+    RecyclerView.Adapter<PostViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.card_post, parent, false)

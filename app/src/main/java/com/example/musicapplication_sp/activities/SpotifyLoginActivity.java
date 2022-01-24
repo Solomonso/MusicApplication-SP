@@ -1,7 +1,5 @@
 package com.example.musicapplication_sp.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +8,8 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -29,6 +29,7 @@ public class SpotifyLoginActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE = 1337;
     private static final String REDIRECT_URI = "https://com.example.musicapplication_sp//callback";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +49,7 @@ public class SpotifyLoginActivity extends AppCompatActivity {
         authorizeAccessButton.setOnClickListener(view -> {
             String CLIENT_ID = spotifyClientID.getText().toString();
             Log.d("id", CLIENT_ID);
-            if(TextUtils.isEmpty(CLIENT_ID)) {
+            if (TextUtils.isEmpty(CLIENT_ID)) {
                 Toast.makeText(this, "Enter client id", Toast.LENGTH_SHORT).show();
             } else {
                 AuthorizationRequest.Builder builder = new AuthorizationRequest.Builder(CLIENT_ID, AuthorizationResponse.Type.TOKEN, REDIRECT_URI);
@@ -57,6 +58,10 @@ public class SpotifyLoginActivity extends AppCompatActivity {
                 AuthorizationRequest request = builder.build();
 
                 AuthorizationClient.openLoginActivity(this, REQUEST_CODE, request);
+                /*Cryptography cryptography = new Cryptography();
+                SecretKey key = cryptography.createSecretKey("AES");
+                byte[] byteArray = CLIENT_ID.getBytes(StandardCharsets.UTF_8);
+                cryptography.encrypt(byteArray, key);*/
                 editor = getSharedPreferences("Spotify", MODE_PRIVATE).edit();
                 editor.putString("client_id", CLIENT_ID);
                 editor.commit();

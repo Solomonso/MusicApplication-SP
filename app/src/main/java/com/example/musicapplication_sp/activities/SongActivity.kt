@@ -3,8 +3,6 @@ package com.example.musicapplication_sp.activities
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +18,7 @@ import com.spotify.android.appremote.api.ConnectionParams
 import com.spotify.android.appremote.api.Connector
 import com.spotify.android.appremote.api.SpotifyAppRemote
 
-class SongActivity : AppCompatActivity(){
+class SongActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var requestQueue: RequestQueue
     private lateinit var songs: ArrayList<Song>
@@ -46,9 +44,11 @@ class SongActivity : AppCompatActivity(){
      */
     override fun onStart() {
         super.onStart()
-        val clientId = sharedPreferences.getString("client_id","")
+        val clientId = sharedPreferences.getString("client_id", "")
         val redirectUri = "https://com.example.musicapplication_sp//callback"
-        val connectionParams = ConnectionParams.Builder(clientId).setRedirectUri(redirectUri).showAuthView(true).build()
+        val connectionParams =
+            ConnectionParams.Builder(clientId).setRedirectUri(redirectUri).showAuthView(true)
+                .build()
 
         SpotifyAppRemote.connect(this, connectionParams, object : Connector.ConnectionListener {
             override fun onConnected(appRemote: SpotifyAppRemote) {
