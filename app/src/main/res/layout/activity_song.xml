@@ -42,7 +42,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView"
-            tools:listitem="@layout/list_of_songs" />
+            tools:listitem="@layout/playlist_songs" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

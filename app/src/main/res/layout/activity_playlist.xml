@@ -44,7 +44,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView"
             tools:ignore="MissingConstraints"
-            tools:listitem="@layout/playlist_list" />
+            tools:listitem="@layout/user_playlists" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnFab"
