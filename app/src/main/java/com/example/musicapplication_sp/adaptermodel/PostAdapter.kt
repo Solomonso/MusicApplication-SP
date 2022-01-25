@@ -8,28 +8,39 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.musicapplication_sp.R
 import com.example.musicapplication_sp.model.PostModel
 
-class PostAdapter(private val postModel: MutableList<PostModel>) :
-    RecyclerView.Adapter<PostViewHolder>() {
+class PostAdapter(private val postModel: List<PostModel>) :
+    RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.card_post, parent, false)
-        return PostViewHolder(view)
+    class PostViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private var tvId: TextView = itemView.findViewById(R.id.tvId)
+        private var tvUserId: TextView = itemView.findViewById(R.id.tvUserId)
+        private var tvSongName: TextView = itemView.findViewById(R.id.tvSongName)
+        /**
+         * bindView method takes one PostModel object and loads its content in the list item.
+         */
+        fun bindView(postModel: PostModel) {
+            tvId.text = postModel.id.toString()
+            tvUserId.text = postModel.UserID.toString()
+            tvSongName.text = postModel.song_name.toString()
+        }
     }
+
+    /**
+     * onCreateViewHolder loads the layout for the list items
+     */
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
+        return PostViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.card_post, parent, false)
+        )
+    }
+
+    /**
+     * getItemCount returns the total number of items to show in the recyclerview
+     */
+    override fun getItemCount(): Int = postModel.size
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        return holder.bindView(postModel[position])
+        holder.bindView(postModel[position])
     }
 
-    override fun getItemCount(): Int {
-        return postModel.size
-    }
-
-}
-
-class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    private val tvSongName: TextView = itemView.findViewById(R.id.tvSongName)
-
-    fun bindView(postModel: PostModel) {
-        tvSongName.text = postModel.song_name
-    }
 }

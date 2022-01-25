@@ -67,10 +67,8 @@ class PlaylistActivity : AppCompatActivity() {
                         val songIntent = Intent(this@PlaylistActivity, SongActivity::class.java)
                         songIntent.putExtra("playlist_id", playlists[position].id)
                         startActivity(songIntent)
-
                     }
                 })
-
             }
         })
     }
