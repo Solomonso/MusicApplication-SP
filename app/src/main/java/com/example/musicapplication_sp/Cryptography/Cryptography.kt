@@ -1,11 +1,19 @@
 package com.example.musicapplication_sp.Cryptography
 
+import android.security.keystore.KeyProperties
+import android.security.keystore.KeyProtection
+import java.io.IOException
+import java.security.KeyStore
+import java.security.KeyStoreException
+import java.security.NoSuchAlgorithmException
 import java.security.SecureRandom
+import java.security.cert.CertificateException
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
+
 
 open class Cryptography {
 
@@ -23,25 +31,57 @@ open class Cryptography {
         val secretKey: SecretKey = KeyGenerator.getInstance(algorithm).generateKey()
         // get base64 encoded version of the key
         val encodedKey = secretKey.encoded
+        var keyStore: KeyStore?
+        try {
+            keyStore = KeyStore.getInstance("AndroidKeyStore").apply { load(null) }
+            keyStore.setEntry(
+                "clientIDKey",
+                KeyStore.SecretKeyEntry(secretKey),
+                KeyProtection.Builder(KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
+                    .setBlockModes(KeyProperties.BLOCK_MODE_CTR)
+                    .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+                    .build()
+            )
+        } catch (e : KeyStoreException) {
+            e.printStackTrace();
+        } catch (e : CertificateException) {
+            e.printStackTrace();
+        } catch (e : NoSuchAlgorithmException) {
+            e.printStackTrace();
+        } catch (e : IOException) {
+            e.printStackTrace();
+        }
+
         return SecretKeySpec(encodedKey, algorithm)
     }
 
     fun encrypt(
-        plainByteArray: ByteArray,
-        secretKey: SecretKey
+        plainByteArray: ByteArray
+        //secretKey: SecretKey
     ): MutableMap<String, ByteArray> {
         val ivRandom = SecureRandom() //not caching previous seeded instance of SecureRandom
         val map: MutableMap<String, ByteArray>
         map = HashMap()
-        val iv = ByteArray(16)
+        var iv = ByteArray(16)
         ivRandom.nextBytes(iv)
         val ivSpec = IvParameterSpec(iv) // 2
+        val ks: KeyStore = KeyStore.getInstance("AndroidKeyStore").apply {
+            load(null)
+        }
 
+        val secretKey : SecretKey = ks.getKey("clientIDKey",null) as SecretKey
+        //secretKey.g
         val cipher = Cipher.getInstance("AES/CTR/NoPadding") // 1
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivSpec)
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey)
+        var ivParams = cipher.getParameters().getParameterSpec(IvParameterSpec::class.java)
+        iv = ivParams.getIV()
         val encrypted = cipher.doFinal(plainByteArray) // 2
         map["iv"] = iv
         map["encrypted"] = encrypted
+
+
+
+
         return map
 
     }
