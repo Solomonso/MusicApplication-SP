@@ -1,14 +1,12 @@
 package com.example.musicapplication_sp.interfaces
 
-import com.example.musicapplication_sp.model.SongResponse
+import com.example.musicapplication_sp.data.SongResponse
 import retrofit2.Call
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.PATCH
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface SonglistCrudMethod {
     // GET all data from songs root
+    @Headers("Authorization: jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5Ijoic3R1ZmYiLCJpYXQiOjE2NDMzMTMzNDl9.fQEgE7ZdN8o8yDu40GSR_o0iQ2hfjWdugTuI-wpWZHI")
     @GET("songs")
     fun getSongs(): Call<SongResponse>
 

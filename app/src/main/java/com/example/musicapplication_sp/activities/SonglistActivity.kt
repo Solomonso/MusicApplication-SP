@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.musicapplication_sp.R
 import com.example.musicapplication_sp.adaptermodel.PostAdapter
 import com.example.musicapplication_sp.interfaces.SonglistCrudMethod
-import com.example.musicapplication_sp.model.PostModel
-import com.example.musicapplication_sp.model.SongResponse
+import com.example.musicapplication_sp.model.GetSongsModel
+import com.example.musicapplication_sp.data.SongResponse
 import com.example.musicapplication_sp.repositories.SongListService
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,7 +35,7 @@ class SonglistActivity : AppCompatActivity() {
 
         listOfSongs.layoutManager = LinearLayoutManager(this)
         listOfSongs.setHasFixedSize(true)
-        getListOfSongs { songs: List<PostModel> ->
+        getListOfSongs { songs: List<GetSongsModel> ->
             listOfSongs.adapter = PostAdapter(songs)
         }
 
@@ -45,7 +45,7 @@ class SonglistActivity : AppCompatActivity() {
     /**
      * Retrieve Data from API which is stored in MySql database
      */
-    private fun getListOfSongs(callback: (List<PostModel>) -> Unit) {
+    private fun getListOfSongs(callback: (List<GetSongsModel>) -> Unit) {
         val api = SongListService.getInstance().create(SonglistCrudMethod::class.java)
         api.getSongs().enqueue(object : Callback<SongResponse> {
             override fun onResponse(call: Call<SongResponse>, response: Response<SongResponse>) {
@@ -62,7 +62,7 @@ class SonglistActivity : AppCompatActivity() {
     /**
      * Insert Data to API to store. DOES NOT WORK YET!!
      */
-    private fun postListOfSongs(callback: (List<PostModel>) -> Unit) {
+    private fun postListOfSongs(callback: (List<GetSongsModel>) -> Unit) {
         val api = SongListService.getInstance().create(SonglistCrudMethod::class.java)
 
         addButton.setOnClickListener {

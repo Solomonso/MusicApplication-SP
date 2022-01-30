@@ -5,6 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class SongListService {
     companion object {
+        //the url needs to store
         private const val BASE_URL = "https://musicapi.duckdns.org/api/"
         private var retrofit: Retrofit? = null
 
