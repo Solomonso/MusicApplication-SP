@@ -40,5 +40,7 @@
     <string name="addsongbutton">addSongButton</string>
     <string name="two_factor_authentication">Two factor authentication</string>
     <string name="code">Please enter the code you received via email:</string>
+    <string name="id">id</string>
+    <string name="userid">userId</string>
 
 </resources>

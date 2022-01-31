@@ -2,12 +2,10 @@ package com.example.musicapplication_sp.activities
 
 import android.content.Intent
 import android.content.SharedPreferences
-import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -16,8 +14,6 @@ import com.example.musicapplication_sp.R
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import java.util.*
-
 
 class MainActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
@@ -26,7 +22,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var displayName: TextView
     private lateinit var username: String
 
-    @RequiresApi(Build.VERSION_CODES.O)
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +35,6 @@ class MainActivity : AppCompatActivity() {
         displayName.text = username
         setSupportActionBar(toolbar)
         toggleDrawer()
-
     }
 
     private fun toggleDrawer() {

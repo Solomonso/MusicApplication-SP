@@ -21,14 +21,13 @@ import com.spotify.sdk.android.auth.AuthorizationRequest;
 import com.spotify.sdk.android.auth.AuthorizationResponse;
 
 public class SpotifyLoginActivity extends AppCompatActivity {
+    private static final int REQUEST_CODE = 1337;
+    private static final String REDIRECT_URI = "https://com.example.musicapplication_sp//callback";
     private SharedPreferences sharedPreferences;
     private RequestQueue rQueue;
     private SharedPreferences.Editor editor;
     private EditText spotifyClientID;
     private Button authorizeAccessButton;
-
-    private static final int REQUEST_CODE = 1337;
-    private static final String REDIRECT_URI = "https://com.example.musicapplication_sp//callback";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

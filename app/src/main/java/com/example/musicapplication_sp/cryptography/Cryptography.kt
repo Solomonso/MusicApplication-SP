@@ -1,4 +1,4 @@
-package com.example.musicapplication_sp.Cryptography
+package com.example.musicapplication_sp.cryptography
 
 import java.security.SecureRandom
 import javax.crypto.Cipher
