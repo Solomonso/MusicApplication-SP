@@ -38,7 +38,7 @@
     <string name="invalid_password_message">The password does not meet the required criteria. Please use 1 lowercase, 1 uppercase, 1 special character and 1 number</string>
     <string name="password_criteria">The provided passwords don\'t match, please re-enter your password</string>
     <string name="addsongbutton">addSongButton</string>
-    <string name="two_factor_authentication">Two factor authentication</string>
+    <string name="two_factor_authentication">Two-factor authentication</string>
     <string name="code">Please enter the code you received via email:</string>
     <string name="id">id</string>
     <string name="userid">userId</string>
