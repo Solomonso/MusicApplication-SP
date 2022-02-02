@@ -3,6 +3,8 @@
     package="com.example.musicapplication_sp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <application
         android:allowBackup="false"
@@ -11,7 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:testOnly="false"
+        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.MusicApplicationSP">
+        <activity
+            android:name=".activities.LoginActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.SpotifyLoginActivity"
             android:exported="false" />
@@ -30,18 +36,18 @@
         <activity
             android:name=".activities.PlaylistActivity"
             android:exported="false" />
-
         <activity
             android:name=".activities.SonglistActivity"
             android:exported="false" />
-
         <activity
-            android:name=".activities.LoginActivity"
+            android:name=".activities.YoutubeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
+
 </manifest>
