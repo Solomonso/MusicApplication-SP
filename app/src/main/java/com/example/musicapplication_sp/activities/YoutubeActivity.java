@@ -1,5 +1,6 @@
 package com.example.musicapplication_sp.activities;
 
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -40,9 +41,9 @@ public class YoutubeActivity extends AppCompatActivity {
 //    private static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
 //    private static final int REQUEST_PERMISSION_GET_ACCOUNTS = 1003;
 //    private static final String[] SCOPES = { YouTubeScopes.YOUTUBE_READONLY, YouTubeScopes.YOUTUBE, YouTubeScopes.YOUTUBE_UPLOAD};
-    private static final String CLIENT_SECRETS= "D:\\Files\\SP\\MusicApplicationSP\\app\\client_secret.json";
+    private static final String CLIENT_SECRETS= "client_secret.json";
     private static final Collection<String> SCOPES = Collections.singletonList("https://www.googleapis.com/auth/youtube.force-ssl");
-
+    //AssetManager assets = this.getAssets();
     private static final String APPLICATION_NAME = "API code samples";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
@@ -54,18 +55,19 @@ public class YoutubeActivity extends AppCompatActivity {
         Log.d("Test", "Test");
     }
 
-    public static Credential authorize(final NetHttpTransport httpTransport) throws IOException {
+    public  Credential authorize(final NetHttpTransport httpTransport) throws IOException {
         // Load client secrets.
         InputStream in = YoutubeActivity.class.getResourceAsStream(CLIENT_SECRETS);
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+        AssetManager assets = this.getAssets();
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(assets.open("client_secret.json")));
         // Build flow and trigger user authorization request.
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(httpTransport, JSON_FACTORY, clientSecrets, SCOPES)
                         .build();
         return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
     }
 
-    public static YouTube getService() throws GeneralSecurityException, IOException {
-        final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+    public  YouTube getService() throws GeneralSecurityException, IOException {
+        final NetHttpTransport httpTransport = new com.google.api.client.http.javanet.NetHttpTransport();
         Credential credential = authorize(httpTransport);
         return new YouTube.Builder(httpTransport, JSON_FACTORY, credential).setApplicationName(APPLICATION_NAME).build();
     }
