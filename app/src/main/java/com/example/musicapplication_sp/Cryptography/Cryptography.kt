@@ -79,9 +79,6 @@ open class Cryptography {
         map["iv"] = iv
         map["encrypted"] = encrypted
 
-
-
-
         return map
 
     }
