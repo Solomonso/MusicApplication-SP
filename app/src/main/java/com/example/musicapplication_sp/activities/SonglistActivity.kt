@@ -47,7 +47,7 @@ class SonglistActivity : AppCompatActivity() {
      */
     private fun getListOfSongs(callback: (List<GetSongsModel>) -> Unit) {
         val api = SongListService.getInstance().create(SonglistCrudMethod::class.java)
-        api.getSongs().enqueue(object : Callback<SongResponse> {
+        api.getSongsById().enqueue(object : Callback<SongResponse> {
             override fun onResponse(call: Call<SongResponse>, response: Response<SongResponse>) {
                 return callback(response.body()!!.songs)
             }
