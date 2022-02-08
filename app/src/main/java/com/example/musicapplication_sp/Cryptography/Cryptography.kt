@@ -83,9 +83,16 @@ open class Cryptography {
 
     }
 
-    fun decrypt(map: MutableMap<String, ByteArray>, secretKeySpec: SecretKeySpec): String {
+    fun decrypt(map: MutableMap<String, ByteArray>, secretKeySpec: SecretKey): String {
         val iv = map["iv"]
         val encrypted = map["encrypted"]
+        val sb2 = StringBuilder()
+        if (encrypted != null) {
+            for (b in encrypted) {
+                sb2.append(b.toInt().toChar())
+            }
+        }
+        val test = sb2.toString()
         val ivSpec = IvParameterSpec(iv)
         val cipher = Cipher.getInstance("AES/CTR/NoPadding")
         cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivSpec)
