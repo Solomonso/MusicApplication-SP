@@ -18,7 +18,7 @@ class CryptoTest {
         val aliases: Enumeration<String> = ks.aliases()
         val alias = "clientIDKey"
         val entry = ks.getEntry(alias, null) as? KeyStore.SecretKeyEntry
-        val key: SecretKeySpec = crypto.createSecretKey("AES")
+        crypto.createSecretKey("AES")
         val string = "test"
         val map: MutableMap<String, ByteArray> = crypto.encrypt(string.toByteArray())
 
