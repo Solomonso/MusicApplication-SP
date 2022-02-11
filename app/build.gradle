@@ -63,6 +63,15 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:21.0.1'
     implementation 'com.google.firebase:firebase-database-ktx:20.0.3'
 
+
+    implementation 'pub.devrel:easypermissions:3.0.0'
+    implementation('com.google.api-client:google-api-client-android:1.23.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
+    implementation('com.google.apis:google-api-services-youtube:v3-rev183-1.22.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
+
     //spotify
     implementation("com.spotify.android:auth:1.2.6")
     implementation files('../spotify-app-remote-release-0.7.2.aar')
