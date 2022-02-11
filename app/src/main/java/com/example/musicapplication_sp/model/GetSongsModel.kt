@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class GetSongsModel(
     @SerializedName("songName")
-    val songName: String?,
+    val songName: String?
 ) : Parcelable {
     constructor() : this("")
 }
