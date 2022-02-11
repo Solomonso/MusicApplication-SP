@@ -55,9 +55,7 @@ open class Cryptography {
         return SecretKeySpec(encodedKey, algorithm)
     }
 
-    fun encrypt(
-        plainByteArray: ByteArray
-        //secretKey: SecretKey
+    fun encrypt(plainByteArray: ByteArray //secretKey: SecretKey
     ): MutableMap<String, ByteArray> {
         val ivRandom = SecureRandom() //not caching previous seeded instance of SecureRandom
         val map: MutableMap<String, ByteArray>
