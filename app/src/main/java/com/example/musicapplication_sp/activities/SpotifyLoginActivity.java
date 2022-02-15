@@ -32,9 +32,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.crypto.SecretKey;
 
 public class SpotifyLoginActivity extends AppCompatActivity {
+    public native String getKey();
+    static {
+        System.loadLibrary("keys");
+    }
     private static final int REQUEST_CODE = 1337;
     private static final String REDIRECT_URI = "https://com.example.musicapplication_sp//callback";
     private SharedPreferences sharedPreferences;
@@ -56,6 +59,7 @@ public class SpotifyLoginActivity extends AppCompatActivity {
         sharedPreferences = this.getSharedPreferences("Spotify", MODE_PRIVATE);
         rQueue = Volley.newRequestQueue(this);
     }
+
 
     /**
      * Uses the Spotify Authentication Library,.
@@ -142,7 +146,7 @@ public class SpotifyLoginActivity extends AppCompatActivity {
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 String token = sharedPreferences.getString("token", "");
-                String auth = "jwt " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5Ijoic3R1ZmYiLCJpYXQiOjE2NDQ1ODI3MTd9.KL4UQfRoJNzC3n-ui0EP8398oKhlDV-SiJPCgH_7FUM";
+                String auth = "jwt " + getKey();
                 headers.put("Authorization", auth);
                 headers.put("Content-Type", "application/json");
                 return headers;
