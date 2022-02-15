@@ -1,22 +1,29 @@
 package com.example.musicapplication_sp.interfaces
 
 import com.example.musicapplication_sp.data.SongResponse
+import com.example.musicapplication_sp.model.PostSongsModel
 import retrofit2.Call
 import retrofit2.http.*
 
+
 interface SonglistCrudMethod {
-    // GET all data from songs root
     @Headers("Accept:application/json",
         "Content-Type:application/json",
-        "Authorization: jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5Ijoic3R1ZmYiLCJpYXQiOjE2NDMzMTMzNDl9.fQEgE7ZdN8o8yDu40GSR_o0iQ2hfjWdugTuI-wpWZHI")
+        "Authorization: jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5Ijoic3R1ZmYiLCJpYXQiOjE2NDQ1NzY0OTZ9.lxG2IoubFbjv7pPNpq0-8U5gHNSlmeUfIvSE_1uBjIc")
     @GET("songs/user/{UserId}")
-    fun getSongsById(@Path("UserId") UserID: String): Call<SongResponse>
+    fun getSongsById(@Path(value = "UserId") UserId: String?): Call<SongResponse?>?
 
+    @Headers("Accept:application/json",
+        "Content-Type:application/json",
+        "Authorization: jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5Ijoic3R1ZmYiLCJpYXQiOjE2NDQ1NzY0OTZ9.lxG2IoubFbjv7pPNpq0-8U5gHNSlmeUfIvSE_1uBjIc")
     @GET("songs")
     fun getSongs(): Call<SongResponse>
 
+    @Headers("Accept:application/json",
+        "Content-Type:application/json",
+        "Authorization: jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5Ijoic3R1ZmYiLCJpYXQiOjE2NDQ1NzY0OTZ9.lxG2IoubFbjv7pPNpq0-8U5gHNSlmeUfIvSE_1uBjIc")
     @POST("songs")
-    fun postSongs(): Call<SongResponse>
+    fun postSongs(@Body params: PostSongsModel): Call<PostSongsModel>
 
     @DELETE("songs")
     fun deleteSongs(): Call<SongResponse>

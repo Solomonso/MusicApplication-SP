@@ -4,14 +4,16 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.musicapplication_sp.R
 import com.example.musicapplication_sp.adaptermodel.PostAdapter
+import com.example.musicapplication_sp.data.SongResponse
 import com.example.musicapplication_sp.interfaces.SonglistCrudMethod
 import com.example.musicapplication_sp.model.GetSongsModel
-import com.example.musicapplication_sp.data.SongResponse
+import com.example.musicapplication_sp.model.PostSongsModel
 import com.example.musicapplication_sp.repositories.SongListService
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -38,10 +40,18 @@ class SonglistActivity : AppCompatActivity() {
         auth = Firebase.auth
         listOfSongs.layoutManager = LinearLayoutManager(this)
         listOfSongs.setHasFixedSize(true)
+
         this.getListOfSongs { songs: List<GetSongsModel> ->
             listOfSongs.adapter = PostAdapter(songs)
         }
-        postListOfSongs {  }
+
+        addButton.setOnClickListener {
+            this.insertSong()
+            Toast.makeText(
+                applicationContext, "Song Inserted", Toast.LENGTH_SHORT
+            ).show()
+            true
+        }
     }
 
     /**
@@ -49,8 +59,8 @@ class SonglistActivity : AppCompatActivity() {
      */
     private fun getListOfSongs(callback: (List<GetSongsModel>) -> Unit) {
         val api = SongListService.getInstance().create(SonglistCrudMethod::class.java)
-        val id = auth.currentUser!!.uid
-        api.getSongsById(id).enqueue(object : Callback<SongResponse> {
+        val userId = auth.currentUser!!.uid
+        api.getSongs().enqueue(object : Callback<SongResponse> {
             override fun onResponse(call: Call<SongResponse>, response: Response<SongResponse>) {
                 return callback(response.body()!!.songs)
             }
@@ -63,25 +73,57 @@ class SonglistActivity : AppCompatActivity() {
     }
 
     /**
-     * Insert Data to API to store. DOES NOT WORK YET!!
+     * insertSong() method posts an submitted songs to api
      */
-    private fun postListOfSongs(callback: (List<GetSongsModel>) -> Unit) {
-        val api = SongListService.getInstance().create(SonglistCrudMethod::class.java)
+    private fun insertSong() {
+        try {
+            val song: String = songInput.text.toString().trim { it <= ' ' }
+            val id = auth.currentUser!!.uid
 
-        addButton.setOnClickListener {
-            api.postSongs().enqueue(object : Callback<SongResponse> {
-                override fun onResponse(
-                    call: Call<SongResponse>,
-                    response: Response<SongResponse>
-                ) {
-                    return callback(response.body()!!.songs)
+            val postSongsModel = PostSongsModel(
+                UserID = id,
+                songName = song
+            )
+            postListOfSongs(postSongsModel) {
+                if (it.UserID != null) {
+                    return@postListOfSongs
+                } else {
+                    Log.d("SonglistActivity", "onFailure: " + toString())
                 }
-
-                override fun onFailure(call: Call<SongResponse>, t: Throwable) {
-                    t.printStackTrace()
-                    Log.d("SonglistActivity", "onFailure: " + t.message.toString())
-                }
-            })
+            }
+        } catch (e: Exception) {
+            Toast.makeText(
+                this@SonglistActivity,
+                e.message,
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
+
+    /**
+     * postListOfSongs()
+     */
+    private fun postListOfSongs(params: PostSongsModel, onResult: (PostSongsModel) -> Unit) {
+        val api = SongListService.getInstance().create(SonglistCrudMethod::class.java)
+        api.postSongs(params).enqueue(object : Callback<PostSongsModel> {
+            override fun onResponse(
+                call: Call<PostSongsModel>,
+                response: Response<PostSongsModel>
+            ) {
+                val addedSong = response.body()
+                if (addedSong != null) {
+                    onResult(addedSong)
+                }
+            }
+
+            override fun onFailure(call: Call<PostSongsModel>, t: Throwable) {
+                t.printStackTrace()
+                Log.d("SonglistActivity", "onFailure: " + t.message.toString())
+            }
+        })
+    }
+}
+
+private fun <T> Call<T>?.enqueue(callback: Callback<SongResponse>) {
+
 }
