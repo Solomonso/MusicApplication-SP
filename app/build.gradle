@@ -8,6 +8,17 @@ plugins {
 android {
     compileSdkVersion 32
     buildToolsVersion '31.0.0'
+        ndkVersion = "23.1.7779620" // e.g.,  ndkVersion "21.3.6528147"
+    externalNativeBuild {
+        cmake {
+            version = "3.18.1"
+        }
+        ndkBuild {
+            path file('src/main/jni/Android.mk')
+        }
+    }
+
+
 
     defaultConfig {
         applicationId "com.example.musicapplication_sp"
@@ -17,7 +28,13 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        externalNativeBuild {
+            ndkBuild {
+                cppFlags ''
+            }
+        }
     }
+
 
     buildFeatures {
         viewBinding true
