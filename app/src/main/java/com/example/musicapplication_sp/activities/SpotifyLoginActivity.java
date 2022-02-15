@@ -15,8 +15,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.musicapplication_sp.Cryptography.Cryptography;
 import com.example.musicapplication_sp.R;
+import com.example.musicapplication_sp.cryptography.Cryptography;
 import com.example.musicapplication_sp.model.Endpoints;
 import com.example.musicapplication_sp.model.User;
 import com.example.musicapplication_sp.repositories.UserService;
@@ -145,7 +145,6 @@ public class SpotifyLoginActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-                String token = sharedPreferences.getString("token", "");
                 String auth = "jwt " + getKey();
                 headers.put("Authorization", auth);
                 headers.put("Content-Type", "application/json");

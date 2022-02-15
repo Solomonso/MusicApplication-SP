@@ -24,6 +24,9 @@ import retrofit2.Response
 
 class SonglistActivity : AppCompatActivity() {
 
+    init{
+        System.loadLibrary("keys")
+    }
     private lateinit var songInput: EditText
     private lateinit var addButton: Button
     private lateinit var listOfSongs: RecyclerView
@@ -54,12 +57,15 @@ class SonglistActivity : AppCompatActivity() {
         }
     }
 
+    external fun getTokenKey(): String
     /**
      * Retrieve Data from API which is stored in MySql database
      */
     private fun getListOfSongs(callback: (List<GetSongsModel>) -> Unit) {
         val api = SongListService.getInstance().create(SonglistCrudMethod::class.java)
         val userId = auth.currentUser!!.uid
+
+
         api.getSongs().enqueue(object : Callback<SongResponse> {
             override fun onResponse(call: Call<SongResponse>, response: Response<SongResponse>) {
                 return callback(response.body()!!.songs)
