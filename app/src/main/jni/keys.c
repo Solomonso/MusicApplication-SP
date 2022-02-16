@@ -12,9 +12,20 @@ Java_com_example_musicapplication_1sp_activities_SpotifyLoginActivity_getKey(JNI
 
 }
 
+JNIEXPORT jstring JNICALL
+Java_com_example_musicapplication_1sp_repositories_SongListService_00024Companion_getURL(
+        JNIEnv *env, jobject instance) {
+    return (*env)->  NewStringUTF(env, "https://musicapi.duckdns.org/api/");
+}
 
 JNIEXPORT jstring JNICALL
-Java_com_example_musicapplication_1sp_interfaces_SonglistCrudMethod_00024Companion_getTokenKey(JNIEnv *env, jobject instance) {
+Java_com_example_musicapplication_1sp_activities_SonglistActivity_getTokenKey(JNIEnv *env,
+                                                                              jobject instance) {
     return (*env)->  NewStringUTF(env, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5Ijoic3R1ZmYiLCJpYXQiOjE2NDQ1NzY0OTZ9.lxG2IoubFbjv7pPNpq0-8U5gHNSlmeUfIvSE_1uBjIc");
+}
 
+JNIEXPORT jstring JNICALL
+Java_com_example_musicapplication_1sp_repositories_ServiceInterceptor_getTokenKey(JNIEnv *env,
+                                                                                  jobject instance) {
+    return (*env)->  NewStringUTF(env, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5Ijoic3R1ZmYiLCJpYXQiOjE2NDQ1NzY0OTZ9.lxG2IoubFbjv7pPNpq0-8U5gHNSlmeUfIvSE_1uBjIc");
 }

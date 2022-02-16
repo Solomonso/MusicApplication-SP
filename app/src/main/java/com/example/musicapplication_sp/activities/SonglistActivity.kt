@@ -31,6 +31,8 @@ class SonglistActivity : AppCompatActivity() {
     private lateinit var addButton: Button
     private lateinit var listOfSongs: RecyclerView
     private lateinit var auth: FirebaseAuth
+    private external fun getTokenKey(): String
+    var token : String = getTokenKey()
 
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,20 +55,23 @@ class SonglistActivity : AppCompatActivity() {
             Toast.makeText(
                 applicationContext, "Song Inserted", Toast.LENGTH_SHORT
             ).show()
-            true
+//            true
         }
     }
 
-    external fun getTokenKey(): String
+//    var client: APIService = retrofit.create(APIService::class.java)
+//
+//    var calltargetResponse: Call<UserProfile> = client.getUser("0034", "Bearer $token")
+//    https://stackoverflow.com/questions/41078866/retrofit2-authorization-global-interceptor-for-access-token#41082979
     /**
      * Retrieve Data from API which is stored in MySql database
      */
     private fun getListOfSongs(callback: (List<GetSongsModel>) -> Unit) {
         val api = SongListService.getInstance().create(SonglistCrudMethod::class.java)
-        val userId = auth.currentUser!!.uid
+        //val userId = auth.currentUser!!.uid
+        val callSong: Call<SongResponse> = api.getSongs(token)
 
-
-        api.getSongs().enqueue(object : Callback<SongResponse> {
+        callSong.enqueue(object : Callback<SongResponse> {
             override fun onResponse(call: Call<SongResponse>, response: Response<SongResponse>) {
                 return callback(response.body()!!.songs)
             }
@@ -128,8 +133,4 @@ class SonglistActivity : AppCompatActivity() {
             }
         })
     }
-}
-
-private fun <T> Call<T>?.enqueue(callback: Callback<SongResponse>) {
-
 }
