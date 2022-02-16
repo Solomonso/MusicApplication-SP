@@ -58,6 +58,7 @@ public class SpotifyLoginActivity extends AppCompatActivity {
         authSpotify();
         sharedPreferences = this.getSharedPreferences("Spotify", MODE_PRIVATE);
         rQueue = Volley.newRequestQueue(this);
+
     }
 
 
