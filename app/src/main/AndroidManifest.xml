@@ -16,8 +16,14 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.MusicApplicationSP">
         <activity
-            android:name=".activities.LoginActivity"
-            android:exported="false" />
+            android:name=".activities.YoutubeActivity"
+            android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
         <activity
             android:name=".activities.SpotifyLoginActivity"
             android:exported="false" />
@@ -40,13 +46,9 @@
             android:name=".activities.SonglistActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.YoutubeActivity"
+            android:name=".activities.YoutubeApiActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
