@@ -9,27 +9,27 @@
     android:orientation="vertical"
     android:padding="8dp">
 
-    <TextView
-        android:id="@+id/tvId"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/id"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/tvUserId"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp" />
+<!--    <TextView-->
+<!--        android:id="@+id/tvId"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/id"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="15sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/tvUserId"-->
+<!--        tools:ignore="MissingConstraints"-->
+<!--        tools:layout_editor_absoluteX="0dp" />-->
 
-    <TextView
-        android:id="@+id/tvUserId"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/userid"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="28dp" />
+<!--    <TextView-->
+<!--        android:id="@+id/tvUserId"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/userid"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="15sp"-->
+<!--        tools:ignore="MissingConstraints"-->
+<!--        tools:layout_editor_absoluteX="8dp"-->
+<!--        tools:layout_editor_absoluteY="28dp" />-->
 
     <TextView
         android:id="@+id/tvSongName"
@@ -38,7 +38,6 @@
         android:text="@string/music"
         android:textColor="@color/black"
         android:textSize="15sp"
-        app:layout_constraintTop_toBottomOf="@+id/tvUserId"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="8dp" />
 

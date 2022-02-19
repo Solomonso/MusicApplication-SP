@@ -3,6 +3,8 @@ package com.example.musicapplication_sp.activities
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +14,7 @@ import com.example.musicapplication_sp.R
 import com.example.musicapplication_sp.adaptermodel.SongAdapter
 import com.example.musicapplication_sp.interfaces.OnSongClickListener
 import com.example.musicapplication_sp.interfaces.VolleyCallBack
+import com.example.musicapplication_sp.model.PlayingState
 import com.example.musicapplication_sp.model.Song
 import com.example.musicapplication_sp.repositories.SongService
 import com.spotify.android.appremote.api.ConnectionParams
@@ -27,6 +30,7 @@ class SongActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private var spotifyAppRemote: SpotifyAppRemote? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_song)
@@ -37,6 +41,7 @@ class SongActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.item_song)
         recyclerView.layoutManager = LinearLayoutManager(this)
         songs = arrayListOf()
+
     }
 
     /**
@@ -75,10 +80,46 @@ class SongActivity : AppCompatActivity() {
                 recyclerView.adapter = adapter
                 adapter.setOnSongPlayListener(object : OnSongClickListener {
                     override fun onItemClick(position: Int) {
-
+                        adapter.setupViews()
+                        adapter.playButton.setOnClickListener {
+                            play(song[position].uri)
+                            adapter.showPauseButton()
+                        }
+                        adapter.pauseButton.setOnClickListener {
+                            pause()
+                            adapter.showResumeButton()
+                        }
+                        adapter.resumeButton.setOnClickListener {
+                            resume()
+                            adapter.showPauseButton()
+                        }
                     }
                 })
             }
         })
+    }
+
+    fun play(uri: String) {
+        spotifyAppRemote?.playerApi?.play(uri)
+    }
+
+    fun resume() {
+       spotifyAppRemote?.playerApi?.resume()
+    }
+
+    fun pause() {
+        spotifyAppRemote?.playerApi?.pause()
+    }
+
+    fun playingState(handler: (PlayingState) -> Unit) {
+        spotifyAppRemote?.playerApi?.playerState?.setResultCallback { result ->
+            if (result.track.uri == null) {
+                handler(PlayingState.STOPPED)
+            } else if (result.isPaused) {
+                handler(PlayingState.PAUSED)
+            } else {
+                handler(PlayingState.PLAYING)
+            }
+        }
     }
 }

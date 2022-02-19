@@ -11,16 +11,33 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.musicapplication_sp.R;
+import com.example.musicapplication_sp.cryptography.Cryptography;
+import com.example.musicapplication_sp.model.Endpoints;
 import com.example.musicapplication_sp.model.User;
 import com.example.musicapplication_sp.repositories.UserService;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.ktx.Firebase;
 import com.spotify.sdk.android.auth.AuthorizationClient;
 import com.spotify.sdk.android.auth.AuthorizationRequest;
 import com.spotify.sdk.android.auth.AuthorizationResponse;
 
+import org.json.JSONObject;
+
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
+
+
 public class SpotifyLoginActivity extends AppCompatActivity {
+    public native String getKey();
+    static {
+        System.loadLibrary("keys");
+    }
     private static final int REQUEST_CODE = 1337;
     private static final String REDIRECT_URI = "https://com.example.musicapplication_sp//callback";
     private SharedPreferences sharedPreferences;
@@ -28,17 +45,22 @@ public class SpotifyLoginActivity extends AppCompatActivity {
     private SharedPreferences.Editor editor;
     private EditText spotifyClientID;
     private Button authorizeAccessButton;
+    private  FirebaseAuth auth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spotify);
         spotifyClientID = findViewById(R.id.text_spotify_client_id);
+        auth = FirebaseAuth.getInstance();
         authorizeAccessButton = findViewById(R.id.authorize_access);
         authSpotify();
         sharedPreferences = this.getSharedPreferences("Spotify", MODE_PRIVATE);
         rQueue = Volley.newRequestQueue(this);
+
     }
+
 
     /**
      * Uses the Spotify Authentication Library,.
@@ -57,10 +79,10 @@ public class SpotifyLoginActivity extends AppCompatActivity {
                 AuthorizationRequest request = builder.build();
 
                 AuthorizationClient.openLoginActivity(this, REQUEST_CODE, request);
-                /*Cryptography cryptography = new Cryptography();
-                SecretKey key = cryptography.createSecretKey("AES");
+                Cryptography cryptography = new Cryptography();
+                cryptography.createSecretKey("AES");
                 byte[] byteArray = CLIENT_ID.getBytes(StandardCharsets.UTF_8);
-                cryptography.encrypt(byteArray, key);*/
+                saveTheClientID(auth.getUid(), cryptography.encrypt(byteArray).toString());
                 editor = getSharedPreferences("Spotify", MODE_PRIVATE).edit();
                 editor.putString("client_id", CLIENT_ID);
                 editor.commit();
@@ -107,5 +129,29 @@ public class SpotifyLoginActivity extends AppCompatActivity {
         startActivity(intent);
         Toast.makeText(this, "Spotify Account linked successfully.", Toast.LENGTH_SHORT).show();
         finish();
+    }
+
+    private void saveTheClientID(String userId, String clientId) {
+        final HashMap<String, String> postParams = new HashMap<>();
+        postParams.put("UserID", userId);
+        postParams.put("ClientID", clientId);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Endpoints.POSTCLIENTID.getEndpoint(), new JSONObject(postParams), response -> {
+
+        }, error -> {
+            if (postParams.isEmpty()) {
+                Log.d("Error", "Unable to post");
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                String auth = "jwt " + getKey();
+                headers.put("Authorization", auth);
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+        rQueue.add(jsonObjectRequest);
     }
 }

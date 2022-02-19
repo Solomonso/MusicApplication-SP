@@ -5,15 +5,11 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class PostModel(
-    @SerializedName("id")
-    val id: Int?,
-
+data class PostSongsModel(
     @SerializedName("UserID")
     val UserID: String?,
-
-    @SerializedName("song_name")
-    val song_name: String?
+    @SerializedName("songName")
+    val songName: String?
 ) : Parcelable {
-    constructor() : this(null, "", "")
+    constructor() : this("","")
 }

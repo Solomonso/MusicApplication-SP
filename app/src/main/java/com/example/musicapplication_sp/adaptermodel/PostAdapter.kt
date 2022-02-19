@@ -6,22 +6,18 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.musicapplication_sp.R
-import com.example.musicapplication_sp.model.PostModel
+import com.example.musicapplication_sp.model.GetSongsModel
 
-class PostAdapter(private val postModel: List<PostModel>) :
+class PostAdapter(private val getSongsModel: List<GetSongsModel>) :
     RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
     class PostViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private var tvId: TextView = itemView.findViewById(R.id.tvId)
-        private var tvUserId: TextView = itemView.findViewById(R.id.tvUserId)
         private var tvSongName: TextView = itemView.findViewById(R.id.tvSongName)
         /**
-         * bindView method takes one PostModel object and loads its content in the list item.
+         * bindView method takes one GetSongsModel object and loads its content in the list item.
          */
-        fun bindView(postModel: PostModel) {
-            tvId.text = postModel.id.toString()
-            tvUserId.text = postModel.UserID.toString()
-            tvSongName.text = postModel.song_name.toString()
+        fun bindView(getSongsModel: GetSongsModel) {
+            tvSongName.text = getSongsModel.songName.toString()
         }
     }
 
@@ -37,10 +33,10 @@ class PostAdapter(private val postModel: List<PostModel>) :
     /**
      * getItemCount returns the total number of items to show in the recyclerview
      */
-    override fun getItemCount(): Int = postModel.size
+    override fun getItemCount(): Int = getSongsModel.size
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        holder.bindView(postModel[position])
+        holder.bindView(getSongsModel[position])
     }
 
 }
