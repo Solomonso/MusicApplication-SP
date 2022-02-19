@@ -17,20 +17,28 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.musicapplication_sp.R;
 import com.example.musicapplication_sp.cryptography.Cryptography;
+import com.example.musicapplication_sp.interfaces.VolleyCallBack;
+import com.example.musicapplication_sp.model.ClientID;
 import com.example.musicapplication_sp.model.Endpoints;
+import com.example.musicapplication_sp.model.Song;
 import com.example.musicapplication_sp.model.User;
 import com.example.musicapplication_sp.repositories.UserService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.ktx.Firebase;
+import com.google.gson.Gson;
 import com.spotify.sdk.android.auth.AuthorizationClient;
 import com.spotify.sdk.android.auth.AuthorizationRequest;
 import com.spotify.sdk.android.auth.AuthorizationResponse;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 
 public class SpotifyLoginActivity extends AppCompatActivity {
@@ -46,6 +54,8 @@ public class SpotifyLoginActivity extends AppCompatActivity {
     private EditText spotifyClientID;
     private Button authorizeAccessButton;
     private  FirebaseAuth auth;
+    private ClientID clientID;
+    private RequestQueue requestQueue;
 
 
     @Override
@@ -153,5 +163,42 @@ public class SpotifyLoginActivity extends AppCompatActivity {
             }
         };
         rQueue.add(jsonObjectRequest);
+    }
+
+    public ClientID getClient() {
+        return this.clientID;
+    }
+
+    public void getTheClientID(String UserID, final VolleyCallBack callBack) {
+        String endpoint = String.format(Endpoints.GETCLIENTID.getEndpoint(), UserID); //format the url to get the playlist id
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, endpoint, null,
+                response -> {
+                    Gson gson = new Gson();
+                    JSONArray jsonArray = response.optJSONArray("data");
+                    for (int i = 0; i < Objects.requireNonNull(jsonArray).length(); i++) {
+                        try {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            jsonObject = jsonObject.optJSONObject("track");
+                            assert jsonObject != null;
+                            ClientID client = gson.fromJson(jsonObject.toString(), ClientID.class);
+                            clientID.add(client);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    callBack.onSuccess();
+                },
+                error -> Log.d("Error", "Unable get song from playlist " + error)) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                String token = sharedPreferences.getString("token", "");
+                String auth = "Bearer " + token;
+                headers.put("Authorization", auth);
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+        requestQueue.add(jsonObjectRequest);
     }
 }

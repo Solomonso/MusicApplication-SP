@@ -67,11 +67,10 @@ class SonglistActivity : AppCompatActivity() {
      * Retrieve Data from API which is stored in MySql database
      */
     private fun getListOfSongs(callback: (List<GetSongsModel>) -> Unit) {
+        val userId = auth.currentUser!!.uid
         val api = SongListService.getInstance().create(SonglistCrudMethod::class.java)
-        //val userId = auth.currentUser!!.uid
-        val callSong: Call<SongResponse> = api.getSongs(token)
 
-        callSong.enqueue(object : Callback<SongResponse> {
+        api.getSongsById(userId).enqueue(object : Callback<SongResponse> {
             override fun onResponse(call: Call<SongResponse>, response: Response<SongResponse>) {
                 return callback(response.body()!!.songs)
             }
