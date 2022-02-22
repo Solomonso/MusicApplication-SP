@@ -42,5 +42,6 @@
     <string name="code">Please enter the code you received via email:</string>
     <string name="id">id</string>
     <string name="userid">userId</string>
+    <string name="add_two_factor_authentication">Add two-factor authentication</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.example.musicapplication_sp.activities
 
+
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Build
@@ -16,9 +17,13 @@ import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
 import com.example.musicapplication_sp.R
+import com.google.common.io.BaseEncoding.base32
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import dev.turingcomplete.kotlinonetimepassword.GoogleAuthenticator
+import dev.turingcomplete.kotlinonetimepassword.GoogleAuthenticator.Companion.createRandomSecretAsByteArray
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -41,6 +46,8 @@ class LoginActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
+        twoFactorAuthentication()
+
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
         setContentView(R.layout.activity_login)
@@ -57,7 +64,6 @@ class LoginActivity : AppCompatActivity() {
         this.logIn()//call function for signing with username/password
 
         this.openRegistrationActivity() //open register page
-
 
     }
 
@@ -93,6 +99,28 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    private fun twoFactorAuthentication() {
+        // Warning: the length of the plain text may be limited, see next chapter
+//        val plainTextSecret = "Pxw7BDGHf6".toByteArray(Charsets.UTF_8)
+
+        // This is the encoded one to use in most of the generators (Base32 is from the Apache commons codec library)
+//        val base32EncodedSecret = base32().encode(plainTextSecret)
+
+//        Log.i("test", "Base32 encoded secret to be used in the Google Authenticator app: $base32EncodedSecret");
+
+        val secret = createRandomSecretAsByteArray()
+        val googleAuthenticator = GoogleAuthenticator(secret)
+
+
+        Timer().schedule(object: TimerTask() {
+            override fun run() {
+                val timestamp = Date(System.currentTimeMillis())
+                val code = GoogleAuthenticator(secret).generate(timestamp)
+                Log.i("test1", "${SimpleDateFormat("HH:mm:ss").format(timestamp)}: $code")
+            }
+        }, 0, 1000)
+    }
+
     /**
      * @description This function is used for logging in users with validate is the email and password is valid
      */
@@ -116,6 +144,14 @@ class LoginActivity : AppCompatActivity() {
                         auth.signInWithEmailAndPassword(email, password)
                             .addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
+
+                                    //TODO: TWO-FACTOR AUTHENTICATION
+//                                    val twoFAintent = Intent(this@LoginActivity, RegistrationActivity::class.java)
+//                                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                                    startActivity(twoFAintent)
+//                                    finish()
+
+
                                     Toast.makeText(
                                         this@LoginActivity,
                                         "You are logged in " + auth.currentUser!!.email,

@@ -7,10 +7,13 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.musicapplication_sp.R
+import com.google.zxing.*
 
 class SettingActivity : AppCompatActivity() {
     private lateinit var signSpotifyButton: Button
     private lateinit var sharedPreferences: SharedPreferences
+    private var enabled2fa = false
+
 
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,4 +40,12 @@ class SettingActivity : AppCompatActivity() {
             }
         }
     }
+
+//    private fun listenToClickForAddingTwoFactorAuth() {
+//        enabled2fa = !enabled2fa
+//
+//        if(enabled2fa){
+//            val bitmap =
+//        }
+//    }
 }
