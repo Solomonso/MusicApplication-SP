@@ -68,7 +68,6 @@ public class SpotifyLoginActivity extends AppCompatActivity {
         authSpotify();
         sharedPreferences = this.getSharedPreferences("Spotify", MODE_PRIVATE);
         rQueue = Volley.newRequestQueue(this);
-
     }
 
 
@@ -153,15 +152,15 @@ public class SpotifyLoginActivity extends AppCompatActivity {
                 Log.d("Error", "Unable to post");
             }
         }) {
-            @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> headers = new HashMap<>();
-                String auth = "jwt " + getKey();
-                headers.put("Authorization", auth);
-                headers.put("Content-Type", "application/json");
-                return headers;
-            }
-        };
+        @Override
+        public Map<String, String> getHeaders() {
+            Map<String, String> headers = new HashMap<>();
+            String auth = "jwt " + getKey();
+            headers.put("Authorization", auth);
+            headers.put("Content-Type", "application/json");
+            return headers;
+        }
+    };
         rQueue.add(jsonObjectRequest);
     }
 
@@ -178,7 +177,7 @@ public class SpotifyLoginActivity extends AppCompatActivity {
                     for (int i = 0; i < Objects.requireNonNull(jsonArray).length(); i++) {
                         try {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            jsonObject = jsonObject.optJSONObject("track");
+                            jsonObject = jsonObject.optJSONObject("UserID");
                             assert jsonObject != null;
                             ClientID client = gson.fromJson(jsonObject.toString(), ClientID.class);
                             clientID.add(client);
@@ -192,13 +191,12 @@ public class SpotifyLoginActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-                String token = sharedPreferences.getString("token", "");
-                String auth = "Bearer " + token;
+                String auth = "jwt " + getKey();
                 headers.put("Authorization", auth);
                 headers.put("Content-Type", "application/json");
                 return headers;
             }
         };
-        requestQueue.add(jsonObjectRequest);
+        rQueue.add(jsonObjectRequest);
     }
 }

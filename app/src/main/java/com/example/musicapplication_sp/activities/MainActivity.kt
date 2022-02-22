@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.songs -> {
-                    val intent = Intent(this@MainActivity, SonglistActivity::class.java)
+                    val intent = Intent(this@MainActivity, UsersSongsActivity::class.java)
                     startActivity(intent)
                     true
                 }
