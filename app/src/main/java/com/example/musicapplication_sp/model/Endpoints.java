@@ -8,7 +8,7 @@ public enum Endpoints {
     USER("https://api.spotify.com/v1/me"),
     MUSICSONGS("https://musicapi.duckdns.org/api/songs/"),
     POSTCLIENTID("https://musicapi.duckdns.org/api/clientId"),
-    GETCLIENTID("https://musicapi.duckdns.org/api/clientId/%UserID");
+    GETCLIENTID("https://musicapi.duckdns.org/api/clientId/%s");
 
     private final String endpoints;
 

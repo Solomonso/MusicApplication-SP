@@ -1,8 +1,11 @@
 package com.example.musicapplication_sp.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.security.keystore.KeyGenParameterSpec;
+import android.security.keystore.KeyProperties;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Button;
@@ -10,6 +13,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.security.crypto.EncryptedSharedPreferences;
+import androidx.security.crypto.MasterKey;
+import androidx.security.crypto.MasterKeys;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -34,7 +40,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,6 +50,11 @@ import java.util.Objects;
 
 
 public class SpotifyLoginActivity extends AppCompatActivity {
+
+
+    public SpotifyLoginActivity() throws GeneralSecurityException, IOException {
+    }
+
     public native String getKey();
     static {
         System.loadLibrary("keys");
@@ -66,11 +79,37 @@ public class SpotifyLoginActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         authorizeAccessButton = findViewById(R.id.authorize_access);
         authSpotify();
-        sharedPreferences = this.getSharedPreferences("Spotify", MODE_PRIVATE);
+//        sharedPreferences = this.getSharedPreferences("Spotify", MODE_PRIVATE);
+
+//        try {
+//            MasterKey masterKey = new MasterKey.Builder(this)
+//                    .setKeyScheme(androidx.security.crypto.MasterKey.KeyScheme.AES256_GCM).build();
+//
+//            sharedPreferences = EncryptedSharedPreferences.create(
+//                    SpotifyLoginActivity.this,
+//                    "Spotify",
+//                    masterKey,
+//                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+//                    EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+//                    );
+//        } catch (GeneralSecurityException | IOException e) {
+//            e.printStackTrace();
+//        }
         rQueue = Volley.newRequestQueue(this);
-
     }
-
+    public MasterKey getMasterKey() throws GeneralSecurityException, IOException {
+        return new MasterKey.Builder(this)
+                .setKeyScheme(androidx.security.crypto.MasterKey.KeyScheme.AES256_GCM).build();
+    }
+    public SharedPreferences getEncryptedSharedPreferences() throws GeneralSecurityException, IOException {
+        return EncryptedSharedPreferences.create(
+                SpotifyLoginActivity.this,
+                "Spotify",
+                getMasterKey(),
+                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        );
+    }
 
     /**
      * Uses the Spotify Authentication Library,.
@@ -92,10 +131,19 @@ public class SpotifyLoginActivity extends AppCompatActivity {
                 Cryptography cryptography = new Cryptography();
                 cryptography.createSecretKey("AES");
                 byte[] byteArray = CLIENT_ID.getBytes(StandardCharsets.UTF_8);
-                saveTheClientID(auth.getUid(), cryptography.encrypt(byteArray).toString());
-                editor = getSharedPreferences("Spotify", MODE_PRIVATE).edit();
+                saveTheClientID(auth.getUid(), cryptography.encrypt(byteArray).get("encrypted").toString()/*String.valueOf(cryptography.encrypt(byteArray))*/);
+//                editor = getSharedPreferences("Spotify", MODE_PRIVATE).edit();
+//                editor.putString("client_id", CLIENT_ID);
+//                editor.commit();
+                try {
+                    sharedPreferences = getEncryptedSharedPreferences();
+                } catch (GeneralSecurityException | IOException e) {
+                    e.printStackTrace();
+                }
+                editor = sharedPreferences.edit();
                 editor.putString("client_id", CLIENT_ID);
-                editor.commit();
+                editor.apply();
+
             }
         });
 
@@ -109,9 +157,17 @@ public class SpotifyLoginActivity extends AppCompatActivity {
 
             switch (response.getType()) {
                 case TOKEN:
-                    editor = getSharedPreferences("Spotify", MODE_PRIVATE).edit();
+                    try {
+                        sharedPreferences = getEncryptedSharedPreferences();
+                    } catch (GeneralSecurityException | IOException e) {
+                        e.printStackTrace();
+                    }
+                    editor = sharedPreferences.edit();
                     editor.putString("token", response.getAccessToken());
-                    editor.commit();
+                    editor.apply();
+//                    editor = getSharedPreferences("Spotify", MODE_PRIVATE).edit();
+//                    editor.putString("token", response.getAccessToken());
+//                    editor.commit();
                     waitForUserInfo();
                     break;
                 case ERROR:
@@ -126,10 +182,18 @@ public class SpotifyLoginActivity extends AppCompatActivity {
         UserService userService = new UserService(rQueue, sharedPreferences);
         userService.get(() -> {
             User user = userService.getUser();
-            editor = getSharedPreferences("Spotify", 0).edit();
+            try {
+                sharedPreferences = getEncryptedSharedPreferences();
+            } catch (GeneralSecurityException | IOException e) {
+                e.printStackTrace();
+            }
+            editor = sharedPreferences.edit();
             editor.putString("username", user.display_name);
+            editor.apply();
+//            editor = getSharedPreferences("Spotify", 0).edit();
+//            editor.putString("username", user.display_name);
             Log.d("Starting", "Got user information");
-            editor.commit();
+//            editor.commit();
             startMainActivity();
         });
     }
@@ -169,24 +233,18 @@ public class SpotifyLoginActivity extends AppCompatActivity {
         return this.clientID;
     }
 
-    public void getTheClientID(String UserID, final VolleyCallBack callBack) {
+    public void getTheClientID(String UserID) {
         String endpoint = String.format(Endpoints.GETCLIENTID.getEndpoint(), UserID); //format the url to get the playlist id
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, endpoint, null,
                 response -> {
-                    Gson gson = new Gson();
-                    JSONArray jsonArray = response.optJSONArray("data");
-                    for (int i = 0; i < Objects.requireNonNull(jsonArray).length(); i++) {
-                        try {
-                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            jsonObject = jsonObject.optJSONObject("track");
-                            assert jsonObject != null;
-                            ClientID client = gson.fromJson(jsonObject.toString(), ClientID.class);
-                            clientID.add(client);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                    try {
+                        String client_id = response.getString("ClientID");
+                        Toast.makeText(this, "client id " + client_id, Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                    callBack.onSuccess();
+//                    Toast.makeText(this,"Respones: " + response.toString(), Toast.LENGTH_SHORT).show();
+
                 },
                 error -> Log.d("Error", "Unable get song from playlist " + error)) {
             @Override

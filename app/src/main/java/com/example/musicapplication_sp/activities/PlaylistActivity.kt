@@ -3,6 +3,7 @@ package com.example.musicapplication_sp.activities
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -10,20 +11,29 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.VolleyError
+import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.musicapplication_sp.R
 import com.example.musicapplication_sp.adaptermodel.PlaylistAdapter
 import com.example.musicapplication_sp.interfaces.OnPlaylistClickListener
 import com.example.musicapplication_sp.interfaces.VolleyCallBack
+import com.example.musicapplication_sp.model.Endpoints
 import com.example.musicapplication_sp.model.Playlist
 import com.example.musicapplication_sp.model.PlaylistModel
 import com.example.musicapplication_sp.repositories.PlaylistService
 import com.example.musicapplication_sp.repositories.UserService
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.firestore.FirebaseFirestore
+import org.json.JSONException
+import org.json.JSONObject
 
 //PlaylistUpdateDelete
 class PlaylistActivity : AppCompatActivity() {
+    init{
+        System.loadLibrary("keys")
+    }
     private lateinit var btnFab: FloatingActionButton
     private lateinit var database: FirebaseFirestore
     private lateinit var sharedPreferences: SharedPreferences
@@ -32,6 +42,8 @@ class PlaylistActivity : AppCompatActivity() {
     private lateinit var userService: UserService
     private lateinit var recyclerView: RecyclerView
     private lateinit var playlists: ArrayList<Playlist>
+    private external fun getTokenKey(): String
+    var token : String = getTokenKey()
 
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +61,7 @@ class PlaylistActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         playlists = arrayListOf()
         retrieveUserPlaylist()
+        getTheClientID("6hh8Uyhy37XnnKIAxLQjMRIYZn736hh8Uyhy37XnnKIAxLQjMRIYZn73")
 
     }
 
@@ -100,5 +113,37 @@ class PlaylistActivity : AppCompatActivity() {
             alertDialog.show()
         }
 
+    }
+
+    fun getTheClientID(UserID: String?) {
+        val endpoint = String.format(
+            Endpoints.GETCLIENTID.endpoint,
+            UserID
+        ) //format the url to get the playlist id
+        val jsonObjectRequest: JsonObjectRequest = object : JsonObjectRequest(
+            Method.GET, endpoint, null,
+            Response.Listener { response: JSONObject ->
+                try {
+                    val clientId = response.getString("ClientID")
+                    Toast.makeText(this, "client id $clientId", Toast.LENGTH_SHORT).show()
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            },
+            Response.ErrorListener { error: VolleyError ->
+                Log.d(
+                    "Error",
+                    "Unable get song from playlist $error"
+                )
+            }) {
+            override fun getHeaders(): Map<String, String> {
+                val headers: MutableMap<String, String> = HashMap()
+                val auth = "jwt $token"
+                headers["Authorization"] = auth
+                headers["Content-Type"] = "application/json"
+                return headers
+            }
+        }
+        rQueue.add(jsonObjectRequest)
     }
 }
