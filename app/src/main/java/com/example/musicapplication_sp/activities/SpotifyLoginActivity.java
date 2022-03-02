@@ -131,7 +131,9 @@ public class SpotifyLoginActivity extends AppCompatActivity {
                 Cryptography cryptography = new Cryptography();
                 cryptography.createSecretKey("AES");
                 byte[] byteArray = CLIENT_ID.getBytes(StandardCharsets.UTF_8);
-                saveTheClientID(auth.getUid(), cryptography.encrypt(byteArray).toString());
+                HashMap<String, byte[]> encryptedMap = (HashMap<String, byte[]>) cryptography.encrypt(byteArray);
+                String encryptedString = new String(encryptedMap.get("encrypted"), StandardCharsets.UTF_8);
+                saveTheClientID(auth.getUid(), encryptedString);
                 editor = getSharedPreferences("Spotify", MODE_PRIVATE).edit();
                 editor.putString("client_id", CLIENT_ID);
                 editor.apply();
