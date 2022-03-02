@@ -7,16 +7,17 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.musicapplication_sp.R
 import com.example.musicapplication_sp.model.GetSongsModel
+import com.example.musicapplication_sp.model.UserSongsModel
 
-class PostAdapter(private val getSongsModel: List<GetSongsModel>) :
-    RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
+class GetAdapter(private val getSongsModel: ArrayList<UserSongsModel>) :
+    RecyclerView.Adapter<GetAdapter.PostViewHolder>() {
 
     class PostViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private var tvSongName: TextView = itemView.findViewById(R.id.tvSongName)
         /**
          * bindView method takes one GetSongsModel object and loads its content in the list item.
          */
-        fun bindView(getSongsModel: GetSongsModel) {
+        fun bindView(getSongsModel: UserSongsModel) {
             tvSongName.text = getSongsModel.songName.toString()
         }
     }

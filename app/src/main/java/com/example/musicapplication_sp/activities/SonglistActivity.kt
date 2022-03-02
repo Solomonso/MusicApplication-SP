@@ -8,19 +8,28 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.VolleyError
+import com.android.volley.toolbox.JsonObjectRequest
 import com.example.musicapplication_sp.R
-import com.example.musicapplication_sp.adaptermodel.PostAdapter
+import com.example.musicapplication_sp.adaptermodel.GetAdapter
 import com.example.musicapplication_sp.data.SongResponse
 import com.example.musicapplication_sp.interfaces.SonglistCrudMethod
+import com.example.musicapplication_sp.interfaces.VolleyCallBack
+import com.example.musicapplication_sp.model.ClientID
+import com.example.musicapplication_sp.model.Endpoints
 import com.example.musicapplication_sp.model.GetSongsModel
 import com.example.musicapplication_sp.model.PostSongsModel
 import com.example.musicapplication_sp.repositories.SongListService
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.gson.Gson
+import org.json.JSONException
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 class SonglistActivity : AppCompatActivity() {
 
@@ -31,33 +40,33 @@ class SonglistActivity : AppCompatActivity() {
     private lateinit var addButton: Button
     private lateinit var listOfSongs: RecyclerView
     private lateinit var auth: FirebaseAuth
-    private external fun getTokenKey(): String
-    var token : String = getTokenKey()
+//    private external fun getKey(): String
+//    var token : String = getTokenKey()
 
-    @Override
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_songlist)
-
-        songInput = findViewById(R.id.song_input)
-        addButton = findViewById(R.id.add_song_button)
-        listOfSongs = findViewById(R.id.list_of_songs)
-        auth = Firebase.auth
-        listOfSongs.layoutManager = LinearLayoutManager(this)
-        listOfSongs.setHasFixedSize(true)
-
-        this.getListOfSongs { songs: List<GetSongsModel> ->
-            listOfSongs.adapter = PostAdapter(songs)
-        }
-
-        addButton.setOnClickListener {
-            this.insertSong()
-            Toast.makeText(
-                applicationContext, "Song Inserted", Toast.LENGTH_SHORT
-            ).show()
-//            true
-        }
-    }
+//    @Override
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        setContentView(R.layout.activity_songlist)
+//
+//        songInput = findViewById(R.id.song_input)
+//        addButton = findViewById(R.id.add_song_button)
+//        listOfSongs = findViewById(R.id.list_of_songs)
+//        auth = Firebase.auth
+//        listOfSongs.layoutManager = LinearLayoutManager(this)
+//        listOfSongs.setHasFixedSize(true)
+//
+//        this.getListOfSongs { songs: List<GetSongsModel> ->
+//            listOfSongs.adapter = GetAdapter(songs)
+//        }
+//
+//        addButton.setOnClickListener {
+//            this.insertSong()
+//            Toast.makeText(
+//                applicationContext, "Song Inserted", Toast.LENGTH_SHORT
+//            ).show()
+////            true
+//        }
+//    }
 
 //    var client: APIService = retrofit.create(APIService::class.java)
 //
@@ -67,7 +76,7 @@ class SonglistActivity : AppCompatActivity() {
      * Retrieve Data from API which is stored in MySql database
      */
     private fun getListOfSongs(callback: (List<GetSongsModel>) -> Unit) {
-        val userId = auth.currentUser!!.uid
+        val userId = auth.currentUser!!.uid.toString().trim()
         val api = SongListService.getInstance().create(SonglistCrudMethod::class.java)
 
         api.getSongsById(userId).enqueue(object : Callback<SongResponse> {

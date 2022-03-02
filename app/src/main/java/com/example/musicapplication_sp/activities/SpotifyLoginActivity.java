@@ -131,16 +131,8 @@ public class SpotifyLoginActivity extends AppCompatActivity {
                 Cryptography cryptography = new Cryptography();
                 cryptography.createSecretKey("AES");
                 byte[] byteArray = CLIENT_ID.getBytes(StandardCharsets.UTF_8);
-                saveTheClientID(auth.getUid(), cryptography.encrypt(byteArray).get("encrypted").toString()/*String.valueOf(cryptography.encrypt(byteArray))*/);
-//                editor = getSharedPreferences("Spotify", MODE_PRIVATE).edit();
-//                editor.putString("client_id", CLIENT_ID);
-//                editor.commit();
-                try {
-                    sharedPreferences = getEncryptedSharedPreferences();
-                } catch (GeneralSecurityException | IOException e) {
-                    e.printStackTrace();
-                }
-                editor = sharedPreferences.edit();
+                saveTheClientID(auth.getUid(), cryptography.encrypt(byteArray).toString());
+                editor = getSharedPreferences("Spotify", MODE_PRIVATE).edit();
                 editor.putString("client_id", CLIENT_ID);
                 editor.apply();
 
@@ -193,7 +185,7 @@ public class SpotifyLoginActivity extends AppCompatActivity {
 //            editor = getSharedPreferences("Spotify", 0).edit();
 //            editor.putString("username", user.display_name);
             Log.d("Starting", "Got user information");
-//            editor.commit();
+            editor.commit();
             startMainActivity();
         });
     }
@@ -217,15 +209,15 @@ public class SpotifyLoginActivity extends AppCompatActivity {
                 Log.d("Error", "Unable to post");
             }
         }) {
-            @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> headers = new HashMap<>();
-                String auth = "jwt " + getKey();
-                headers.put("Authorization", auth);
-                headers.put("Content-Type", "application/json");
-                return headers;
-            }
-        };
+        @Override
+        public Map<String, String> getHeaders() {
+            Map<String, String> headers = new HashMap<>();
+            String auth = "jwt " + getKey();
+            headers.put("Authorization", auth);
+            headers.put("Content-Type", "application/json");
+            return headers;
+        }
+    };
         rQueue.add(jsonObjectRequest);
     }
 
@@ -250,13 +242,12 @@ public class SpotifyLoginActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-                String token = sharedPreferences.getString("token", "");
-                String auth = "Bearer " + token;
+                String auth = "jwt " + getKey();
                 headers.put("Authorization", auth);
                 headers.put("Content-Type", "application/json");
                 return headers;
             }
         };
-        requestQueue.add(jsonObjectRequest);
+        rQueue.add(jsonObjectRequest);
     }
 }
