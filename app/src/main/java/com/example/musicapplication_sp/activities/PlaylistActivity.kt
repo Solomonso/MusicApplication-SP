@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.RequestQueue
@@ -31,6 +32,7 @@ class PlaylistActivity : AppCompatActivity() {
     private lateinit var playlistService: PlaylistService
     private lateinit var userService: UserService
     private lateinit var recyclerView: RecyclerView
+    private lateinit var toolbar: Toolbar
     private lateinit var playlists: ArrayList<Playlist>
 
     @Override
@@ -49,7 +51,8 @@ class PlaylistActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         playlists = arrayListOf()
         retrieveUserPlaylist()
-
+        toolbar = findViewById(R.id.toolbarPlaylist)
+        this.toolbar()
     }
 
     private fun retrieveUserPlaylist() {
@@ -100,5 +103,12 @@ class PlaylistActivity : AppCompatActivity() {
             alertDialog.show()
         }
 
+    }
+
+    private fun toolbar() {
+        setSupportActionBar(toolbar)
+        supportActionBar!!.title = "Playlist"
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 }
