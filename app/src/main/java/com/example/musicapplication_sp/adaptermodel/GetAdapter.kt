@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.musicapplication_sp.R
 import com.example.musicapplication_sp.model.GetSongsModel
 
-class PostAdapter(private val getSongsModel: List<GetSongsModel>) :
-    RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
+class GetAdapter(private val getSongsModel: List<GetSongsModel>) :
+    RecyclerView.Adapter<GetAdapter.PostViewHolder>() {
 
     class PostViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private var tvSongName: TextView = itemView.findViewById(R.id.tvSongName)

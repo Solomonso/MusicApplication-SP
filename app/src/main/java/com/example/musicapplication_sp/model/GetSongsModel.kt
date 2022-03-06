@@ -6,10 +6,10 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class GetSongsModel(
-//    @SerializedName("UserID")
-//    val UserID: String?,
+    @SerializedName("UserID")
+    val UserID: String?,
     @SerializedName("songName")
     val songName: String?
 ) : Parcelable {
-    constructor() : this("")
+    constructor() : this("", "")
 }

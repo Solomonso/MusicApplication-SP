@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.RequestQueue
@@ -26,6 +27,7 @@ class SongActivity : AppCompatActivity() {
     private lateinit var songService: SongService
     private lateinit var playlistId: String
     private lateinit var recyclerView: RecyclerView
+    private lateinit var toolbar: Toolbar
     private var spotifyAppRemote: SpotifyAppRemote? = null
 
 
@@ -40,6 +42,8 @@ class SongActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         songs = arrayListOf()
 
+        toolbar = findViewById(R.id.toolbarSong)
+        this.toolbar()
     }
 
     /**
@@ -119,5 +123,12 @@ class SongActivity : AppCompatActivity() {
                 handler(PlayingState.PLAYING)
             }
         }
+    }
+
+    private fun toolbar() {
+        setSupportActionBar(toolbar)
+        supportActionBar!!.title = "Songs"
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 }

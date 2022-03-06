@@ -1,15 +1,18 @@
 package com.example.musicapplication_sp.activities
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.musicapplication_sp.R
-import com.example.musicapplication_sp.adaptermodel.PostAdapter
+import com.example.musicapplication_sp.adaptermodel.GetAdapter
 import com.example.musicapplication_sp.data.SongResponse
 import com.example.musicapplication_sp.interfaces.SonglistCrudMethod
 import com.example.musicapplication_sp.model.GetSongsModel
@@ -28,13 +31,16 @@ class SonglistActivity : AppCompatActivity() {
         System.loadLibrary("keys")
     }
 
+    private lateinit var swipe: SwipeRefreshLayout
     private lateinit var songInput: EditText
     private lateinit var addButton: Button
     private lateinit var listOfSongs: RecyclerView
     private lateinit var auth: FirebaseAuth
-    private external fun getTokenKey(): String
-    var token: String = getTokenKey()
+    private lateinit var toolbar: Toolbar
+    private external fun getKey(): String
+    var token: String = getKey()
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,9 +52,19 @@ class SonglistActivity : AppCompatActivity() {
         auth = Firebase.auth
         listOfSongs.layoutManager = LinearLayoutManager(this)
         listOfSongs.setHasFixedSize(true)
+        swipe = findViewById(R.id.swipeSongs)
+
+        toolbar = findViewById(R.id.toolbar)
+        this.toolbar()
+
+        swipe.setOnRefreshListener {
+            if (swipe.isRefreshing) {
+                swipe.isRefreshing = false
+            }
+        }
 
         this.getListOfSongs { songs: List<GetSongsModel> ->
-            listOfSongs.adapter = PostAdapter(songs)
+            listOfSongs.adapter = GetAdapter(songs)
         }
 
         addButton.setOnClickListener {
@@ -56,23 +72,18 @@ class SonglistActivity : AppCompatActivity() {
             Toast.makeText(
                 applicationContext, "Song Inserted", Toast.LENGTH_SHORT
             ).show()
-//            true
         }
+
     }
 
-//    var client: APIService = retrofit.create(APIService::class.java)
-//
-//    var calltargetResponse: Call<UserProfile> = client.getUser("0034", "Bearer $token")
-//    https://stackoverflow.com/questions/41078866/retrofit2-authorization-global-interceptor-for-access-token#41082979
     /**
      * Retrieve Data from API which is stored in MySql database
      */
     private fun getListOfSongs(callback: (List<GetSongsModel>) -> Unit) {
+        val userId = auth.currentUser!!.uid.trim()
         val api = SongListService.getInstance().create(SonglistCrudMethod::class.java)
-        //val userId = auth.currentUser!!.uid
-        val callSong: Call<SongResponse> = api.getSongs(token)
 
-        callSong.enqueue(object : Callback<SongResponse> {
+        api.getSongsById(userId, token).enqueue(object : Callback<SongResponse> {
             override fun onResponse(call: Call<SongResponse>, response: Response<SongResponse>) {
                 return callback(response.body()!!.songs)
             }
@@ -90,7 +101,7 @@ class SonglistActivity : AppCompatActivity() {
     private fun insertSong() {
         try {
             val song: String = songInput.text.toString().trim { it <= ' ' }
-            val id = auth.currentUser!!.uid
+            val id = auth.currentUser!!.uid.trim()
 
             val postSongsModel = PostSongsModel(
                 UserID = id,
@@ -117,7 +128,7 @@ class SonglistActivity : AppCompatActivity() {
      */
     private fun postListOfSongs(params: PostSongsModel, onResult: (PostSongsModel) -> Unit) {
         val api = SongListService.getInstance().create(SonglistCrudMethod::class.java)
-        api.postSongs(params).enqueue(object : Callback<PostSongsModel> {
+        api.postSongs(params, token).enqueue(object : Callback<PostSongsModel> {
             override fun onResponse(
                 call: Call<PostSongsModel>,
                 response: Response<PostSongsModel>
@@ -133,5 +144,15 @@ class SonglistActivity : AppCompatActivity() {
                 Log.d("SonglistActivity", "onFailure: " + t.message.toString())
             }
         })
+    }
+
+    /**
+     * @toolbar returns the actionbar elements on toolbar.xml
+     */
+    private fun toolbar() {
+        setSupportActionBar(toolbar)
+        supportActionBar!!.title = "Settings"
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 }

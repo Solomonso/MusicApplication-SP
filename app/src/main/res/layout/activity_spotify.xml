@@ -7,6 +7,19 @@
     android:background="@drawable/greenbackground"
     tools:context=".activities.LoginActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarSpotify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/greenish"
+        android:elevation="4dp"
+        android:gravity="start"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
         android:id="@+id/text_spotify_client_id"
         android:layout_width="wrap_content"

@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        toolbar = findViewById(R.id.toolbar)
+        toolbar = findViewById(R.id.toolbarMain)
         sharedPreferences = this.getSharedPreferences("Spotify", MODE_PRIVATE)
         displayName = findViewById(R.id.username)
         username =
@@ -80,10 +80,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)) {
             return true
         }
         return super.onOptionsItemSelected(item)
     }
+
+
 }
