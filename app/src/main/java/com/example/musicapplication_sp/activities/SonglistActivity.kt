@@ -67,13 +67,7 @@ class SonglistActivity : AppCompatActivity() {
             listOfSongs.adapter = GetAdapter(songs)
         }
 
-        addButton.setOnClickListener {
-            this.insertSong()
-            Toast.makeText(
-                applicationContext, "Song Inserted", Toast.LENGTH_SHORT
-            ).show()
-        }
-
+        this.insertSong()
     }
 
     /**
@@ -99,27 +93,34 @@ class SonglistActivity : AppCompatActivity() {
      * insertSong() method posts an submitted songs to api
      */
     private fun insertSong() {
-        try {
-            val song: String = songInput.text.toString().trim { it <= ' ' }
-            val id = auth.currentUser!!.uid.trim()
+        addButton.setOnClickListener {
+            try {
+                val song: String = songInput.text.toString().trim()
+                val id = auth.currentUser!!.uid.trim()
 
-            val postSongsModel = PostSongsModel(
-                UserID = id,
-                songName = song
-            )
-            postListOfSongs(postSongsModel) {
-                if (it.UserID != null) {
-                    return@postListOfSongs
+                if (song.isEmpty()){
+                    Toast.makeText(this@SonglistActivity, "Please enter the song", Toast.LENGTH_SHORT).show()
                 } else {
-                    Log.d("SonglistActivity", "onFailure: " + toString())
+                    val postSongsModel = PostSongsModel(
+                        UserID = id,
+                        songName = song
+                    )
+                    postListOfSongs(postSongsModel) {
+                        if (it.UserID != null || it.songName != null) {
+                            return@postListOfSongs
+                        } else {
+                            Log.d("SonglistActivity", "onFailure: " + toString())
+                        }
+                    }
+                    Toast.makeText(this@SonglistActivity, "Song added", Toast.LENGTH_SHORT).show()
                 }
+            } catch (e: Exception) {
+                Toast.makeText(
+                    this@SonglistActivity,
+                    e.message,
+                    Toast.LENGTH_LONG
+                ).show()
             }
-        } catch (e: Exception) {
-            Toast.makeText(
-                this@SonglistActivity,
-                e.message,
-                Toast.LENGTH_LONG
-            ).show()
         }
     }
 

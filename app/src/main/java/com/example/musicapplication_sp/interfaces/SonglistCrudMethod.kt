@@ -8,24 +8,12 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface SonglistCrudMethod {
-    companion object {
-        init {
-            System.loadLibrary("keys")
-        }
 
-        private external fun getTokenKey(): String
-        private var token: String = getTokenKey()
-    }
-
-    @GET("songs/user/{UserId}")
+    @GET("songs/user/{UserID}")
     fun getSongsById(
-        @Path("UserId") id: String,
+        @Path("UserID") id: String,
         @Header("Authorization") token: String
     ): Call<SongResponse>
-
-    @GET("songs")
-    fun getSongs(): Call<SongResponse>
-
 
     @POST("songs")
     fun postSongs(
