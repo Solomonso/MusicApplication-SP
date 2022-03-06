@@ -59,6 +59,12 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                     true
                 }
+
+                R.id.playlistYoutube -> {
+                    val intent = Intent(this@MainActivity, YoutubeActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
                 R.id.settings -> {
                     val intent = Intent(this@MainActivity, SettingActivity::class.java)
                     startActivity(intent)

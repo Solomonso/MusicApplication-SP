@@ -12,17 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:testOnly="false"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.MusicApplicationSP"
-        android:dataExtractionRules="@xml/data_extraction_rules">
+        android:theme="@style/Theme.MusicApplicationSP">
         <activity
             android:name=".activities.YoutubeActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:exported="false">
         </activity>
         <activity
             android:name=".activities.SpotifyLoginActivity"
@@ -60,7 +53,6 @@
         <activity
             android:name=".activities.YoutubePlaylistItemActivity"
             android:exported="false" />
-
     </application>
 
 </manifest>

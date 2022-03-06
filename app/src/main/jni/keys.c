@@ -42,3 +42,10 @@ JNIEXPORT jstring JNICALL
 Java_com_example_musicapplication_1sp_activities_YoutubePlaylistItemActivity_getTokenKey(JNIEnv *env, jobject instance) {
     return (*env)->NewStringUTF(env,"AIzaSyDGDhdiqacmjroaO7-Bar_fgP6G2YVEHsA");
 }
+
+JNIEXPORT jstring JNICALL
+Java_com_example_musicapplication_1sp_activities_PlaylistActivity_getTokenKey(JNIEnv *env,
+                                                                              jobject thiz) {
+    return (*env)->NewStringUTF(env,"AIzaSyDGDhdiqacmjroaO7-Bar_fgP6G2YVEHsA");
+
+}
