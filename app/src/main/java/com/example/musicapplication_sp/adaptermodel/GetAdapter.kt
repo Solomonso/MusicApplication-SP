@@ -7,9 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.musicapplication_sp.R
 import com.example.musicapplication_sp.model.GetSongsModel
-import com.example.musicapplication_sp.model.UserSongsModel
 
-class GetAdapter(private val getSongsModel: ArrayList<UserSongsModel>) :
+class GetAdapter(private val getSongsModel: List<GetSongsModel>) :
     RecyclerView.Adapter<GetAdapter.PostViewHolder>() {
 
     class PostViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -17,7 +16,7 @@ class GetAdapter(private val getSongsModel: ArrayList<UserSongsModel>) :
         /**
          * bindView method takes one GetSongsModel object and loads its content in the list item.
          */
-        fun bindView(getSongsModel: UserSongsModel) {
+        fun bindView(getSongsModel: GetSongsModel) {
             tvSongName.text = getSongsModel.songName.toString()
         }
     }

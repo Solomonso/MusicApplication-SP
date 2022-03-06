@@ -12,24 +12,26 @@ interface SonglistCrudMethod {
         init {
             System.loadLibrary("keys")
         }
+
         private external fun getTokenKey(): String
         private var token: String = getTokenKey()
     }
 
-    @Headers("Accept:application/json",
-        "Content-Type:application/json",
-        "Authorization: jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5Ijoic3R1ZmYiLCJpYXQiOjE2NDQ1NzY0OTZ9.lxG2IoubFbjv7pPNpq0-8U5gHNSlmeUfIvSE_1uBjIc")
     @GET("songs/user/{UserId}")
-    fun getSongsById(@Path(value = "UserId") UserId: String): Call<SongResponse>
+    fun getSongsById(
+        @Path("UserId") id: String,
+        @Header("Authorization") token: String
+    ): Call<SongResponse>
 
     @GET("songs")
-    fun getSongs(@Header("Authorization: ") authorization: String): Call<SongResponse>
+    fun getSongs(): Call<SongResponse>
 
-    @Headers("Accept:application/json",
-        "Content-Type:application/json",
-        "Authorization: jwt {token}")
+
     @POST("songs")
-    fun postSongs(@Body params: PostSongsModel): Call<PostSongsModel>
+    fun postSongs(
+        @Body params: PostSongsModel,
+        @Header("Authorization") token: String
+    ): Call<PostSongsModel>
 
     @DELETE("songs")
     fun deleteSongs(): Call<SongResponse>

@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.RequestQueue
@@ -41,6 +42,7 @@ class PlaylistActivity : AppCompatActivity() {
     private lateinit var playlistService: PlaylistService
     private lateinit var userService: UserService
     private lateinit var recyclerView: RecyclerView
+    private lateinit var toolbar: Toolbar
     private lateinit var playlists: ArrayList<Playlist>
     private external fun getTokenKey(): String
     var token : String = getTokenKey()
@@ -61,6 +63,10 @@ class PlaylistActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         playlists = arrayListOf()
         retrieveUserPlaylist()
+        getTheClientID("6hh8Uyhy37XnnKIAxLQjMRIYZn736hh8Uyhy37XnnKIAxLQjMRIYZn73")
+
+        toolbar = findViewById(R.id.toolbarPlaylist)
+        this.toolbar()
     }
 
     private fun retrieveUserPlaylist() {
@@ -113,4 +119,42 @@ class PlaylistActivity : AppCompatActivity() {
 
     }
 
+    private fun toolbar() {
+        setSupportActionBar(toolbar)
+        supportActionBar!!.title = "Playlist"
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+    }
+
+    fun getTheClientID(UserID: String?) {
+        val endpoint = String.format(
+            Endpoints.GETCLIENTID.endpoint,
+            UserID
+        ) //format the url to get the playlist id
+        val jsonObjectRequest: JsonObjectRequest = object : JsonObjectRequest(
+            Method.GET, endpoint, null,
+            Response.Listener { response: JSONObject ->
+                try {
+                    val clientId = response.getString("ClientID")
+                    Toast.makeText(this, "client id $clientId", Toast.LENGTH_SHORT).show()
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            },
+            Response.ErrorListener { error: VolleyError ->
+                Log.d(
+                    "Error",
+                    "Unable get song from playlist $error"
+                )
+            }) {
+            override fun getHeaders(): Map<String, String> {
+                val headers: MutableMap<String, String> = HashMap()
+                val auth = "jwt $token"
+                headers["Authorization"] = auth
+                headers["Content-Type"] = "application/json"
+                return headers
+            }
+        }
+        rQueue.add(jsonObjectRequest)
+    }
 }

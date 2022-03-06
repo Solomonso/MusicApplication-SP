@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        toolbar = findViewById(R.id.toolbar)
+        toolbar = findViewById(R.id.toolbarMain)
         sharedPreferences = this.getSharedPreferences("Spotify", MODE_PRIVATE)
         displayName = findViewById(R.id.username)
         username =
@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.songs -> {
-                    val intent = Intent(this@MainActivity, UsersSongsActivity::class.java)
+                    val intent = Intent(this@MainActivity, SonglistActivity::class.java)
                     startActivity(intent)
                     true
                 }
@@ -87,4 +87,6 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+
 }
