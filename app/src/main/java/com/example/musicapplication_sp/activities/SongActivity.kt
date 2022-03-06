@@ -77,7 +77,6 @@ class SongActivity : AppCompatActivity() {
                 val song = songService.songs
                 for (s in song) {
                     songs.add(s)
-                    Log.d("track info ", s.uri)
                 }
                 val adapter = SongAdapter(songs)
 

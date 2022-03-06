@@ -18,6 +18,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.musicapplication_sp.R
 import com.example.musicapplication_sp.adaptermodel.PlaylistAdapter
+import com.example.musicapplication_sp.cryptography.Cryptography
 import com.example.musicapplication_sp.interfaces.OnPlaylistClickListener
 import com.example.musicapplication_sp.interfaces.VolleyCallBack
 import com.example.musicapplication_sp.model.Endpoints
@@ -29,6 +30,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.firestore.FirebaseFirestore
 import org.json.JSONException
 import org.json.JSONObject
+import java.nio.charset.StandardCharsets
+import java.security.KeyStore
+import java.util.*
 
 //PlaylistUpdateDelete
 class PlaylistActivity : AppCompatActivity() {
@@ -134,17 +138,37 @@ class PlaylistActivity : AppCompatActivity() {
         val jsonObjectRequest: JsonObjectRequest = object : JsonObjectRequest(
             Method.GET, endpoint, null,
             Response.Listener { response: JSONObject ->
-                try {
-                    val clientId = response.getString("ClientID")
-                    Toast.makeText(this, "client id $clientId", Toast.LENGTH_SHORT).show()
-                } catch (e: JSONException) {
-                    e.printStackTrace()
+                val jsonArray = response.optJSONArray("data")
+                for (i in 0 until Objects.requireNonNull(jsonArray).length()) {
+                    try {
+                        val jsonObject = jsonArray?.getJSONObject(i)
+                        //     Toast.makeText(this, "id: " + jsonObject.getString("id") + " client id " + jsonObject.getString("ClientID") + " iv " + jsonObject.getString("iv"), Toast.LENGTH_SHORT).show();
+//                        Log.d(
+//                            "Test ",
+//                            " client id " + jsonObject?.getString("ClientID") + " iv " + Arrays.toString(
+//                                jsonObject?.getString("iv")
+//                                    .toByteArray(StandardCharsets.UTF_8)
+//                            )
+//                        )
+                        val cryptography = Cryptography()
+                        val ks: KeyStore = KeyStore.getInstance("AndroidKeyStore").apply {
+                            load(null)
+                        }
+                        val alias = "clientIDKey"
+                        val entry = ks.getEntry(alias, null) as? KeyStore.SecretKeyEntry
+                        cryptography.createSecretKey("AES")
+                        val map = HashMap<String, ByteArray>()
+                        map[jsonObject?.getString("iv")!!.toByteArray(StandardCharsets.UTF_8).contentToString()] = jsonObject?.getString("ClientID")!!.toByteArray(StandardCharsets.UTF_8)
+                        val result = entry?.let {cryptography.decrypt(map, it.secretKey)}
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
                 }
             },
             Response.ErrorListener { error: VolleyError ->
                 Log.d(
                     "Error",
-                    "Unable get song from playlist $error"
+                    "Unable get client id $error"
                 )
             }) {
             override fun getHeaders(): Map<String, String> {
@@ -155,6 +179,9 @@ class PlaylistActivity : AppCompatActivity() {
                 return headers
             }
         }
+        rQueue = Volley.newRequestQueue(this)
         rQueue.add(jsonObjectRequest)
     }
+
+
 }
