@@ -42,20 +42,21 @@ open class Cryptography {
                     .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
                     .build()
             )
-        } catch (e : KeyStoreException) {
+        } catch (e: KeyStoreException) {
             e.printStackTrace();
-        } catch (e : CertificateException) {
+        } catch (e: CertificateException) {
             e.printStackTrace();
-        } catch (e : NoSuchAlgorithmException) {
+        } catch (e: NoSuchAlgorithmException) {
             e.printStackTrace();
-        } catch (e : IOException) {
+        } catch (e: IOException) {
             e.printStackTrace();
         }
 
         return SecretKeySpec(encodedKey, algorithm)
     }
 
-    fun encrypt(plainByteArray: ByteArray //secretKey: SecretKey
+    fun encrypt(
+        plainByteArray: ByteArray //secretKey: SecretKey
     ): MutableMap<String, ByteArray> {
         val ivRandom = SecureRandom() //not caching previous seeded instance of SecureRandom
         val map: MutableMap<String, ByteArray>
@@ -67,7 +68,7 @@ open class Cryptography {
             load(null)
         }
 
-        val secretKey : SecretKey = ks.getKey("clientIDKey",null) as SecretKey
+        val secretKey: SecretKey = ks.getKey("clientIDKey", null) as SecretKey
         //secretKey.g
         val cipher = Cipher.getInstance("AES/CTR/NoPadding") // 1
         cipher.init(Cipher.ENCRYPT_MODE, secretKey)

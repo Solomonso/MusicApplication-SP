@@ -7,7 +7,6 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.musicapplication_sp.R
-import com.example.musicapplication_sp.activities.MainActivity
 import com.example.musicapplication_sp.activities.SongActivity
 import com.example.musicapplication_sp.interfaces.OnSongClickListener
 import com.example.musicapplication_sp.model.PlayingState
@@ -26,7 +25,8 @@ class SongAdapter(private val songs: ArrayList<Song>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.playlist_songs, parent, false)
+        val itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.playlist_songs, parent, false)
         playButton = itemView.findViewById(R.id.playButton)
         pauseButton = itemView.findViewById(R.id.pauseButton)
         resumeButton = itemView.findViewById(R.id.resumeButton)
@@ -42,13 +42,14 @@ class SongAdapter(private val songs: ArrayList<Song>) :
     fun setupViews() {
         val sActivity = SongActivity()
         sActivity.playingState {
-            when(it) {
+            when (it) {
                 PlayingState.PLAYING -> showPauseButton()
                 PlayingState.STOPPED -> showPlayButton()
                 PlayingState.PAUSED -> showResumeButton()
             }
         }
     }
+
     fun showPlayButton() {
         playButton.visibility = View.VISIBLE
         pauseButton.visibility = View.GONE

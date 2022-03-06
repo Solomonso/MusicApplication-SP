@@ -13,6 +13,7 @@ class GetAdapter(private val getSongsModel: List<GetSongsModel>) :
 
     class PostViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private var tvSongName: TextView = itemView.findViewById(R.id.tvSongName)
+
         /**
          * bindView method takes one GetSongsModel object and loads its content in the list item.
          */

@@ -3,8 +3,6 @@ package com.example.musicapplication_sp.activities
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -107,7 +105,7 @@ class SongActivity : AppCompatActivity() {
     }
 
     fun resume() {
-       spotifyAppRemote?.playerApi?.resume()
+        spotifyAppRemote?.playerApi?.resume()
     }
 
     fun pause() {
