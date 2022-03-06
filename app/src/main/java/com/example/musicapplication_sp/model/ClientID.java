@@ -1,21 +1,27 @@
 package com.example.musicapplication_sp.model;
 
 public class ClientID {
-    private String cliendID;
+    private String clientID;
+    public String iv;
 
-    public ClientID(String cliendId) {
-        this.cliendID = cliendId;
+    public ClientID(String clientID, String iv) {
+        this.clientID = clientID;
+        this.iv = iv;
     }
 
-    public String getCliendId() {
-        return cliendID;
+    public String getClientId() {
+        return clientID;
+    }
+    public void setClientID(String clientId) {
+        this.clientID = clientId;
     }
 
-    public void setCliendId(String cliendId) {
-        this.cliendID = cliendId;
+    public String getIv() {
+        return this.iv;
     }
 
-    public void add(ClientID client) {
-
+    public void setIv(String iv) {
+        this.iv = iv;
     }
+
 }

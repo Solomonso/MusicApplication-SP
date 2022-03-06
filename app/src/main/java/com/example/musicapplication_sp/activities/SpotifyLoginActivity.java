@@ -1,11 +1,8 @@
 package com.example.musicapplication_sp.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.security.keystore.KeyGenParameterSpec;
-import android.security.keystore.KeyProperties;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Button;
@@ -15,29 +12,21 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
-import androidx.security.crypto.MasterKeys;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.musicapplication_sp.R;
 import com.example.musicapplication_sp.cryptography.Cryptography;
-import com.example.musicapplication_sp.interfaces.VolleyCallBack;
 import com.example.musicapplication_sp.model.ClientID;
 import com.example.musicapplication_sp.model.Endpoints;
-import com.example.musicapplication_sp.model.Song;
 import com.example.musicapplication_sp.model.User;
 import com.example.musicapplication_sp.repositories.UserService;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.ktx.Firebase;
-import com.google.gson.Gson;
 import com.spotify.sdk.android.auth.AuthorizationClient;
 import com.spotify.sdk.android.auth.AuthorizationRequest;
 import com.spotify.sdk.android.auth.AuthorizationResponse;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -46,7 +35,6 @@ import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 
 public class SpotifyLoginActivity extends AppCompatActivity {
@@ -67,8 +55,8 @@ public class SpotifyLoginActivity extends AppCompatActivity {
     private EditText spotifyClientID;
     private Button authorizeAccessButton;
     private  FirebaseAuth auth;
-    private ClientID clientID;
-    private RequestQueue requestQueue;
+    private ArrayList<ClientID> clientIDs;
+    private ClientIDService clientIDService;
 
 
     @Override
@@ -78,7 +66,10 @@ public class SpotifyLoginActivity extends AppCompatActivity {
         spotifyClientID = findViewById(R.id.text_spotify_client_id);
         auth = FirebaseAuth.getInstance();
         authorizeAccessButton = findViewById(R.id.authorize_access);
+        getTheClientID("1234");
         authSpotify();
+        this.clientIDs = new ArrayList<>();
+        this.clientIDService(rQueue, sharedPreferences);
 //        sharedPreferences = this.getSharedPreferences("Spotify", MODE_PRIVATE);
 
 //        try {
@@ -95,12 +86,18 @@ public class SpotifyLoginActivity extends AppCompatActivity {
 //        } catch (GeneralSecurityException | IOException e) {
 //            e.printStackTrace();
 //        }
-        rQueue = Volley.newRequestQueue(this);
+
     }
+
+    public ArrayList<ClientID> getClientIDs() {
+        return this.clientIDs;
+    }
+
     public MasterKey getMasterKey() throws GeneralSecurityException, IOException {
         return new MasterKey.Builder(this)
                 .setKeyScheme(androidx.security.crypto.MasterKey.KeyScheme.AES256_GCM).build();
     }
+
     public SharedPreferences getEncryptedSharedPreferences() throws GeneralSecurityException, IOException {
         return EncryptedSharedPreferences.create(
                 SpotifyLoginActivity.this,
@@ -132,8 +129,10 @@ public class SpotifyLoginActivity extends AppCompatActivity {
                 cryptography.createSecretKey("AES");
                 byte[] byteArray = CLIENT_ID.getBytes(StandardCharsets.UTF_8);
                 HashMap<String, byte[]> encryptedMap = (HashMap<String, byte[]>) cryptography.encrypt(byteArray);
+
                 String encryptedString = new String(encryptedMap.get("encrypted"), StandardCharsets.UTF_8);
-                saveTheClientID(auth.getUid(), encryptedString);
+                String iv = new String(encryptedMap.get("iv"));
+                saveTheClientID(auth.getUid(), encryptedString, iv);
                 editor = getSharedPreferences("Spotify", MODE_PRIVATE).edit();
                 editor.putString("client_id", CLIENT_ID);
                 editor.apply();
@@ -199,10 +198,11 @@ public class SpotifyLoginActivity extends AppCompatActivity {
         finish();
     }
 
-    private void saveTheClientID(String userId, String clientId) {
+    private void saveTheClientID(String userId, String clientId, String iv) {
         final HashMap<String, String> postParams = new HashMap<>();
         postParams.put("UserID", userId);
         postParams.put("ClientID", clientId);
+        postParams.put("iv", iv);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Endpoints.POSTCLIENTID.getEndpoint(), new JSONObject(postParams), response -> {
 
@@ -223,24 +223,33 @@ public class SpotifyLoginActivity extends AppCompatActivity {
         rQueue.add(jsonObjectRequest);
     }
 
-    public ClientID getClient() {
-        return this.clientID;
-    }
-
-    public void getTheClientID(String UserID) {
+    public void getTheClientID(String UserID, final VolleyCallBack callBack) {
         String endpoint = String.format(Endpoints.GETCLIENTID.getEndpoint(), UserID); //format the url to get the playlist id
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, endpoint, null,
                 response -> {
-                    try {
-                        String client_id = response.getString("ClientID");
-                        Toast.makeText(this, "client id " + client_id, Toast.LENGTH_SHORT).show();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    JSONArray jsonArray = response.optJSONArray("data");
+                    for(int i = 0; i < Objects.requireNonNull(jsonArray).length(); i++) {
+                        try {
+                            Gson gson = new Gson();
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            ClientID clientID = gson.fromJson(jsonObject.toString(), ClientID.class);
+                            clientIDs.add(clientID);
+                            Toast.makeText(this, "id: " + jsonObject.getString("id") + " client id " + jsonObject.getString("ClientID") + " iv " + jsonObject.getString("iv"), Toast.LENGTH_SHORT).show();
+
+                            String client_id = response.getString("ClientID");
+                            String iv = response.getString("iv");
+                            Toast.makeText(this, "client id " + client_id + " iv " + iv, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "client id " + clientID.getClientId() + " iv " + clientID.getIv(), Toast.LENGTH_SHORT).show();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-//                    Toast.makeText(this,"Respones: " + response.toString(), Toast.LENGTH_SHORT).show();
+                    callBack.onSuccess();
+                    //Toast.makeText(this,"Response: " + response, Toast.LENGTH_SHORT).show();
 
                 },
-                error -> Log.d("Error", "Unable get song from playlist " + error)) {
+                error -> Log.d("Error", "Unable get client id " + error.toString())) {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
@@ -250,6 +259,8 @@ public class SpotifyLoginActivity extends AppCompatActivity {
                 return headers;
             }
         };
+        rQueue = Volley.newRequestQueue(this);
         rQueue.add(jsonObjectRequest);
     }
+
 }

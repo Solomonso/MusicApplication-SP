@@ -61,8 +61,6 @@ class PlaylistActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         playlists = arrayListOf()
         retrieveUserPlaylist()
-        getTheClientID("6hh8Uyhy37XnnKIAxLQjMRIYZn736hh8Uyhy37XnnKIAxLQjMRIYZn73")
-
     }
 
     private fun retrieveUserPlaylist() {
@@ -115,35 +113,4 @@ class PlaylistActivity : AppCompatActivity() {
 
     }
 
-    fun getTheClientID(UserID: String?) {
-        val endpoint = String.format(
-            Endpoints.GETCLIENTID.endpoint,
-            UserID
-        ) //format the url to get the playlist id
-        val jsonObjectRequest: JsonObjectRequest = object : JsonObjectRequest(
-            Method.GET, endpoint, null,
-            Response.Listener { response: JSONObject ->
-                try {
-                    val clientId = response.getString("ClientID")
-                    Toast.makeText(this, "client id $clientId", Toast.LENGTH_SHORT).show()
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-            },
-            Response.ErrorListener { error: VolleyError ->
-                Log.d(
-                    "Error",
-                    "Unable get song from playlist $error"
-                )
-            }) {
-            override fun getHeaders(): Map<String, String> {
-                val headers: MutableMap<String, String> = HashMap()
-                val auth = "jwt $token"
-                headers["Authorization"] = auth
-                headers["Content-Type"] = "application/json"
-                return headers
-            }
-        }
-        rQueue.add(jsonObjectRequest)
-    }
 }
