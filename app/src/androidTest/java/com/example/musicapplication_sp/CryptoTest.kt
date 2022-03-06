@@ -2,11 +2,9 @@ package com.example.musicapplication_sp
 
 import com.example.musicapplication_sp.cryptography.Cryptography
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotEquals
 import org.junit.Test
 import java.security.KeyStore
 import java.util.*
-import javax.crypto.spec.SecretKeySpec
 
 class CryptoTest {
     @Test

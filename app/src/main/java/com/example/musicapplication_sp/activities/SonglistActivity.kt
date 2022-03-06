@@ -24,15 +24,16 @@ import retrofit2.Response
 
 class SonglistActivity : AppCompatActivity() {
 
-    init{
+    init {
         System.loadLibrary("keys")
     }
+
     private lateinit var songInput: EditText
     private lateinit var addButton: Button
     private lateinit var listOfSongs: RecyclerView
     private lateinit var auth: FirebaseAuth
     private external fun getTokenKey(): String
-    var token : String = getTokenKey()
+    var token: String = getTokenKey()
 
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
