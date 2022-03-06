@@ -71,7 +71,7 @@ class SonglistActivity : AppCompatActivity() {
     }
 
     /**
-     * Retrieve Data from API which is stored in MySql database
+     * @getListOfSongs() Retrieve Data from API which is stored in MySql database
      */
     private fun getListOfSongs(callback: (List<GetSongsModel>) -> Unit) {
         val userId = auth.currentUser!!.uid.trim()
@@ -90,7 +90,7 @@ class SonglistActivity : AppCompatActivity() {
     }
 
     /**
-     * insertSong() method posts an submitted songs to api
+     * @insertSong() method posts an submitted songs to api
      */
     private fun insertSong() {
         addButton.setOnClickListener {
@@ -125,7 +125,7 @@ class SonglistActivity : AppCompatActivity() {
     }
 
     /**
-     * postListOfSongs()
+     * @postListOfSongs()
      */
     private fun postListOfSongs(params: PostSongsModel, onResult: (PostSongsModel) -> Unit) {
         val api = SongListService.getInstance().create(SonglistCrudMethod::class.java)
