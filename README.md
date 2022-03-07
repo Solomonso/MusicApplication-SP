@@ -5,5 +5,4 @@
 * Period: **2**
 * Made by **MusicApp group**
 
-Create your branch from develop.
-Open **develop** branch to review code.
+Open **develop** branch to review the Android application code.
