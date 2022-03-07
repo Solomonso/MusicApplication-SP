@@ -21,6 +21,7 @@ class UserService(requestQueue: RequestQueue, sharedPreferences: SharedPreferenc
 
     fun get(callBack: VolleyCallBack) {
         val jsonObjectRequest: JsonObjectRequest = object : JsonObjectRequest(
+            Method.GET,
             Endpoints.USER.endpoint, null,
             Response.Listener { response: JSONObject ->
                 val gson = Gson()

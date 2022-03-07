@@ -1,4 +1,5 @@
 # **Music App**
+
 * Oragnization: **NHL Stenden University of Applied Sciences**
 * Subject: **Secure Programming**
 * Date: **2022, March 6th**
@@ -6,22 +7,31 @@
 * Made by **MusicApp group**
 
 ## Description
-An Android application that uses the Spotify API and the YouTube Data API. The application also uses Firebase for authentication and data storage. Besides Firebase and the two data sources, there is also a custom API and database to store encrypted ClientID and song lists created by the user. The application is mainly written in the programming language Kotlin with parts being written in Java. The API is written in NodeJS using the Express.js framework.
+
+An Android application that uses the Spotify API and the YouTube Data API. The application also uses
+Firebase for authentication and data storage. Besides Firebase and the two data sources, there is
+also a custom API and database to store encrypted ClientID and song lists created by the user. The
+application is mainly written in the programming language Kotlin with parts being written in Java.
+The API is written in NodeJS using the Express.js framework.
 
 ### List of sources the app uses:
+
 1. Firebase Authentication & Data storage.
 2. Sportify API
 3. YouTube API
 4. Node.js RESTful API
 
 ### Testing tools:
+
 1. MobSF
 2. Jenkins
 3. DebugTool
 4. Unittest
 
 ## Getting Started
-To run Android application, follow this quideline: **https://developer.android.com/studio/run/emulator**.
+
+To run Android application, follow this
+quideline: **https://developer.android.com/studio/run/emulator**.
 
 ## Linking you Spotify Account
 

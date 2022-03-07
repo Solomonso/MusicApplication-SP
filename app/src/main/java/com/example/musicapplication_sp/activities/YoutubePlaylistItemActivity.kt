@@ -20,21 +20,21 @@ import com.example.musicapplication_sp.interfaces.VolleyCallBack
 import com.example.musicapplication_sp.model.ResourceId
 import com.example.musicapplication_sp.model.VideoSnippet
 import com.example.musicapplication_sp.model.YtPlaylistItem
-
 import com.google.gson.Gson
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
-import kotlin.collections.ArrayList
 
 class YoutubePlaylistItemActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var playlistsItems: ArrayList<YtPlaylistItem>
     private lateinit var requestQueue: RequestQueue
     private lateinit var playlistId: String
+
     init {
         System.loadLibrary("keys")
     }
+
     private external fun getTokenKey(): String
     var token: String = getTokenKey()
     override fun onCreate(savedInstanceState: Bundle?) {

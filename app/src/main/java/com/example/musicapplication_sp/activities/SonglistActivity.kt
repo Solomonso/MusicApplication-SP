@@ -97,8 +97,12 @@ class SonglistActivity : AppCompatActivity() {
                 val song: String = songInput.text.toString().trim()
                 val id = auth.currentUser!!.uid.trim()
 
-                if (song.isEmpty()){
-                    Toast.makeText(this@SonglistActivity, "Please enter the song", Toast.LENGTH_SHORT).show()
+                if (song.isEmpty()) {
+                    Toast.makeText(
+                        this@SonglistActivity,
+                        "Please enter the song",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
                     val postSongsModel = PostSongsModel(
                         UserID = id,

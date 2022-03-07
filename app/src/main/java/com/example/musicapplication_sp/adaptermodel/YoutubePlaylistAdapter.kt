@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.musicapplication_sp.R
-import com.example.musicapplication_sp.interfaces.OnPlaylistClickListener
 import com.example.musicapplication_sp.interfaces.OnYoutubePlaylistClickListener
 import com.example.musicapplication_sp.model.YtPlaylist
 

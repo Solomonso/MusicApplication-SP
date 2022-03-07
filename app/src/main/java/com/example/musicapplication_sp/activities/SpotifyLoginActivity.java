@@ -16,39 +16,33 @@ import androidx.security.crypto.MasterKey;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.musicapplication_sp.R;
 import com.example.musicapplication_sp.cryptography.Cryptography;
-import com.example.musicapplication_sp.interfaces.VolleyCallBack;
-import com.example.musicapplication_sp.model.ClientID;
 import com.example.musicapplication_sp.model.Endpoints;
 import com.example.musicapplication_sp.model.User;
 import com.example.musicapplication_sp.repositories.UserService;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.gson.Gson;
 import com.spotify.sdk.android.auth.AuthorizationClient;
 import com.spotify.sdk.android.auth.AuthorizationRequest;
 import com.spotify.sdk.android.auth.AuthorizationResponse;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 
 public class SpotifyLoginActivity extends AppCompatActivity {
 
     public native String getKey();
+
     static {
         System.loadLibrary("keys");
     }
+
     private static final int REQUEST_CODE = 1337;
     private static final String REDIRECT_URI = "https://com.example.musicapplication_sp//callback";
     private SharedPreferences sharedPreferences;
@@ -56,7 +50,7 @@ public class SpotifyLoginActivity extends AppCompatActivity {
     private SharedPreferences.Editor editor;
     private EditText spotifyClientID;
     private Button authorizeAccessButton;
-    private  FirebaseAuth auth;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,23 +60,7 @@ public class SpotifyLoginActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         authorizeAccessButton = findViewById(R.id.authorize_access);
         authSpotify();
-        //getTheClientID("1234");
         sharedPreferences = this.getSharedPreferences("Spotify", MODE_PRIVATE);
-    }
-
-    public MasterKey getMasterKey() throws GeneralSecurityException, IOException {
-        return new MasterKey.Builder(this)
-                .setKeyScheme(androidx.security.crypto.MasterKey.KeyScheme.AES256_GCM).build();
-    }
-
-    public SharedPreferences getEncryptedSharedPreferences() throws GeneralSecurityException, IOException {
-        return EncryptedSharedPreferences.create(
-                SpotifyLoginActivity.this,
-                "Spotify",
-                getMasterKey(),
-                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        );
     }
 
     /**
@@ -103,7 +81,7 @@ public class SpotifyLoginActivity extends AppCompatActivity {
 
                 AuthorizationClient.openLoginActivity(this, REQUEST_CODE, request);
                 Cryptography cryptography = new Cryptography();
-                cryptography.createSecretKey();
+                cryptography.createSecretKey("AES");
                 byte[] byteArray = CLIENT_ID.getBytes(StandardCharsets.UTF_8);
                 HashMap<String, byte[]> encryptedMap = (HashMap<String, byte[]>) cryptography.encrypt(byteArray);
 
@@ -171,15 +149,15 @@ public class SpotifyLoginActivity extends AppCompatActivity {
                 Log.d("Error", "Unable to post");
             }
         }) {
-        @Override
-        public Map<String, String> getHeaders() {
-            Map<String, String> headers = new HashMap<>();
-            String auth = "jwt " + getKey();
-            headers.put("Authorization", auth);
-            headers.put("Content-Type", "application/json");
-            return headers;
-        }
-    };
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                String auth = "jwt " + getKey();
+                headers.put("Authorization", auth);
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
         rQueue.add(jsonObjectRequest);
     }
 

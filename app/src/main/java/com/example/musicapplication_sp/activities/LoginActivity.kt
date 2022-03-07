@@ -111,61 +111,65 @@ class LoginActivity : AppCompatActivity() {
                         .show()
                 }
                 else -> {
-                    if (numberOfAttempts < 3) {
-                        auth.signInWithEmailAndPassword(email, password)
-                            .addOnCompleteListener { task ->
-                                if (task.isSuccessful) {
-                                    Toast.makeText(
-                                        this@LoginActivity,
-                                        "You are logged in " + auth.currentUser!!.email,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                    val intent =
-                                        Intent(this@LoginActivity, MainActivity::class.java)
-                                    intent.flags =
-                                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                    intent.putExtra("display_name", auth.currentUser!!.email)
-                                    startActivity(intent)
-                                    finish()
-                                } else {
-                                    Toast.makeText(
-                                        this@LoginActivity,
-                                        "Username or password not correct",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                    when {
+                        numberOfAttempts < 3 -> {
+                            auth.signInWithEmailAndPassword(email, password)
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        Toast.makeText(
+                                            this@LoginActivity,
+                                            "You are logged in " + auth.currentUser!!.email,
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                        val intent =
+                                            Intent(this@LoginActivity, MainActivity::class.java)
+                                        intent.flags =
+                                            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                        intent.putExtra("display_name", auth.currentUser!!.email)
+                                        startActivity(intent)
+                                        finish()
+                                    } else {
+                                        Toast.makeText(
+                                            this@LoginActivity,
+                                            "Username or password not correct",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
                                 }
-                            }
-                    } else if (numberOfAttempts == 3) {
-                        Toast.makeText(
-                            this@LoginActivity,
-                            "Login failed. No of attempts is $numberOfAttempts.",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    } else {
-                        Toast.makeText(
-                            this@LoginActivity,
-                            "Login limit exceeded.",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        object : CountDownTimer(60000, 1000) {
-                            override fun onTick(millisUntilFinished: Long) {
+                        }
+                        numberOfAttempts == 3 -> {
+                            Toast.makeText(
+                                this@LoginActivity,
+                                "Login failed. No of attempts is $numberOfAttempts.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                        else -> {
+                            Toast.makeText(
+                                this@LoginActivity,
+                                "Login limit exceeded.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            object : CountDownTimer(60000, 1000) {
+                                override fun onTick(millisUntilFinished: Long) {
 
-                                val timeLeft =
-                                    getString(R.string.time_count, millisUntilFinished / 1000)
-                                timeCountField.text = timeLeft
-                                loginButton.isEnabled = false //disable button
-                                registerButton.isEnabled = false
+                                    val timeLeft =
+                                        getString(R.string.time_count, millisUntilFinished / 1000)
+                                    timeCountField.text = timeLeft
+                                    loginButton.isEnabled = false //disable button
+                                    registerButton.isEnabled = false
 
-                            }
+                                }
 
-                            override fun onFinish() {
-                                numberOfAttempts = 0
-                                loginButton.isEnabled = true //enable button again
-                                registerButton.isEnabled = true // enable register again
-                                timeCountField.text = ""
-                            }
-                        }.start()
+                                override fun onFinish() {
+                                    numberOfAttempts = 0
+                                    loginButton.isEnabled = true //enable button again
+                                    registerButton.isEnabled = true // enable register again
+                                    timeCountField.text = ""
+                                }
+                            }.start()
 
+                        }
                     }
                     Log.d(TAG, numberOfAttempts.toString())
                     numberOfAttempts++

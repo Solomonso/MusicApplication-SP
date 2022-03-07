@@ -20,10 +20,10 @@ open class Cryptography {
     fun createSecretKey(algo: String): SecretKeySpec {
         // create new key
         val algorithm: String
-        if (algo.isEmpty()) {
-            algorithm = "AES"
+        algorithm = if (algo.isEmpty()) {
+            "AES"
         } else {
-            algorithm = algo
+            algo
         }
         val random = SecureRandom()
         val salt = ByteArray(256)
@@ -31,7 +31,7 @@ open class Cryptography {
         val secretKey: SecretKey = KeyGenerator.getInstance(algorithm).generateKey()
         // get base64 encoded version of the key
         val encodedKey = secretKey.encoded
-        var keyStore: KeyStore?
+        val keyStore: KeyStore?
         try {
             keyStore = KeyStore.getInstance("AndroidKeyStore").apply { load(null) }
             keyStore.setEntry(
@@ -43,13 +43,13 @@ open class Cryptography {
                     .build()
             )
         } catch (e: KeyStoreException) {
-            e.printStackTrace();
+            e.printStackTrace()
         } catch (e: CertificateException) {
-            e.printStackTrace();
+            e.printStackTrace()
         } catch (e: NoSuchAlgorithmException) {
-            e.printStackTrace();
+            e.printStackTrace()
         } catch (e: IOException) {
-            e.printStackTrace();
+            e.printStackTrace()
         }
 
         return SecretKeySpec(encodedKey, algorithm)
@@ -71,8 +71,8 @@ open class Cryptography {
         //secretKey.g
         val cipher = Cipher.getInstance("AES/CTR/NoPadding") // 1
         cipher.init(Cipher.ENCRYPT_MODE, secretKey)
-        var ivParams = cipher.getParameters().getParameterSpec(IvParameterSpec::class.java)
-        iv = ivParams.getIV()
+        val ivParams = cipher.parameters.getParameterSpec(IvParameterSpec::class.java)
+        iv = ivParams.iv
         val encrypted = cipher.doFinal(plainByteArray) // 2
         map["iv"] = iv
         map["encrypted"] = encrypted

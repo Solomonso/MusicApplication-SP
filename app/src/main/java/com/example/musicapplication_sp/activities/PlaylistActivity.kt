@@ -40,9 +40,10 @@ import java.util.*
 
 //PlaylistUpdateDelete
 class PlaylistActivity : AppCompatActivity() {
-    init{
+    init {
         System.loadLibrary("keys")
     }
+
     private lateinit var btnFab: FloatingActionButton
     private lateinit var database: FirebaseFirestore
     private lateinit var sharedPreferences: SharedPreferences
@@ -55,7 +56,7 @@ class PlaylistActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseUser
 
     private external fun getTokenKey(): String
-    var token : String = getTokenKey()
+    var token: String = getTokenKey()
 
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,7 +78,6 @@ class PlaylistActivity : AppCompatActivity() {
         val user = Firebase.auth.currentUser
         getTheClientID(user?.uid, object : VolleyCallBack {
             override fun onSuccess() {
-                TODO("Not yet implemented")
             }
         })
 
@@ -161,13 +161,16 @@ class PlaylistActivity : AppCompatActivity() {
                             load(null)
                         }
                         val alias = "clientIDKey"
+
+                        cryptography.createSecretKey("AES")
                         val entry = ks.getEntry(alias, null) as? KeyStore.SecretKeyEntry
-                        cryptography.createSecretKey()
                         val map = HashMap<String, ByteArray>()
                         //map[jsonObject?.getString("iv")!!.toByteArray(StandardCharsets.UTF_8).contentToString()] = jsonObject?.getString("ClientID")!!.toByteArray(StandardCharsets.UTF_8)
-                        map["iv"] = jsonObject?.getString("iv")!!.toByteArray(StandardCharsets.UTF_8)
-                        map["encrypted"] = jsonObject?.getString("ClientID")!!.toByteArray(StandardCharsets.UTF_8)
-                        val result = entry?.let {cryptography.decrypt(map, it.secretKey)}
+                        map["iv"] =
+                            jsonObject?.getString("iv")!!.toByteArray(StandardCharsets.UTF_8)
+                        map["encrypted"] =
+                            jsonObject.getString("ClientID").toByteArray(StandardCharsets.UTF_8)
+                        entry?.let { cryptography.decrypt(map, it.secretKey) }
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }

@@ -13,11 +13,10 @@ class CryptoTest {
         val ks: KeyStore = KeyStore.getInstance("AndroidKeyStore").apply {
             load(null)
         }
-        val aliases: Enumeration<String> = ks.aliases()
         val alias = "clientIDKey"
-        val entry = ks.getEntry(alias, null) as? KeyStore.SecretKeyEntry
         crypto.createSecretKey("AES")
         val string = "test"
+        val entry = ks.getEntry(alias, null) as? KeyStore.SecretKeyEntry
         val map: MutableMap<String, ByteArray> = crypto.encrypt(string.toByteArray())
 
         val result = entry?.let { crypto.decrypt(map, it.secretKey) }

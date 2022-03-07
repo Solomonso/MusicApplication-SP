@@ -24,15 +24,15 @@ import java.util.regex.Pattern
 
 class RegistrationActivity : AppCompatActivity() {
 
-    lateinit var auth: FirebaseAuth
-    lateinit var email: EditText
-    lateinit var password: EditText
-    lateinit var repeatPassword: EditText
-    lateinit var fName: EditText
-    lateinit var lName: EditText
-    lateinit var passwordCriteria: TextView
-    lateinit var signUpButton: Button
-    var db = Firebase.firestore
+    private lateinit var auth: FirebaseAuth
+    private lateinit var email: EditText
+    private lateinit var password: EditText
+    private lateinit var repeatPassword: EditText
+    private lateinit var fName: EditText
+    private lateinit var lName: EditText
+    private lateinit var passwordCriteria: TextView
+    private lateinit var signUpButton: Button
+    private var db = Firebase.firestore
 
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {

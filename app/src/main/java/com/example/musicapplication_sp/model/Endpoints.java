@@ -4,12 +4,9 @@ public enum Endpoints {
     GETUSERPLAYLISTS("https://api.spotify.com/v1/me/playlists"),
     CREATEPLAYLIST("https://api.spotify.com/v1/users/%s/playlists"),
     GETSONGFROMPLAYLIST("https://api.spotify.com/v1/playlists/%s/tracks"),
-    ADDTOPLAYLIST("https://api.spotify.com/v1/playlists/%s/tracks"),
     USER("https://api.spotify.com/v1/me"),
-    MUSICSONGS("https://musicapi.duckdns.org/api/songs/"),
     POSTCLIENTID("https://musicapi.duckdns.org/api/clientId"),
-    GETCLIENTID("https://musicapi.duckdns.org/api/clientId/%s"),
-    GETSONGSFROMAPI("https://musicapi.duckdns.org/api/songs/%s");
+    GETCLIENTID("https://musicapi.duckdns.org/api/clientId/%s");
 
     private final String endpoints;
 

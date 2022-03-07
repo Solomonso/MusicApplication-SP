@@ -2,8 +2,6 @@ package com.example.musicapplication_sp.interfaces
 
 import com.example.musicapplication_sp.data.SongResponse
 import com.example.musicapplication_sp.model.PostSongsModel
-import com.example.musicapplication_sp.repositories.SongListService
-import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.http.*
 
