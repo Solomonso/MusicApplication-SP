@@ -15,6 +15,12 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/playlistYoutube"
+        android:background="@color/darklightgreen"
+        android:title="@string/playlistyoutube"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/songs"
         android:background="@color/darklightgreen"
         android:title="@string/songs1"

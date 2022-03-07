@@ -11,5 +11,5 @@ data class PostSongsModel(
     @SerializedName("songName")
     val songName: String?
 ) : Parcelable {
-    constructor() : this("","")
+    constructor() : this("", "")
 }

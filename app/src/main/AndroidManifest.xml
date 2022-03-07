@@ -3,6 +3,7 @@
     package="com.example.musicapplication_sp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -13,11 +14,12 @@
         android:testOnly="false"
         android:theme="@style/Theme.MusicApplicationSP">
         <activity
+            android:name=".activities.YoutubeActivity"
+            android:exported="false">
+        </activity>
+        <activity
             android:name=".activities.SpotifyLoginActivity"
             android:exported="false" />
-<!--        <activity-->
-        <!--            android:name=".activities.LoginActivity"-->
-        <!--            android:exported="false" />-->
         <activity
             android:name=".activities.RegistrationActivity"
             android:exported="false" />
@@ -48,5 +50,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.YoutubePlaylistItemActivity"
+            android:exported="false" />
     </application>
+
 </manifest>

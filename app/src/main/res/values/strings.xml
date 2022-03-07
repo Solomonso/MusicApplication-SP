@@ -42,5 +42,7 @@
     <string name="code">Please enter the code you received via email:</string>
     <string name="id">id</string>
     <string name="userid">userId</string>
-
+    <string name="youtube">Link Youtube Account</string>
+    <string name="youtube_items">Playlist videos</string>
+    <string name="playlistyoutube">PlaylistYoutube</string>
 </resources>
