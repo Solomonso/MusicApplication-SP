@@ -27,7 +27,11 @@ import com.example.musicapplication_sp.model.PlaylistModel
 import com.example.musicapplication_sp.repositories.PlaylistService
 import com.example.musicapplication_sp.repositories.UserService
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import org.json.JSONException
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
@@ -48,6 +52,8 @@ class PlaylistActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var toolbar: Toolbar
     private lateinit var playlists: ArrayList<Playlist>
+    private lateinit var auth: FirebaseUser
+
     private external fun getTokenKey(): String
     var token : String = getTokenKey()
 
@@ -66,8 +72,14 @@ class PlaylistActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.itemPlaylist)
         recyclerView.layoutManager = LinearLayoutManager(this)
         playlists = arrayListOf()
+        auth = FirebaseAuth.getInstance().currentUser!!
         retrieveUserPlaylist()
-        getTheClientID("6hh8Uyhy37XnnKIAxLQjMRIYZn736hh8Uyhy37XnnKIAxLQjMRIYZn73")
+        val user = Firebase.auth.currentUser
+        getTheClientID(user?.uid, object : VolleyCallBack {
+            override fun onSuccess() {
+                TODO("Not yet implemented")
+            }
+        })
 
         toolbar = findViewById(R.id.toolbarPlaylist)
         this.toolbar()
@@ -130,40 +142,37 @@ class PlaylistActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 
-    fun getTheClientID(UserID: String?) {
+    private fun getTheClientID(UserID: String?, callBack: VolleyCallBack) {
         val endpoint = String.format(
             Endpoints.GETCLIENTID.endpoint,
             UserID
         ) //format the url to get the playlist id
         val jsonObjectRequest: JsonObjectRequest = object : JsonObjectRequest(
-            Method.GET, endpoint, null,
+            Method.GET,
+            endpoint,
+            null,
             Response.Listener { response: JSONObject ->
                 val jsonArray = response.optJSONArray("data")
                 for (i in 0 until Objects.requireNonNull(jsonArray).length()) {
                     try {
                         val jsonObject = jsonArray?.getJSONObject(i)
-                        //     Toast.makeText(this, "id: " + jsonObject.getString("id") + " client id " + jsonObject.getString("ClientID") + " iv " + jsonObject.getString("iv"), Toast.LENGTH_SHORT).show();
-//                        Log.d(
-//                            "Test ",
-//                            " client id " + jsonObject?.getString("ClientID") + " iv " + Arrays.toString(
-//                                jsonObject?.getString("iv")
-//                                    .toByteArray(StandardCharsets.UTF_8)
-//                            )
-//                        )
                         val cryptography = Cryptography()
                         val ks: KeyStore = KeyStore.getInstance("AndroidKeyStore").apply {
                             load(null)
                         }
                         val alias = "clientIDKey"
                         val entry = ks.getEntry(alias, null) as? KeyStore.SecretKeyEntry
-                        cryptography.createSecretKey("AES")
+                        cryptography.createSecretKey()
                         val map = HashMap<String, ByteArray>()
-                        map[jsonObject?.getString("iv")!!.toByteArray(StandardCharsets.UTF_8).contentToString()] = jsonObject?.getString("ClientID")!!.toByteArray(StandardCharsets.UTF_8)
-                        //val result = entry?.let {cryptography.decrypt(map, it.secretKey)}
+                        //map[jsonObject?.getString("iv")!!.toByteArray(StandardCharsets.UTF_8).contentToString()] = jsonObject?.getString("ClientID")!!.toByteArray(StandardCharsets.UTF_8)
+                        map["iv"] = jsonObject?.getString("iv")!!.toByteArray(StandardCharsets.UTF_8)
+                        map["encrypted"] = jsonObject?.getString("ClientID")!!.toByteArray(StandardCharsets.UTF_8)
+                        val result = entry?.let {cryptography.decrypt(map, it.secretKey)}
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
                 }
+                callBack.onSuccess()
             },
             Response.ErrorListener { error: VolleyError ->
                 Log.d(

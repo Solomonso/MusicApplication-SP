@@ -50,10 +50,10 @@ class YoutubeActivity : AppCompatActivity() {
     }
 
     private fun getData(callBack: VolleyCallBack) {
-
+        val ids = "PLC1og_v3eb4hrv4wsqG1G5dsNZh9bIscJ,PL3EfCK9aCbkptFjtgWYJ8wiXgJQw5k3M3"
         val jsonObjectRequest: JsonObjectRequest = object : JsonObjectRequest(
             Method.GET,
-            "https://www.googleapis.com/youtube/v3/playlists?key=$token&part=snippet&id=PLC1og_v3eb4hrv4wsqG1G5dsNZh9bIscJ,PL3EfCK9aCbkptFjtgWYJ8wiXgJQw5k3M3,PLOghHB6dKHAISSUl-IoUpE0KAg29mrdad",
+            "https://www.googleapis.com/youtube/v3/playlists?key=$token&part=snippet&id=$ids",
             null,
             Response.Listener { response: JSONObject ->
                 val gson = Gson()
