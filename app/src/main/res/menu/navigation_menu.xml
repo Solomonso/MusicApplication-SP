@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/profile"
+        android:background="@color/darklightgreen"
+        android:title="@string/profile"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/playlist"
+        android:background="@color/darklightgreen"
+        android:title="@string/playlist1"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/playlistYoutube"
+        android:background="@color/darklightgreen"
+        android:title="@string/playlistyoutube"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/songs"
+        android:background="@color/darklightgreen"
+        android:title="@string/songs1"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/settings"
+        android:background="@color/darklightgreen"
+        android:title="@string/settings"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/logout"
+        android:background="@color/darklightgreen"
+        android:title="@string/log_out"
+        app:showAsAction="never" />
+
+</menu>
