@@ -49,9 +49,3 @@ Java_com_example_musicapplication_1sp_activities_PlaylistActivity_getTokenKey(JN
     return (*env)->NewStringUTF(env,"AIzaSyDGDhdiqacmjroaO7-Bar_fgP6G2YVEHsA");
 
 }
-
-JNIEXPORT jstring JNICALL
-Java_com_example_musicapplication_1sp_repositories_StoredUserSongsService_getKey(JNIEnv *env,
-                                                                                 jobject thiz) {
-    // TODO: implement getKey()
-}
