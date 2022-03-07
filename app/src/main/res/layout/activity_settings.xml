@@ -37,7 +37,7 @@
             android:layout_gravity="center_horizontal"
             android:background="@drawable/text_input_shape"
             android:text="@string/spotify"
-            android:theme="@style/FirebaseUI"
+
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

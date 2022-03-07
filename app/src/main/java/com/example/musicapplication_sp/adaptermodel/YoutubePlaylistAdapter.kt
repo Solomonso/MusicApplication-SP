@@ -40,7 +40,7 @@ class YoutubePlaylistAdapter(private val playlists: ArrayList<YtPlaylist>) :
 
         init {
             itemView.setOnClickListener {
-                val currentItem = playlists[adapterPosition]
+                val currentItem = playlists[layoutPosition]
                 listener.onItemClick(currentItem.id)
             }
         }

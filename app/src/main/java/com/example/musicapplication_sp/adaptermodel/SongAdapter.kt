@@ -35,7 +35,7 @@ class SongAdapter(private val songs: ArrayList<Song>) :
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = songs[position]
-        val sActivity = SongActivity()
+        //val sActivity = SongActivity()
         holder.songName.text = currentItem.name
     }
 
@@ -78,7 +78,7 @@ class SongAdapter(private val songs: ArrayList<Song>) :
 
         init {
             itemView.setOnClickListener {
-                listener.onItemClick(adapterPosition)
+                listener.onItemClick(layoutPosition)
             }
         }
     }

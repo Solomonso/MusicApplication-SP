@@ -20,10 +20,7 @@ import com.example.musicapplication_sp.interfaces.VolleyCallBack
 import com.example.musicapplication_sp.model.ResourceId
 import com.example.musicapplication_sp.model.VideoSnippet
 import com.example.musicapplication_sp.model.YtPlaylistItem
-import com.google.api.client.extensions.android.http.AndroidHttp
-import com.google.api.client.json.JsonFactory
-import com.google.api.client.json.jackson2.JacksonFactory
-import com.google.api.services.youtube.YouTube
+
 import com.google.gson.Gson
 import org.json.JSONException
 import org.json.JSONObject
@@ -31,11 +28,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class YoutubePlaylistItemActivity : AppCompatActivity() {
-    private val mJsonFactory: JsonFactory = JacksonFactory.getDefaultInstance()
-    private val mTransport = AndroidHttp.newCompatibleTransport()
     private lateinit var recyclerView: RecyclerView
     private lateinit var playlistsItems: ArrayList<YtPlaylistItem>
-    private lateinit var mYoutubeDataApi: YouTube
     private lateinit var requestQueue: RequestQueue
     private lateinit var playlistId: String
     init {
@@ -53,11 +47,6 @@ class YoutubePlaylistItemActivity : AppCompatActivity() {
         playlistId = intent.getStringExtra("playlist_id").toString()
 
         retrieveData()
-
-        mYoutubeDataApi = YouTube.Builder(mTransport, mJsonFactory, null)
-            .setApplicationName(resources.getString(R.string.app_name))
-            .build()
-
 
         val adapter = YoutubePlaylistItemAdapter(playlistsItems)
         recyclerView.adapter = adapter

@@ -63,7 +63,6 @@ open class Cryptography {
         map = HashMap()
         var iv = ByteArray(16)
         ivRandom.nextBytes(iv)
-        val ivSpec = IvParameterSpec(iv) // 2
         val ks: KeyStore = KeyStore.getInstance("AndroidKeyStore").apply {
             load(null)
         }
@@ -91,7 +90,6 @@ open class Cryptography {
                 sb2.append(b.toInt().toChar())
             }
         }
-        val test = sb2.toString()
         val ivSpec = IvParameterSpec(iv)
         val cipher = Cipher.getInstance("AES/CTR/NoPadding")
         cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivSpec)

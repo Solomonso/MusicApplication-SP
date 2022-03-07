@@ -39,7 +39,7 @@ class PlaylistAdapter(private val playlists: ArrayList<Playlist>) :
 
         init {
             itemView.setOnClickListener {
-                listener.onItemClick(adapterPosition)
+                listener.onItemClick(layoutPosition)
             }
         }
 

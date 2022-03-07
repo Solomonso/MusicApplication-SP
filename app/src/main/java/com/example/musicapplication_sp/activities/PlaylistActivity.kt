@@ -159,7 +159,7 @@ class PlaylistActivity : AppCompatActivity() {
                         cryptography.createSecretKey("AES")
                         val map = HashMap<String, ByteArray>()
                         map[jsonObject?.getString("iv")!!.toByteArray(StandardCharsets.UTF_8).contentToString()] = jsonObject?.getString("ClientID")!!.toByteArray(StandardCharsets.UTF_8)
-                        val result = entry?.let {cryptography.decrypt(map, it.secretKey)}
+                        //val result = entry?.let {cryptography.decrypt(map, it.secretKey)}
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
