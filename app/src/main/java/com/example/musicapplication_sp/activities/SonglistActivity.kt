@@ -51,7 +51,6 @@ class SonglistActivity : AppCompatActivity() {
         listOfSongs = findViewById(R.id.list_of_songs)
         auth = Firebase.auth
         listOfSongs.layoutManager = LinearLayoutManager(this)
-        listOfSongs.setHasFixedSize(true)
         swipe = findViewById(R.id.swipeSongs)
 
         toolbar = findViewById(R.id.toolbar)

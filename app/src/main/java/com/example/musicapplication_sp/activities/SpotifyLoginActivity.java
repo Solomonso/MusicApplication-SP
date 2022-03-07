@@ -48,7 +48,6 @@ import java.util.Objects;
 
 public class SpotifyLoginActivity extends AppCompatActivity {
 
-
     public SpotifyLoginActivity() throws GeneralSecurityException, IOException {
     }
 
