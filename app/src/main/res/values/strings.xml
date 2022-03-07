@@ -37,4 +37,5 @@
     <string name="password_criteria">The provided passwords don\'t match, please re-enter your password</string>
     <string name="youtube_items">Playlist videos</string>
     <string name="playlistyoutube">PlaylistYoutube</string>
+    <string name="test">test</string>
 </resources>

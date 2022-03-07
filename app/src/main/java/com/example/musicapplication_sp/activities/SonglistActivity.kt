@@ -126,7 +126,7 @@ class SonglistActivity : AppCompatActivity() {
     /**
      * @postListOfSongs()
      */
-    fun postListOfSongs(params: PostSongsModel, onResult: (PostSongsModel) -> Unit) {
+    private fun postListOfSongs(params: PostSongsModel, onResult: (PostSongsModel) -> Unit) {
         val api = SongListService.getInstance().create(SonglistCrudMethod::class.java)
         api.postSongs(params, token).enqueue(object : Callback<PostSongsModel> {
             override fun onResponse(
@@ -142,6 +142,7 @@ class SonglistActivity : AppCompatActivity() {
             override fun onFailure(call: Call<PostSongsModel>, t: Throwable) {
                 t.printStackTrace()
                 Log.d("SonglistActivity", "onFailure: " + t.message.toString())
+                Toast.makeText(this@SonglistActivity, t.message, Toast.LENGTH_LONG).show()
             }
         })
     }
