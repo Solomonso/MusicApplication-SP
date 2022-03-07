@@ -5,5 +5,5 @@
 * Period: **2**
 * Made by **MusicApp group**
 
-Create your branch from develop
+Create your branch from develop.
 Open **develop** branch to review code.
