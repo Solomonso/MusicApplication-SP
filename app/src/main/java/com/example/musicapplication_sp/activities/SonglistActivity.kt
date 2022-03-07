@@ -126,7 +126,7 @@ class SonglistActivity : AppCompatActivity() {
     /**
      * @postListOfSongs()
      */
-    private fun postListOfSongs(params: PostSongsModel, onResult: (PostSongsModel) -> Unit) {
+    fun postListOfSongs(params: PostSongsModel, onResult: (PostSongsModel) -> Unit) {
         val api = SongListService.getInstance().create(SonglistCrudMethod::class.java)
         api.postSongs(params, token).enqueue(object : Callback<PostSongsModel> {
             override fun onResponse(
